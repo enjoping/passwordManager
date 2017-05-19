@@ -31,8 +31,8 @@ deploy_develop:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
-    - rsync -avr backend fwe@h2652485.stratoserver.net:/home/fwe/passwordmanager/develop
-    - ssh fwe@h2652485.stratoserver.net
+    - ssh fwe@h2652485.stratoserver.net "echo test"
+    - rsync -avuz -e 'ssh -i ~/.ssh/deploy_rsa.pub' backend fwe@h2652485.stratoserver.net:/home/fwe/passwordmanager/develop
   environment:
     name: develop
     url: https://dev.example.com
