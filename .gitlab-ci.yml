@@ -1,3 +1,13 @@
+image: node:latest
+
+cache:
+  paths:
+   - backend/node_modules/
+
+before_script:
+  - cd backend
+  - npm install
+  
 stages:
   - test
   - build
