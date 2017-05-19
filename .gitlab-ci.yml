@@ -23,6 +23,8 @@ build:
   script:
     - echo "Building the app"
     - cd ../frontend
+    - npm install -g @angular/cli
+    - npm install
     - ng build
     - cp dist ../backend/frontend
 
