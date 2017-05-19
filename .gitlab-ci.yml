@@ -26,7 +26,7 @@ build:
     - npm install -g @angular/cli
     - npm install
     - ng build
-    - cp dist ../backend/frontend
+    - cp -r dist ../backend/frontend
 
 deploy_develop:
   stage: deploy
@@ -40,6 +40,7 @@ deploy_develop:
     - chmod 700 id_rsa
     - echo "${SSH_HOST_KEY}" > known_hosts
     - ssh -v fwe@h2652485.stratoserver.net "echo test"
+    - cd "${CI_PROJECT_DIR}"
     - rsync -avuz -e 'ssh -i ~/.ssh/deploy_rsa.pub' backend fwe@h2652485.stratoserver.net:/home/fwe/passwordmanager/develop
   environment:
     name: develop
