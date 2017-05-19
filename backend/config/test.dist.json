@@ -1,0 +1,4 @@
+{
+  "db": "MongoDB Connection String (e.g. mongodb://localhost:27017/testPasswordManager)",
+  "port": 3000
+}
