@@ -1,0 +1,30 @@
+stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  script:
+    - echo "Running tests"
+
+build:
+  stage: build
+  script:
+    - echo "Building the app"
+    
+
+deploy_develop:
+  stage: deploy
+  script:
+    - echo "Deploy to develop server"
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - rsync -avr backend fwe@h2652485.stratoserver.net:/home/fwe/passwordmanager/develop
+    - ssh fwe@h2652485.stratoserver.net
+  environment:
+    name: develop
+    url: https://dev.example.com
+  only:
+    - develop
