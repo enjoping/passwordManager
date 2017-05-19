@@ -29,11 +29,12 @@ deploy_develop:
   script:
     - echo "Deploy to develop server"
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - mkdir "${HOME}/.ssh"
+    - cd "${HOME}/.ssh"
     - echo "${SSH_PRIVATE_KEY}" > id_rsa
     - chmod 700 id_rsa
-    - mkdir "${HOME}/.ssh"
-    - echo "${SSH_HOST_KEY}" > "${HOME}/.ssh/known_hosts"
-    - ssh fwe@h2652485.stratoserver.net "echo test"
+    - echo "${SSH_HOST_KEY}" > known_hosts
+    - ssh -v fwe@h2652485.stratoserver.net "echo test"
     - rsync -avuz -e 'ssh -i ~/.ssh/deploy_rsa.pub' backend fwe@h2652485.stratoserver.net:/home/fwe/passwordmanager/develop
   environment:
     name: develop
