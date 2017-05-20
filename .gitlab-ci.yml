@@ -19,15 +19,16 @@ test:
   script:
     - echo "Running tests"
 
-build:
-  stage: build
+build_angular:
+  stage: deploy
   script:
     - echo "Building the app"
-    - cd ../frontend
+    - cd "${CI_PROJECT_DIR}/frontend"
     - npm install -g @angular/cli
     - npm install
     - ng build
-    - cp -rv dist ../backend/frontend
+    - mkdir ../backend/dist
+    - cp -rv dist ../backend/dist
 
 deploy_develop:
   stage: deploy
