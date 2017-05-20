@@ -11,15 +11,16 @@ before_script:
   
 stages:
   - test
-  - build
   - deploy
 
 test:
   stage: test
   script:
     - echo "Running tests"
+    - cd "${CI_PROJECT_DIR}/frontend"
+    - ng lint
 
-build_angular:
+deploy_develop:
   stage: deploy
   script:
     - echo "Building the app"
@@ -29,11 +30,6 @@ build_angular:
     - ng build
     - mkdir ../backend/dist
     - cp -rv dist ../backend/dist
-
-deploy_develop:
-  stage: deploy
-  script:
-    - ls -lah ./
     - echo "Deploy to develop server"
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - 'which rsync || ( apt-get update -y && apt-get install rsync -y )'
