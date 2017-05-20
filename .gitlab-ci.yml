@@ -3,6 +3,7 @@ image: node:latest
 cache:
   paths:
    - backend/node_modules/
+   - frontend/node_modules/
 
 before_script:
   - cd backend
@@ -31,7 +32,7 @@ build:
 deploy_develop:
   stage: deploy
   script:
-    - ls -lah backend
+    - ls -lah ./
     - echo "Deploy to develop server"
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - 'which rsync || ( apt-get update -y && apt-get install rsync -y )'
