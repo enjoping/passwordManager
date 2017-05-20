@@ -6,7 +6,7 @@ const express = require("express");
 const router = express.Router();
 
 const getGroups = (req, res) => {
-    
+
 };
 
 const getGroup = (req, res) => {
@@ -25,11 +25,11 @@ const deleteGroup = (req, res) => {
 
 };
 
-router.route("/group")
+router.route("/")
     .get(getGroups)
     .post(postGroup);
 
-router.route("/group/:id")
+router.route("/:id")
     .get(getGroup)
     .delete(deleteGroup)
     .patch(patchGroup);

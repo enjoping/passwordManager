@@ -25,11 +25,11 @@ const deleteSecurityNote = (req, res) => {
 
 };
 
-router.route("/security-note")
+router.route("/")
     .get(getSecurityNotes)
     .post(postSecurityNote);
 
-router.route("/security-note/:id")
+router.route("/:id")
     .get(getSecurityNote)
     .delete(deleteSecurityNote)
     .patch(patchSecurityNote);
