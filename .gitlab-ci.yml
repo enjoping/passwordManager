@@ -6,7 +6,10 @@ cache:
    - frontend/node_modules/
 
 before_script:
-  - cd backend
+  - cd "${CI_PROJECT_DIR}/backend"
+  - npm install
+  - cd "${CI_PROJECT_DIR}/frontend"
+  - npm install -g @angular/cli
   - npm install
   
 stages:
@@ -25,8 +28,6 @@ deploy_develop:
   script:
     - echo "Building the app"
     - cd "${CI_PROJECT_DIR}/frontend"
-    - npm install -g @angular/cli
-    - npm install
     - ng build
     - mkdir ../backend/dist
     - cp -rv dist ../backend/dist
