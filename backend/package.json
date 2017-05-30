@@ -4,7 +4,10 @@
   "description": "Backend for PasswordManager",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --timeout 10000"
+    "start": "npm run build:live",
+    "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./server.ts",
+    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register --timeout 10000",
+    "lint": "./node_modules/tslint/bin/tslint -c tslint.json server.ts"
   },
   "author": "",
   "license": "MIT",
@@ -15,8 +18,16 @@
     "mongoose": "^4.10.0"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.16.3",
+    "@types/config": "0.0.32",
+    "@types/express": "^4.0.35",
+    "@types/mongoose": "^4.7.13",
+    "@types/node": "^7.0.22",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
-    "mocha": "^3.4.1"
+    "nodemon": "^1.11.0",
+    "ts-node": "^3.0.4",
+    "tslint": "^5.3.2",
+    "typescript": "^2.3.4"
   }
 }

@@ -11,7 +11,7 @@ before_script:
   - cd "${CI_PROJECT_DIR}/frontend"
   - npm install -g @angular/cli
   - npm install
-  
+
 stages:
   - test
   - deploy
@@ -22,6 +22,8 @@ test:
     - echo "Running tests"
     - cd "${CI_PROJECT_DIR}/frontend"
     - ng lint
+    - cd "${CI_PROJECT_DIR}/backend"
+    - npm run lint
 
 deploy_develop:
   stage: deploy
