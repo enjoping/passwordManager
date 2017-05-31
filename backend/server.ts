@@ -2,38 +2,25 @@
  * Created by marcelboes on 19.05.17.
  */
 
-import * as bodyParser from "body-parser";
 import * as config from "config";
-import * as express from "express";
-import * as mongoose from "mongoose";
-import * as path from "path";
+// import * as mongoose from "mongoose";
 
-const app: express.Application = express();
-mongoose.connect(config.get("db"));
-mongoose.Promise = global.Promise;
+import {Server} from "./app/models/server";
 
-/**
- * Body parser Options
- */
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+import { GroupRouter } from "./app/routes/groupRouter";
+import { SecurityNoteRouter } from "./app/routes/securityNoteRouter";
 
-/**
- * Defining routers.
- */
-import * as groupRoute from "./app/routes/group";
-import * as securityNoteRoute from "./app/routes/securityNote";
-app.use("/api/1.0/group", groupRoute);
-app.use("/api/1.0/security-note", securityNoteRoute);
+const server = new Server(config.get("port"));
 
-/**
- * Deliver the angular frontend
- */
-app.use("/", express.static(__dirname + "/dist"));
-app.use((req: express.Request, res: express.Response) => {
-    res.sendFile("index.html", { root: path.resolve(__dirname + "/dist") });
-});
+const groupRouter = new GroupRouter();
+const securityNoteRouter = new SecurityNoteRouter();
+server.registerRouter("/api/1.0/group", groupRouter.getRouter());
+server.registerRouter("/api/1.0/security-note", securityNoteRouter.getRouter());
 
-app.listen(config.get("port"));
+// TODO move these lines into the database class
+// mongoose.connect(config.get("db"));
+// mongoose.Promise = global.Promise;
 
-module.exports = app;
+server.start();
+
+module.exports = server.getApp();
