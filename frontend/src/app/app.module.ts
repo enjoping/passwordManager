@@ -17,8 +17,14 @@ import GroupService from './services/group.service';
         HttpModule,
         NgbModule.forRoot()
     ],
+    /*
+      ERROR thrown: Cannot read property 'provide' of null. App worked fine, even with the error thrown, but
+      CI crashed.
+      Never seen it before. Fixed it with there instructions by changing the providers to the following format:
+        https://github.com/angular/angular-cli/issues/3834
+     */
     providers: [
-      GroupService
+      { provide: GroupService, useClass: GroupService }
     ],
     bootstrap: [AppComponent]
 })
