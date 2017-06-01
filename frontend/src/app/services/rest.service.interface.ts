@@ -1,4 +1,4 @@
-export interface RestInterface<Model> {
+export interface RestServiceInterface<Model> {
   single(_id: number): Promise<Model>;
   get(): Promise<Model[]>;
   post(model: Model): Promise<Model>;

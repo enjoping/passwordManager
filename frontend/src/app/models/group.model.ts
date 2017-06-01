@@ -1,5 +1,5 @@
-import {Model} from "./model";
+import Model from "./model";
 
-export default class Group implements Model {
-  _id: number;
+export default class Group extends Model {
+  name: string;
 }
