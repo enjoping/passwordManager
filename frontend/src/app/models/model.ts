@@ -3,7 +3,7 @@ export default class Model {
 
 
   public jsonFill(jsonObject: any): Model {
-    for (let prop in jsonObject) {
+    for (const prop in jsonObject) {
       if (jsonObject.hasOwnProperty(prop)) {
         this[prop] = jsonObject[prop];
       }

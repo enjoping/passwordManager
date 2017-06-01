@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import GroupService from "./services/group.service";
+import GroupService from './services/group.service';
 
 @NgModule({
     declarations: [
