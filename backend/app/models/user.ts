@@ -5,21 +5,21 @@
 import { model, Schema } from "mongoose";
 
 /**
- * Group schema for MongoDB
+ * SecurityNote schema for MongoDB
  */
-const GroupSchema = new Schema({
+const UserSchema = new Schema({
+    email: { type: String, required: true},
     name: { type: String, required: true},
-    owner: { type: String, required: true},
-    count: Number,
-    noteId: Number
+    password: String,
+    publicKEy: String
 });
 
 /**
  * This method triggers for each save in the database.
  */
-GroupSchema.pre("save", (next) => {
+UserSchema.pre("save", (next) => {
     this.creationDate = Date.now();
     next();
 });
 
-module.exports = model("Group", GroupSchema);
+module.exports = model("UserNote", UserSchema);
