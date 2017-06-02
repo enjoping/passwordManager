@@ -16,7 +16,7 @@ Raven
   .install();
 
 export class RavenErrorHandler implements ErrorHandler {
-  handleError(err:any) : void {
+  handleError(err: any): void {
     Raven.captureException(err.originalError);
   }
 }
