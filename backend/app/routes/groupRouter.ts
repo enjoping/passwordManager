@@ -9,6 +9,12 @@ import { BaseRouter } from "./baseRouter";
 import { GroupValidator } from "../validators/groupValidator";
 
 export class GroupRouter extends BaseRouter {
+
+    /**
+     * GET /group route to retrieve all stored groups.
+     * @param req
+     * @param res
+     */
     protected list(req: Request, res: Response): void {
         groupModel.find()
             .then(groups => {
@@ -21,6 +27,11 @@ export class GroupRouter extends BaseRouter {
             });
     }
 
+    /**
+     * GET /group/:id route to retrieve a single group by id.
+     * @param req
+     * @param res
+     */
     protected get(req: Request, res: Response): void {
         groupModel.findById(req.params.id)
             .then(group => {
@@ -33,6 +44,11 @@ export class GroupRouter extends BaseRouter {
             });
     }
 
+    /**
+     * POST /group route to create a new group.
+     * @param req
+     * @param res
+     */
     protected create(req: Request, res: Response): void {
         const newGroup = GroupValidator.validateGroupSchema(req);
         if (!newGroup.hasOwnProperty("error")) {
@@ -51,6 +67,11 @@ export class GroupRouter extends BaseRouter {
         }
     }
 
+    /**
+     * PATCH /group/:id route to update a single group by id.
+     * @param req
+     * @param res
+     */
     protected update(req: Request, res: Response): void {
         const group = GroupValidator.validateGroupSchema(req);
         if (typeof group["errors"] === "undefined") {
@@ -76,6 +97,11 @@ export class GroupRouter extends BaseRouter {
         }
     }
 
+    /**
+     * DELETE /group/:id route to delete a single group by id.
+     * @param req
+     * @param res
+     */
     protected erase(req: Request, res: Response): void {
         groupModel.findByIdAndRemove(req.params.id)
             .then(() => {
