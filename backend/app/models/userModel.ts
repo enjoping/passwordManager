@@ -17,7 +17,7 @@ const UserSchema = new Schema({
 /**
  * This method triggers for each save in the database.
  */
-UserSchema.pre("save", (next) => {
+UserSchema.pre("save", function(this, next) {
     this.creationDate = Date.now();
     next();
 });

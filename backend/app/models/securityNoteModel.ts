@@ -22,7 +22,7 @@ const SecurityNoteSchema = new Schema({
 /**
  * This method triggers for each save in the database.
  */
-SecurityNoteSchema.pre("save", (next) => {
+SecurityNoteSchema.pre("save", function(this, next) {
     this.creationDate = Date.now();
     next();
 });

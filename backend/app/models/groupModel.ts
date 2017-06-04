@@ -11,13 +11,13 @@ const GroupSchema = new Schema({
     name: { type: String, required: true},
     owner: { type: String, required: true},
     count: Number,
-    noteId: Number
+    creationDate: Date
 });
 
 /**
  * This method triggers for each save in the database.
  */
-GroupSchema.pre("save", (next) => {
+GroupSchema.pre("save", function(this, next) {
     this.creationDate = Date.now();
     next();
 });

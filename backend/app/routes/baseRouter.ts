@@ -23,7 +23,7 @@ export class BaseRouter {
         this.router.route("/:id")
             .get(this.get)
             .patch(this.update)
-            .delete(this.delete);
+            .delete(this.erase);
     }
 
     protected list(req: Request, res: Response) {
@@ -46,7 +46,7 @@ export class BaseRouter {
         res.send("This method has not been implemented by the controller.");
     }
 
-    protected delete(req: Request, res: Response) {
+    protected erase(req: Request, res: Response) {
         res.status(405);
         res.send("This method has not been implemented by the controller.");
     }
