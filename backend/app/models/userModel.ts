@@ -14,12 +14,4 @@ const UserSchema = new Schema({
     publicKEy: String
 });
 
-/**
- * This method triggers for each save in the database.
- */
-UserSchema.pre("save", function(this, next) {
-    this.creationDate = Date.now();
-    next();
-});
-
 module.exports = model("UserNote", UserSchema);

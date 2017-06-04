@@ -10,16 +10,7 @@ import { model, Schema } from "mongoose";
 const GroupSchema = new Schema({
     name: { type: String, required: true},
     owner: { type: String, required: true},
-    count: Number,
-    creationDate: Date
-});
-
-/**
- * This method triggers for each save in the database.
- */
-GroupSchema.pre("save", function(this, next) {
-    this.creationDate = Date.now();
-    next();
+    count: Number
 });
 
 module.exports = model("Group", GroupSchema);
