@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import GroupService from './services/group.service';
 import EventService from './services/event/event.service';
 import * as Raven from 'raven-js';
-import {LoginPage} from './pages/login.page';
+import {LoginPageComponent} from './pages/login-page.component';
 import {AppRoutingModule} from './app.routing.module';
 
 
@@ -26,7 +26,7 @@ export class RavenErrorHandler implements ErrorHandler {
 @NgModule({
     declarations: [
       AppComponent,
-      LoginPage
+      LoginPageComponent
     ],
     imports: [
       AppRoutingModule,
