@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npm run build:live",
     "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./server.ts",
+    "build:windows": "nodemon --exec ts-node -- server.ts",
     "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register --timeout 10000",
     "lint": "./node_modules/tslint/bin/tslint -c tslint.json server.ts"
   },
