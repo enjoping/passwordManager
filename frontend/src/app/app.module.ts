@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import GroupService from './services/group.service';
 import EventService from './services/event/event.service';
 import * as Raven from 'raven-js';
+import {LoginPage} from './pages/login.page';
+import {AppRoutingModule} from './app.routing.module';
 
 
 
@@ -23,13 +25,15 @@ export class RavenErrorHandler implements ErrorHandler {
 
 @NgModule({
     declarations: [
-        AppComponent
+      AppComponent,
+      LoginPage
     ],
     imports: [
-        BrowserModule,
-        FormsModule,
-        HttpModule,
-        NgbModule.forRoot()
+      AppRoutingModule,
+      BrowserModule,
+      FormsModule,
+      HttpModule,
+      NgbModule.forRoot()
     ],
     /*
       ERROR thrown: Cannot read property 'provide' of null. App worked fine, even with the error thrown, but
