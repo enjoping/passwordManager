@@ -5,13 +5,13 @@
 import { model, Schema } from "mongoose";
 
 /**
- * SecurityNote schema for MongoDB
+ * User schema for MongoDB
  */
 const UserSchema = new Schema({
     email: { type: String, required: true},
     name: { type: String, required: true},
     password: String,
-    publicKEy: String
+    publicKey: String
 });
 
-module.exports = model("UserNote", UserSchema);
+module.exports = model("User", UserSchema);
