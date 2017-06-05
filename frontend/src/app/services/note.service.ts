@@ -6,7 +6,7 @@ import Note from '../models/note.model';
 import {Http} from '@angular/http';
 
 @Injectable()
-export class NoteService implements RestServiceInterface<Note>{
+export class NoteService implements RestServiceInterface<Note> {
 
   private route: string;
 
