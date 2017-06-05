@@ -19,12 +19,4 @@ const SecurityNoteSchema = new Schema({
     ]
 });
 
-/**
- * This method triggers for each save in the database.
- */
-SecurityNoteSchema.pre("save", (next) => {
-    this.creationDate = Date.now();
-    next();
-});
-
 module.exports = model("SecurityNote", SecurityNoteSchema);
