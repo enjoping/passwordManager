@@ -1,25 +1,24 @@
 /**
- * Created by Joe Pietler on 31.05.17.
+ * Created by marcelboes on 05.06.17.
  */
-
 import { Request, Response } from "express";
-const groupModel = require("./../models/groupModel");
+const userModel = require("./../models/userModel");
 
 import { BaseRouter } from "./baseRouter";
-import { GroupValidator } from "../validators/groupValidator";
+import { UserValidator } from "../validators/userValidator";
 
-export class GroupRouter extends BaseRouter {
+export class UserRouter extends BaseRouter {
 
     /**
-     * GET /group route to retrieve all stored groups.
+     * GET /user route to retrieve all stored users.
      * @param req
      * @param res
      */
     protected list(req: Request, res: Response): void {
-        groupModel.find()
-            .then(groups => {
+        userModel.find()
+            .then(users => {
                 res.status(200);
-                res.json(groups);
+                res.json(users);
             })
             .catch(err => {
                 res.status(500);
@@ -28,34 +27,34 @@ export class GroupRouter extends BaseRouter {
     }
 
     /**
-     * GET /group/:id route to retrieve a single group by id.
+     * GET /user/:id route to retrieve a single user by id.
      * @param req
      * @param res
      */
     protected get(req: Request, res: Response): void {
-        groupModel.findById(req.params.id)
-            .then(group => {
+        userModel.findById(req.params.id)
+            .then(user => {
                 res.status(200);
-                res.json(group);
+                res.json(user);
             })
             .catch(() => {
                 res.status(400);
-                res.send({ "error": "There is no group with the given ID in the database!" });
+                res.send({ "error": "There is no user with the given ID in the database!" });
             });
     }
 
     /**
-     * POST /group route to create a new group.
+     * POST /user route to create a new user.
      * @param req
      * @param res
      */
     protected create(req: Request, res: Response): void {
-        const newGroup = GroupValidator.validateGroupSchema(req);
-        if (!newGroup.hasOwnProperty("error")) {
-            newGroup.save()
-                .then(group => {
+        const newUser = UserValidator.validateUserSchema(req);
+        if (!newUser.hasOwnProperty("error")) {
+            newUser.save()
+                .then(user => {
                     res.status(200);
-                    res.json(group);
+                    res.json(user);
                 })
                 .catch(err => {
                     res.status(500);
@@ -63,24 +62,24 @@ export class GroupRouter extends BaseRouter {
                 })
         } else {
             res.status(400);
-            res.send(newGroup);
+            res.send(newUser);
         }
     }
 
     /**
-     * PATCH /group/:id route to update a single group by id.
+     * PATCH /user/:id route to update a single user by id.
      * @param req
      * @param res
      */
     protected update(req: Request, res: Response): void {
-        const group = GroupValidator.validateGroupSchema(req);
-        if (!group.hasOwnProperty("error")) {
-            groupModel.findById(req.params.id)
-                .then(group => {
-                    Object.assign(group, req.body).save()
-                        .then(group => {
+        const user = UserValidator.validateUserSchema(req);
+        if (typeof user["errors"] === "undefined") {
+            userModel.findById(req.params.id)
+                .then(user => {
+                    Object.assign(user, req.body).save()
+                        .then(user => {
                             res.status(200);
-                            res.json(group);
+                            res.json(user);
                         })
                         .catch(err => {
                             res.status(400);
@@ -93,23 +92,23 @@ export class GroupRouter extends BaseRouter {
                 });
         } else {
             res.status(400);
-            res.send(group);
+            res.send(user);
         }
     }
 
     /**
-     * DELETE /group/:id route to delete a single group by id.
+     * DELETE /user/:id route to delete a single user by id.
      * @param req
      * @param res
      */
     protected erase(req: Request, res: Response): void {
-        groupModel.findByIdAndRemove(req.params.id)
+        userModel.findByIdAndRemove(req.params.id)
             .then(() => {
                 res.sendStatus(204);
             })
             .catch(() => {
                 res.status(400);
-                res.send({ "error" : "There is no group with the given ID in the database!" });
+                res.send({ "error" : "There is no user with the given ID in the database!" });
             });
     }
 }
