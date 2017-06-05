@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import GroupService from './services/group.service';
 import EventService from './services/event/event.service';
 import * as Raven from 'raven-js';
-import {LoginPageComponent} from './pages/login-page.component';
+import {LoginPageComponent} from './pages/login/login-page.component';
 import {AppRoutingModule} from './app.routing.module';
 import {LoginComponent} from './components/login/login.component';
+import {GroupsPageComponent} from './pages/groups/groups-page.component';
 
 
 Raven
@@ -27,6 +28,7 @@ export class RavenErrorHandler implements ErrorHandler {
     declarations: [
       AppComponent,
       LoginPageComponent,
+      GroupsPageComponent,
       LoginComponent
     ],
     imports: [
