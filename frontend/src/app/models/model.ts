@@ -1,6 +1,11 @@
 export default class Model {
   _id: number;
 
+  constructor(jsonObject?: any) {
+    if (jsonObject) {
+      this.jsonFill(jsonObject);
+    }
+  }
 
   public jsonFill(jsonObject: any): Model {
     for (const prop in jsonObject) {
