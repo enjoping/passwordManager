@@ -7,13 +7,11 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class SearchComponent {
 
-  @Input()
-  label: string = '';
+  @Input() label = '';
 
-  @Output()
-  searchQuery = new EventEmitter();
+  @Output() searchQuery = new EventEmitter();
 
-  queryString: string = '';
+  queryString = '';
 
 
   updateQueryString(value) {
