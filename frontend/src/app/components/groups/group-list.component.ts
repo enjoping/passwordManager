@@ -16,6 +16,6 @@ export class GroupListComponent implements OnInit {
       new Group({ name: 'Team Marketing' }),
       new Group({ name: 'Team Social Media' }),
       new Group({ name: 'Team Analytics' })
-    ]
+    ];
   }
 }
