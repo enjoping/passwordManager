@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'pm-page-header',
@@ -11,4 +11,6 @@ export class PageHeaderComponent {
   @Input() button = '';
 
   @Input() search = 'Search..';
+
+  @Output() buttonClicked = new EventEmitter();
 }

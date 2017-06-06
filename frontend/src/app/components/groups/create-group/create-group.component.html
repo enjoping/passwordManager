@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create new group</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross clicked')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form>
+    <div class="input-group">
+      <input class="form-control" placeholder="Name of the group" />
+    </div>
+    <div class="input-group">
+      <textarea class="form-control"></textarea>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary">Create</button>
+</div>

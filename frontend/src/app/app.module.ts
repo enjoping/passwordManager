@@ -16,6 +16,8 @@ import {SearchComponent} from './components/search/search.component';
 import {PageHeaderComponent} from './components/page-header/page-header.component';
 import {ContentBoxComponent} from './components/content-box/content-box.component';
 import {GroupListComponent} from './components/groups/group-list.component';
+import {TagInputModule} from 'ng2-tag-input';
+import {CreateGroupComponent} from './components/groups/create-group/create-group.component';
 
 
 Raven
@@ -37,14 +39,19 @@ export class RavenErrorHandler implements ErrorHandler {
       LoginComponent,
       SearchComponent,
       ContentBoxComponent,
-      GroupListComponent
+      GroupListComponent,
+      CreateGroupComponent
     ],
     imports: [
+      TagInputModule,
       AppRoutingModule,
       BrowserModule,
       FormsModule,
       HttpModule,
       NgbModule.forRoot()
+    ],
+    entryComponents: [
+      CreateGroupComponent
     ],
     /*
       ERROR thrown: Cannot read property 'provide' of null. App worked fine, even with the error thrown, but
