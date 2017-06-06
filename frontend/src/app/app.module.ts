@@ -12,6 +12,7 @@ import {LoginPageComponent} from './pages/login/login-page.component';
 import {AppRoutingModule} from './app.routing.module';
 import {LoginComponent} from './components/login/login.component';
 import {GroupsPageComponent} from './pages/groups/groups-page.component';
+import {SearchComponent} from './components/search/search.component';
 
 
 Raven
@@ -29,7 +30,8 @@ export class RavenErrorHandler implements ErrorHandler {
       AppComponent,
       LoginPageComponent,
       GroupsPageComponent,
-      LoginComponent
+      LoginComponent,
+      SearchComponent
     ],
     imports: [
       AppRoutingModule,

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'pm-search',
@@ -7,4 +7,17 @@ import {Component} from '@angular/core';
 })
 export class SearchComponent {
 
+  @Input()
+  label: string = '';
+
+  @Output()
+  searchQuery = new EventEmitter();
+
+  queryString: string = '';
+
+
+  updateQueryString(value) {
+    this.queryString = value;
+    this.searchQuery.emit(this.queryString);
+  }
 }
