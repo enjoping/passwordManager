@@ -16,12 +16,12 @@ export class AppComponent {
               securityNoteRepository: SecurityNoteRepositoryService) {
 
 
-    let securityNoteInstagram = new SecurityNote({ _id: 0, name: 'Instagram', group: 0 });
+    const securityNoteInstagram = new SecurityNote({ _id: 0, name: 'Instagram', group: 0 });
     securityNoteInstagram.fields.push(new SecurityNoteField('Username', '@passwordmanager', 'string'));
     securityNoteInstagram.fields.push(new SecurityNoteField('Password', 'mysecretpassword', 'password'));
 
 
-    let securityNoteFacebook = new SecurityNote({ _id: 0, name: 'Facebook', group: 0 });
+    const securityNoteFacebook = new SecurityNote({ _id: 0, name: 'Facebook', group: 0 });
     securityNoteFacebook.fields.push(new SecurityNoteField('Username', 'Passwordmanager', 'string'));
     securityNoteFacebook.fields.push(new SecurityNoteField('Password', 'mysecretpassword', 'password'));
 

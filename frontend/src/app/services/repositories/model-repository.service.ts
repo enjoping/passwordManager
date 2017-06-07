@@ -21,7 +21,7 @@ export class ModelRepositoryService<T extends Model> {
       })
       .catch((error) => {
         console.log('error', error);
-      })
+      });
   }
 
   public addModels(models: T[]) {
