@@ -22,6 +22,8 @@ import {GroupRepositoryService} from './services/repositories/group-repository.s
 import {GroupPageComponent} from './pages/group/group-page.component';
 import {SecurityNoteRepositoryService} from './services/repositories/security-note-repository.service';
 import {SecurityNoteService} from './services/security-note.service';
+import {CredentialListComponent} from './components/credentials/credential-list.component';
+import {AddCredentialComponent} from './components/credentials/add-credentials/add-credentials.component';
 
 
 Raven
@@ -45,7 +47,9 @@ export class RavenErrorHandler implements ErrorHandler {
       SearchComponent,
       ContentBoxComponent,
       GroupListComponent,
-      CreateGroupComponent
+      CredentialListComponent,
+      CreateGroupComponent,
+      AddCredentialComponent
     ],
     imports: [
       TagInputModule,
@@ -53,10 +57,11 @@ export class RavenErrorHandler implements ErrorHandler {
       BrowserModule,
       FormsModule,
       HttpModule,
-      NgbModule.forRoot()
+      NgbModule.forRoot(),
     ],
     entryComponents: [
-      CreateGroupComponent
+      CreateGroupComponent,
+      AddCredentialComponent
     ],
     /*
       ERROR thrown: Cannot read property 'provide' of null. App worked fine, even with the error thrown, but

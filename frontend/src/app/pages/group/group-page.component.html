@@ -4,5 +4,7 @@
     [header]="group.name"
     [search]="'Search for credentials...'"
     (buttonClicked)="openModal()"></pm-page-header>
+
+  <pm-credential-list [credentials]="group.securityNotes"></pm-credential-list>
 </div>
 

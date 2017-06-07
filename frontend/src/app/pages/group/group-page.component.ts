@@ -4,6 +4,7 @@ import {CreateGroupComponent} from '../../components/groups/create-group/create-
 import {ActivatedRoute} from '@angular/router';
 import Group from '../../models/group.model';
 import {GroupRepositoryService} from '../../services/repositories/group-repository.service';
+import {AddCredentialComponent} from '../../components/credentials/add-credentials/add-credentials.component';
 
 @Component({
   selector: 'pm-group-page',
@@ -20,6 +21,7 @@ export class GroupPageComponent implements OnInit {
   }
 
   openModal() {
+    this.modalService.open(AddCredentialComponent, { 'size': 'lg' });
   }
 
   ngOnInit(): void {
