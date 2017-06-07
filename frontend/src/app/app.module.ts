@@ -20,6 +20,8 @@ import {TagInputModule} from 'ng2-tag-input';
 import {CreateGroupComponent} from './components/groups/create-group/create-group.component';
 import {GroupRepositoryService} from './services/repositories/group-repository.service';
 import {GroupPageComponent} from './pages/group/group-page.component';
+import {SecurityNoteRepositoryService} from './services/repositories/security-note-repository.service';
+import {SecurityNoteService} from './services/security-note.service';
 
 
 Raven
@@ -65,7 +67,9 @@ export class RavenErrorHandler implements ErrorHandler {
     providers: [
       { provide: GroupService, useClass: GroupService },
       { provide: EventService, useClass: EventService },
+      { provide: SecurityNoteService, useClass: SecurityNoteService },
       { provide: GroupRepositoryService, useClass: GroupRepositoryService },
+      { provide: SecurityNoteRepositoryService, useClass: SecurityNoteRepositoryService },
       { provide: ErrorHandler, useClass: RavenErrorHandler }
     ],
     bootstrap: [AppComponent]

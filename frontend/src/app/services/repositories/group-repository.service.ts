@@ -1,35 +1,25 @@
 import {Injectable} from '@angular/core';
 import GroupService from '../group.service';
 import Group from '../../models/group.model';
+import {ModelRepositoryService} from './model-repository.service';
+import {SecurityNoteRepositoryService} from './security-note-repository.service';
 
 
 /**
  * The {@link GroupRepositoryService} caches all groups for easy access.
  */
 @Injectable()
-export class GroupRepositoryService {
+export class GroupRepositoryService extends ModelRepositoryService<Group> {
 
-  public groups: Group[] = [ ];
-
-  constructor(private groupService: GroupService) { }
-
-  get(_id: number): Promise<Group> {
-    return new Promise(
-      (resolve, reject) => {
-        const group = this.groups.find(row => row._id === _id);
-
-        if (!group) {
-          // There is no group with this id.
-          reject();
-        } else {
-          // We found the group.
-          resolve(group);
-        }
-      }
-    );
+  constructor(groupService: GroupService,
+              private securityNoteRepsitory: SecurityNoteRepositoryService) {
+    super(groupService);
   }
 
-  all(): Promise<Group[]> {
-    return Promise.resolve(this.groups);
+
+  protected loadAdditionalModelInformation(model: Group) {
+    this.securityNoteRepsitory
+      .filter(securityNote => securityNote.group === model._id)
+      .then(securityNotes => model.securityNotes = securityNotes);
   }
 }
