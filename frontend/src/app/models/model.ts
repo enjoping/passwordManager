@@ -1,6 +1,8 @@
 export default class Model {
   _id: number;
 
+  _created: boolean = true;
+
   constructor(jsonObject?: any) {
     if (jsonObject) {
       this.jsonFill(jsonObject);

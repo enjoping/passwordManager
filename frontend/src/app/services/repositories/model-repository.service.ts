@@ -1,5 +1,6 @@
 import Model from '../../models/model';
 import {RestServiceInterface} from '../rest.service.interface';
+import Group from '../../models/group.model';
 
 /**
  * Our generic repository service. We can implement concrete Repositories by extending a
@@ -9,9 +10,9 @@ export class ModelRepositoryService<T extends Model> {
 
   public models: T[] = [ ];
 
-  constructor(private restService: RestServiceInterface<T>) {
-    this.loadModels();
-  }
+  constructor(private restService: RestServiceInterface<T>) { }
+
+  // TODO: save method
 
   private loadModels() {
     this.restService.get()
@@ -22,6 +23,32 @@ export class ModelRepositoryService<T extends Model> {
       .catch((error) => {
         console.log('error', error);
       });
+  }
+
+  public saveModel(model: T): Promise<T> {
+    if (model._created) {
+      const index = this.models.findIndex(row => row._id === model._id);
+      if (index !== -1) {
+        this.models[index] = model;
+      }
+    } else {
+      this.models.push(model);
+    }
+
+    // TODO: implement API as soon as endpoint is working.
+
+    return Promise.resolve(model);
+
+    // const promise =
+    //   (model._created)
+    //     ? this.restService.patch(model)
+    //     : this.restService.post(model);
+    //
+    // return promise;
+  }
+
+  public createModel() {
+    throw new Error('Model cannot be created. Functions needs to be overriden.');
   }
 
   public addModels(models: T[]) {
