@@ -24,6 +24,7 @@ import {SecurityNoteRepositoryService} from './services/repositories/security-no
 import {SecurityNoteService} from './services/security-note.service';
 import {CredentialListComponent} from './components/credentials/credential-list.component';
 import {AddCredentialComponent} from './components/credentials/add-credentials/add-credentials.component';
+import {UserRepositoryService} from './services/repositories/user-repository.service';
 import { UsersAdministrationComponent } from './pages/admin/users-administration';
 import { GroupsAdministrationComponent } from './pages/admin/groups-administration';
 
@@ -79,6 +80,7 @@ export class RavenErrorHandler implements ErrorHandler {
       { provide: SecurityNoteService, useClass: SecurityNoteService },
       { provide: GroupRepositoryService, useClass: GroupRepositoryService },
       { provide: SecurityNoteRepositoryService, useClass: SecurityNoteRepositoryService },
+      { provide: UserRepositoryService, useClass: UserRepositoryService },
       { provide: ErrorHandler, useClass: RavenErrorHandler }
     ],
     bootstrap: [AppComponent]
