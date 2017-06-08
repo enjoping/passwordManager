@@ -25,6 +25,7 @@ import {SecurityNoteService} from './services/security-note.service';
 import {CredentialListComponent} from './components/credentials/credential-list.component';
 import {AddCredentialComponent} from './components/credentials/add-credentials/add-credentials.component';
 import {UserRepositoryService} from './services/repositories/user-repository.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 Raven
@@ -53,12 +54,12 @@ export class RavenErrorHandler implements ErrorHandler {
       AddCredentialComponent
     ],
     imports: [
-      TagInputModule,
       AppRoutingModule,
       BrowserModule,
       FormsModule,
       HttpModule,
       NgbModule.forRoot(),
+      BrowserAnimationsModule
     ],
     entryComponents: [
       CreateGroupComponent,
