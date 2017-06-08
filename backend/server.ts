@@ -20,7 +20,7 @@ const groupRouter = new GroupRouter();
 const securityNoteRouter = new SecurityNoteRouter();
 const userRouter = new UserRouter();
 server.registerRouter("/api/1.0/group", groupRouter.getRouter());
-server.registerRouter("/api/1.0/security-note", securityNoteRouter.getRouter());
+server.registerRouter("/api/1.0/group/:groupid/security-note", securityNoteRouter.getRouter());
 server.registerRouter("/api/1.0/user", userRouter.getRouter());
 
 server.start();

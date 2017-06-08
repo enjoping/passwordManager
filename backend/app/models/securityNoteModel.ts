@@ -10,6 +10,7 @@ import { model, Schema } from "mongoose";
 const SecurityNoteSchema = new Schema({
     name: { type: String, required: true},
     owner: { type: String, required: true},
+    groupId: Number,
     fields: [
         {
             name: String,

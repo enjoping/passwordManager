@@ -3,6 +3,7 @@
  */
 
 import * as mongoose from "mongoose";
+import * as bluebird from "bluebird";
 
 export class Database {
     public static getInstance(): Database {
@@ -20,6 +21,6 @@ export class Database {
 
     public connect(database: any) {
         mongoose.connect(database);
-        (mongoose as any).Promise = global.Promise;
+        (mongoose as any).Promise = bluebird;
     }
 }
