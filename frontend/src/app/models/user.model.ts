@@ -1,6 +1,6 @@
 import Model from './model';
 
-export default class Group extends Model {
+export default class User extends Model {
   email: string;
   name: string;
   password: string;
