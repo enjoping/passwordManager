@@ -35,6 +35,8 @@ export class ModelRepositoryService<T extends Model> {
       this.models.push(model);
     }
 
+    this.loadAdditionalModelInformation(model);
+
     // TODO: implement API as soon as endpoint is working.
 
     return Promise.resolve(model);
