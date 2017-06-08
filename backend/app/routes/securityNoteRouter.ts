@@ -9,6 +9,11 @@ import { SecurityNoteValidator } from "../validators/securityNoteValidator"
 const securityNoteModel = require("./../models/securityNoteModel");
 
 export class SecurityNoteRouter extends BaseRouter {
+    constructor() {
+        super();
+        this.basePath = "/:group/security-note";
+    }
+
     /**
      * GET group/group-id/note route to retrieve all stored securityNotes.
      * @param req
