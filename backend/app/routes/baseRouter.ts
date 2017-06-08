@@ -6,6 +6,8 @@ import { Request, Response, Router } from "express";
 
 export class BaseRouter {
     protected router: Router;
+    protected basePath: string = "";
+
     constructor() {
         this.router = Router();
         this.setRoutes();
@@ -16,11 +18,11 @@ export class BaseRouter {
     }
 
     protected setRoutes() {
-        this.router.route("/")
+        this.router.route(this.basePath + "/")
             .get(this.list)
             .post(this.create);
 
-        this.router.route("/:id")
+        this.router.route(this.basePath + "/:id")
             .get(this.get)
             .patch(this.update)
             .delete(this.erase);
