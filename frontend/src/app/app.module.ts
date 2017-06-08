@@ -24,6 +24,8 @@ import {SecurityNoteRepositoryService} from './services/repositories/security-no
 import {SecurityNoteService} from './services/security-note.service';
 import {CredentialListComponent} from './components/credentials/credential-list.component';
 import {AddCredentialComponent} from './components/credentials/add-credentials/add-credentials.component';
+import { UsersAdministrationComponent } from './pages/admin/users-administration';
+import { GroupsAdministrationComponent } from './pages/admin/groups-administration';
 
 
 Raven
@@ -49,7 +51,9 @@ export class RavenErrorHandler implements ErrorHandler {
       GroupListComponent,
       CredentialListComponent,
       CreateGroupComponent,
-      AddCredentialComponent
+      AddCredentialComponent,
+      UsersAdministrationComponent,
+      GroupsAdministrationComponent
     ],
     imports: [
       TagInputModule,
