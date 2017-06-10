@@ -5,13 +5,14 @@
 import { Request, Response } from "express";
 
 import { BaseRouter } from "./baseRouter";
-import { SecurityNoteValidator } from "../validators/securityNoteValidator"
 const securityNoteModel = require("./../models/securityNoteModel");
+import { SecurityNoteValidator } from "../validators/securityNoteValidator";
 
 export class SecurityNoteRouter extends BaseRouter {
     constructor() {
         super();
         this.basePath = "/:group/security-note";
+        this.init();
     }
 
     /**
@@ -22,11 +23,11 @@ export class SecurityNoteRouter extends BaseRouter {
     protected list(req: Request, res: Response): void {
         console.log(req.params);
         securityNoteModel.find()
-            .then(securityNotes => {
+            .then((securityNotes) => {
                 res.status(200);
                 res.json(securityNotes);
             })
-            .catch(err => {
+            .catch((err) => {
                 res.status(500);
                 res.send(err);
             });

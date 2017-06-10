@@ -9,6 +9,11 @@ import { UserValidator } from "../validators/userValidator";
 
 export class UserRouter extends BaseRouter {
 
+    constructor() {
+        super();
+        this.init();
+    }
+
     /**
      * GET /user route to retrieve all stored users.
      * @param req
