@@ -10,6 +10,7 @@ import { Server } from "./app/models/server";
 import { GroupRouter } from "./app/routes/groupRouter";
 import { SecurityNoteRouter } from "./app/routes/securityNoteRouter";
 import {UserRouter} from "./app/routes/userRouter";
+import {LoginRouter} from "./app/routes/loginRouter";
 
 const server = new Server(config.get("port"));
 
@@ -22,6 +23,7 @@ const userRouter = new UserRouter();
 server.registerRouter("/api/1.0/group", groupRouter.getRouter());
 server.registerRouter("/api/1.0/group", securityNoteRouter.getRouter());
 server.registerRouter("/api/1.0/user", userRouter.getRouter());
+server.registerRouter("/api/1.0/login", new LoginRouter().getRouter());
 
 server.start();
 
