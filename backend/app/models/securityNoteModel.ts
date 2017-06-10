@@ -2,7 +2,12 @@
  * Created by marcelboes on 19.05.17.
  */
 
-import { model, Schema } from "mongoose";
+import { Schema } from "mongoose";
+import * as autoIncrement from "mongoose-auto-increment";
+import { Database } from "./database";
+
+const database = Database.getInstance();
+const connection = database.getConnection();
 
 /**
  * SecurityNote schema for MongoDB
@@ -20,4 +25,5 @@ const SecurityNoteSchema = new Schema({
     ]
 });
 
-module.exports = model("SecurityNote", SecurityNoteSchema);
+SecurityNoteSchema.plugin(autoIncrement.plugin, "SecurityNote");
+module.exports = connection.model("SecurityNote", SecurityNoteSchema);
