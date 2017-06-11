@@ -12,4 +12,8 @@ export class CreateGroupComponent {
   constructor(public activeModal: NgbActiveModal) {
 
   }
+
+  tagAdded() {
+    console.log('tag added');
+  }
 }

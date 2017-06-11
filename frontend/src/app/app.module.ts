@@ -27,6 +27,7 @@ import {AddCredentialComponent} from './components/credentials/add-credentials/a
 import {UserRepositoryService} from './services/repositories/user-repository.service';
 import { UsersAdministrationComponent } from './pages/admin/users-administration';
 import { GroupsAdministrationComponent } from './pages/admin/groups-administration';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 Raven
@@ -57,12 +58,12 @@ export class RavenErrorHandler implements ErrorHandler {
       GroupsAdministrationComponent
     ],
     imports: [
-      TagInputModule,
       AppRoutingModule,
       BrowserModule,
       FormsModule,
       HttpModule,
       NgbModule.forRoot(),
+      BrowserAnimationsModule
     ],
     entryComponents: [
       CreateGroupComponent,
