@@ -4,24 +4,22 @@
 
 import * as config from "config";
 
-import { Database } from "./app/models/database";
 import { Server } from "./app/models/server";
 
 import { GroupRouter } from "./app/routes/groupRouter";
+import { LoginRouter } from "./app/routes/loginRouter";
 import { SecurityNoteRouter } from "./app/routes/securityNoteRouter";
-import {UserRouter} from "./app/routes/userRouter";
+import { UserRouter } from "./app/routes/userRouter";
 
 const server = new Server(config.get("port"));
-
-const database = Database.getInstance();
-database.connect(config.get("db"));
 
 const groupRouter = new GroupRouter();
 const securityNoteRouter = new SecurityNoteRouter();
 const userRouter = new UserRouter();
 server.registerRouter("/api/1.0/group", groupRouter.getRouter());
-server.registerRouter("/api/1.0/security-note", securityNoteRouter.getRouter());
+server.registerRouter("/api/1.0/group", securityNoteRouter.getRouter());
 server.registerRouter("/api/1.0/user", userRouter.getRouter());
+server.registerRouter("/api/1.0/login", new LoginRouter().getRouter());
 
 server.start();
 

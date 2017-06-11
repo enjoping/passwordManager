@@ -2,14 +2,20 @@
  * Created by marcelboes on 19.05.17.
  */
 
-import { model, Schema } from "mongoose";
+import { Schema } from "mongoose";
+import * as autoIncrement from "mongoose-auto-increment";
+import { Database } from "./database";
+
+const database = Database.getInstance();
+const connection = database.getConnection();
 
 /**
  * SecurityNote schema for MongoDB
  */
 const SecurityNoteSchema = new Schema({
-    name: { type: String, required: true},
-    owner: { type: String, required: true},
+    name: { type: String, required: true },
+    owner: { type: String, required: true },
+    groupId: {type: Number, required: true },
     fields: [
         {
             name: String,
@@ -19,4 +25,5 @@ const SecurityNoteSchema = new Schema({
     ]
 });
 
-module.exports = model("SecurityNote", SecurityNoteSchema);
+SecurityNoteSchema.plugin(autoIncrement.plugin, "SecurityNote");
+module.exports = connection.model("SecurityNote", SecurityNoteSchema);

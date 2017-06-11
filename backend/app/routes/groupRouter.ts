@@ -10,6 +10,11 @@ import { GroupValidator } from "../validators/groupValidator";
 
 export class GroupRouter extends BaseRouter {
 
+    constructor() {
+        super();
+        this.init();
+    }
+
     /**
      * GET /group route to retrieve all stored groups.
      * @param req
