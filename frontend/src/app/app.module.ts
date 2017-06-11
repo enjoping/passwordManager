@@ -39,6 +39,7 @@ Raven
 
 export class RavenErrorHandler implements ErrorHandler {
   handleError(err: any): void {
+    console.log(err);
     Raven.captureException(err.originalError);
   }
 }
@@ -84,8 +85,8 @@ export class RavenErrorHandler implements ErrorHandler {
     providers: [
       { provide: GroupService, useClass: GroupService },
       { provide: EventService, useClass: EventService },
-      { provide: SecurityNoteService, useClass: SecurityNoteService },
       { provide: UserService, useClass: UserService },
+      { provide: SecurityNoteService, useClass: SecurityNoteService },
       { provide: GroupRepositoryService, useClass: GroupRepositoryService },
       { provide: SecurityNoteRepositoryService, useClass: SecurityNoteRepositoryService },
       { provide: UserRepositoryService, useClass: UserRepositoryService },
