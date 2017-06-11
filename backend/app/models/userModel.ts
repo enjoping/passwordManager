@@ -4,20 +4,18 @@
 
 import {bcrypt} from "bcrypt";
 import {model, Schema} from "mongoose";
+import * as passportLocalMongoose from "passport-local-mongoose";
 
 /**
  * User schema for MongoDB
  */
 const UserSchema = new Schema({
-    email: {type: String, required: true},
-    name: {type: String, required: true},
-    password: {
-        required: true, set: (pass) => {
-            const bcrypt = require("bcrypt");
-            return bcrypt.hashSync(pass, 10);
-        }, type: String,
-    },
-    publicKey: String
+    email: String,
+    password: String,
+    publicKey: String,
+    username: {type: String, required: true},
 });
+
+UserSchema.plugin(passportLocalMongoose);
 
 module.exports = model("User", UserSchema);

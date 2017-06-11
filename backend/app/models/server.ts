@@ -4,7 +4,15 @@
 
 import * as bodyParser from "body-parser";
 import * as express from "express";
+import * as passport from "passport";
+import {Strategy as LocalStrategy} from "passport-local";
 import * as path from "path";
+
+const userModel = require("./../models/userModel");
+
+passport.use(new LocalStrategy(userModel.authenticate()));
+passport.serializeUser(userModel.serializeUser());
+passport.deserializeUser(userModel.deserializeUser());
 
 export class Server {
     private app: express.Application;
@@ -35,6 +43,13 @@ export class Server {
          */
         this.app.use(bodyParser.urlencoded({extended: true}));
         this.app.use(bodyParser.json());
+        this.app.use(require("express-session")({
+            resave: false,
+            saveUninitialized: false,
+            secret: "keyboard cat",
+        }));
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
     }
 
     private addStaticRoute() {

@@ -1,7 +1,8 @@
 /**
  * Created by marcelboes on 05.06.17.
  */
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import * as passport from "passport";
 const userModel = require("./../models/userModel");
 
 import { BaseRouter } from "./baseRouter";
@@ -39,7 +40,7 @@ export class UserRouter extends BaseRouter {
             })
             .catch(() => {
                 res.status(400);
-                res.send({ "error": "There is no user with the given ID in the database!" });
+                res.send({ error: "There is no user with the given ID in the database!" });
             });
     }
 
@@ -47,23 +48,28 @@ export class UserRouter extends BaseRouter {
      * POST /user route to create a new user.
      * @param req
      * @param res
+     * @param next
      */
     protected create(req: Request, res: Response): void {
-        const newUser = UserValidator.validateUserSchema(req);
-        if (!newUser.hasOwnProperty("error")) {
-            newUser.save()
-                .then(user => {
-                    res.status(200);
-                    res.json(user);
-                })
-                .catch(err => {
-                    res.status(500);
-                    res.send(err);
-                })
-        } else {
+        const user = UserValidator.validateUserSchema(req);
+        if (user.hasOwnProperty("error")) {
             res.status(400);
-            res.send(newUser);
+            res.json(user);
+            return;
         }
+        userModel.register(user, req.body.password, (err, account) => {
+            if (err) {
+                res.status(400);
+                res.json({ error: err.message });
+                return;
+            }
+            const savedUser = {
+                __v: account.__v,
+                _id: account._id,
+                username: account.username,
+            };
+            res.json(savedUser);
+        });
     }
 
     /**
@@ -73,7 +79,7 @@ export class UserRouter extends BaseRouter {
      */
     protected update(req: Request, res: Response): void {
         const user = UserValidator.validateUserSchema(req);
-        if (typeof user["errors"] === "undefined") {
+        if (typeof user.errors === "undefined") {
             userModel.findById(req.params.id)
                 .then(user => {
                     Object.assign(user, req.body).save()
@@ -108,7 +114,7 @@ export class UserRouter extends BaseRouter {
             })
             .catch(() => {
                 res.status(400);
-                res.send({ "error" : "There is no user with the given ID in the database!" });
+                res.send({ error : "There is no user with the given ID in the database!" });
             });
     }
 }
