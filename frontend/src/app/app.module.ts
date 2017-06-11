@@ -26,6 +26,7 @@ import {CredentialListComponent} from './components/credentials/credential-list.
 import {AddCredentialComponent} from './components/credentials/add-credentials/add-credentials.component';
 import {UserRepositoryService} from './services/repositories/user-repository.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import UserService from './services/user.service';
 
 
 Raven
@@ -34,6 +35,7 @@ Raven
 
 export class RavenErrorHandler implements ErrorHandler {
   handleError(err: any): void {
+    console.log(err);
     Raven.captureException(err.originalError);
   }
 }
@@ -74,6 +76,7 @@ export class RavenErrorHandler implements ErrorHandler {
     providers: [
       { provide: GroupService, useClass: GroupService },
       { provide: EventService, useClass: EventService },
+      { provide: UserService, useClass: UserService },
       { provide: SecurityNoteService, useClass: SecurityNoteService },
       { provide: GroupRepositoryService, useClass: GroupRepositoryService },
       { provide: SecurityNoteRepositoryService, useClass: SecurityNoteRepositoryService },
