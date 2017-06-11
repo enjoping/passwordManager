@@ -5,18 +5,20 @@ import Group from '../models/group.model';
 import {RestServiceInterface} from './rest.service.interface';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import {LoginService} from './login.service';
 
 @Injectable()
 export default class GroupService implements RestServiceInterface<Group> {
 
   private route: string;
 
-  constructor(private http: Http) {
+  constructor(private http: Http,
+              private loginService: LoginService) {
     this.route = environment.apiEndpoint + '/group';
   }
 
   single(_id: number): Promise<Group> {
-    return this.http.get(this.route + '/' + _id)
+    return this.http.get(this.route + '/' + _id, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return new Group().jsonFill(response);
       })
@@ -24,7 +26,7 @@ export default class GroupService implements RestServiceInterface<Group> {
   }
 
   public get(): Promise<Group[]> {
-    return this.http.get(this.route)
+    return this.http.get(this.route, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         const jsonResponse = response.json();
 
@@ -37,7 +39,7 @@ export default class GroupService implements RestServiceInterface<Group> {
   }
 
   public post(group: Group): Promise<Group> {
-    return this.http.post(this.route, group)
+    return this.http.post(this.route, group, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return new Group().jsonFill(response);
       })
@@ -45,7 +47,7 @@ export default class GroupService implements RestServiceInterface<Group> {
   }
 
   public remove(group: Group): Promise<Object> {
-    return this.http.delete(this.route + '/' + group._id)
+    return this.http.delete(this.route + '/' + group._id, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return response.json();
       })
@@ -53,7 +55,7 @@ export default class GroupService implements RestServiceInterface<Group> {
   }
 
   public patch(group: Group): Promise<Group> {
-    return this.http.patch(this.route + '/' + group._id, group)
+    return this.http.patch(this.route + '/' + group._id, group, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return new Group().jsonFill(response);
       })

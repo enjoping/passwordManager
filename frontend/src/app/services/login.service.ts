@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, RequestOptions} from '@angular/http';
 import {environment} from '../../environments/environment';
 import 'rxjs/add/operator/toPromise';
 import EventService from './event/event.service';
@@ -43,5 +43,12 @@ export class LoginService {
       }
     );
 
+  }
+
+  buildAuthorizationHeaders(): RequestOptions {
+    const headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.accessToken);
+
+    return new RequestOptions(headers);
   }
 }

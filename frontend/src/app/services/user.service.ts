@@ -5,18 +5,20 @@ import User from '../models/user.model';
 import {RestServiceInterface} from './rest.service.interface';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import {LoginService} from './login.service';
 
 @Injectable()
 export default class UserService implements RestServiceInterface<User> {
 
   private route: string;
 
-  constructor(private http: Http) {
+  constructor(private http: Http,
+              private loginService: LoginService) {
     this.route = environment.apiEndpoint + '/user';
   }
 
   single(_id: number): Promise<User> {
-    return this.http.get(this.route + '/' + _id)
+    return this.http.get(this.route + '/' + _id, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return new User().jsonFill(response);
       })
@@ -24,7 +26,7 @@ export default class UserService implements RestServiceInterface<User> {
   }
 
   public get(): Promise<User[]> {
-    return this.http.get(this.route)
+    return this.http.get(this.route, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         const jsonResponse = response.json();
 
@@ -37,7 +39,7 @@ export default class UserService implements RestServiceInterface<User> {
   }
 
   public post(user: User): Promise<User> {
-    return this.http.post(this.route, user)
+    return this.http.post(this.route, user, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return new User().jsonFill(response);
       })
@@ -45,7 +47,7 @@ export default class UserService implements RestServiceInterface<User> {
   }
 
   public remove(user: User): Promise<Object> {
-    return this.http.delete(this.route + '/' + user._id)
+    return this.http.delete(this.route + '/' + user._id, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return response.json();
       })
@@ -53,7 +55,7 @@ export default class UserService implements RestServiceInterface<User> {
   }
 
   public patch(user: User): Promise<User> {
-    return this.http.patch(this.route + '/' + user._id, user)
+    return this.http.patch(this.route + '/' + user._id, user, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return new User().jsonFill(response);
       })

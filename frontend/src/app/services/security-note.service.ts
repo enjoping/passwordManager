@@ -4,18 +4,20 @@ import {RestServiceInterface} from './rest.service.interface';
 import Model from '../models/model';
 import {Http} from '@angular/http';
 import SecurityNote from '../models/security-note.model';
+import {LoginService} from './login.service';
 
 @Injectable()
 export class SecurityNoteService implements RestServiceInterface<SecurityNote> {
 
   private route: string;
 
-  constructor(private http: Http) {
+  constructor(private http: Http,
+              private loginService: LoginService) {
     this.route = environment.apiEndpoint + '/note';
   }
 
   single(_id: number): Promise<Model> {
-    return this.http.get(this.route + '/' + _id)
+    return this.http.get(this.route + '/' + _id, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return new SecurityNote().jsonFill(response);
       })
@@ -23,7 +25,7 @@ export class SecurityNoteService implements RestServiceInterface<SecurityNote> {
   }
 
   public get(): Promise<SecurityNote[]> {
-    return this.http.get(this.route)
+    return this.http.get(this.route, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         const jsonResponse = response.json();
 
@@ -36,7 +38,7 @@ export class SecurityNoteService implements RestServiceInterface<SecurityNote> {
   }
 
   public post(note: SecurityNote): Promise<SecurityNote> {
-    return this.http.post(this.route, note)
+    return this.http.post(this.route, note, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return new SecurityNote().jsonFill(response);
       })
@@ -44,7 +46,7 @@ export class SecurityNoteService implements RestServiceInterface<SecurityNote> {
   }
 
   public remove(note: SecurityNote): Promise<Object> {
-    return this.http.delete(this.route + '/' + note._id)
+    return this.http.delete(this.route + '/' + note._id, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return response.json();
       })
@@ -52,7 +54,7 @@ export class SecurityNoteService implements RestServiceInterface<SecurityNote> {
   }
 
   public patch(note: SecurityNote): Promise<SecurityNote> {
-    return this.http.patch(this.route + '/' + note._id, note)
+    return this.http.patch(this.route + '/' + note._id, note, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         return new SecurityNote().jsonFill(response);
       })
