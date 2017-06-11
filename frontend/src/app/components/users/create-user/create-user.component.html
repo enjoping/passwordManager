@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title">Invite new user</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross clicked')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <input class="form-control" placeholder="Email of the user" />
+    </div>
+
+    <hr />
+
+    <div>
+
+    </div>
+
+    <hr />
+
+    <div class="form-group row">
+      <div class="col-9">
+        <input class="form-control" placeholder="Email address" />
+      </div>
+      <div class="col-3">
+        <button class="btn btn-primary">Add</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary">Send Invitation</button>
+</div>
