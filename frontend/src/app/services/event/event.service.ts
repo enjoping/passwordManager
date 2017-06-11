@@ -52,4 +52,8 @@ export default class EventService {
       eventReceiver.onEventReceived(source, key, information);
     });
   }
+
+  log(object: any): void {
+    console.log(object);
+  }
 }

@@ -10,7 +10,9 @@ export class ModelRepositoryService<T extends Model> {
 
   public models: T[] = [ ];
 
-  constructor(private restService: RestServiceInterface<T>) { }
+  constructor(private restService: RestServiceInterface<T>) {
+    this.loadModels();
+  }
 
   // TODO: save method
 

@@ -29,6 +29,7 @@ import { UsersAdministrationComponent } from './pages/admin/users-administration
 import { GroupsAdministrationComponent } from './pages/admin/groups-administration';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import UserService from './services/user.service';
+import {LoginService} from './services/login.service';
 
 
 Raven
@@ -82,6 +83,7 @@ export class RavenErrorHandler implements ErrorHandler {
       { provide: EventService, useClass: EventService },
       { provide: UserService, useClass: UserService },
       { provide: SecurityNoteService, useClass: SecurityNoteService },
+      { provide: LoginService, useClass: LoginService },
       { provide: GroupRepositoryService, useClass: GroupRepositoryService },
       { provide: SecurityNoteRepositoryService, useClass: SecurityNoteRepositoryService },
       { provide: UserRepositoryService, useClass: UserRepositoryService },
