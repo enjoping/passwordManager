@@ -31,8 +31,7 @@ export class LoginService {
               // The login was successful.
               this.accessToken = result.toString();
               resolve();
-            }
-            else if (result.status === 401) {
+            } else if (result.status === 401) {
               // The password/username is wrong.
               reject(result.status);
             }

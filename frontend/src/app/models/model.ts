@@ -1,7 +1,7 @@
 export default class Model {
   _id: number;
 
-  _created: boolean = true;
+  _created = true;
 
   constructor(jsonObject?: any) {
     if (jsonObject) {

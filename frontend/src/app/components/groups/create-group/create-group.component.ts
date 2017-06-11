@@ -37,7 +37,7 @@ export class CreateGroupComponent {
           ? [ ]
           : this.availableAddresses.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).splice(0, 10);
       });
-  };
+  }
 
   addNewEmail(emailInput) {
     this.emailAddresses.push(emailInput.value);

@@ -26,7 +26,7 @@ export class GroupPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const groupId =+ params['id'];
+      const groupId = +params['id'];
 
       this.groupRepository.get(groupId)
         .then((group) => {
