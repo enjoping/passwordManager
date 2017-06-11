@@ -49,7 +49,6 @@ export class Server {
             secret: "keyboard cat",
         }));
         this.app.use(passport.initialize());
-        this.app.use(passport.session());
     }
 
     private addStaticRoute() {
