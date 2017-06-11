@@ -7,9 +7,9 @@ import * as config from "config";
 import { Server } from "./app/models/server";
 
 import { GroupRouter } from "./app/routes/groupRouter";
+import { LoginRouter } from "./app/routes/loginRouter";
 import { SecurityNoteRouter } from "./app/routes/securityNoteRouter";
 import { UserRouter } from "./app/routes/userRouter";
-import { LoginRouter } from "./app/routes/loginRouter";
 
 const server = new Server(config.get("port"));
 
