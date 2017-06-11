@@ -25,6 +25,8 @@ import {SecurityNoteService} from './services/security-note.service';
 import {CredentialListComponent} from './components/credentials/credential-list.component';
 import {AddCredentialComponent} from './components/credentials/add-credentials/add-credentials.component';
 import {UserRepositoryService} from './services/repositories/user-repository.service';
+import { UsersAdministrationComponent } from './pages/admin/users-administration';
+import { GroupsAdministrationComponent } from './pages/admin/groups-administration';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import UserService from './services/user.service';
 
@@ -53,7 +55,9 @@ export class RavenErrorHandler implements ErrorHandler {
       GroupListComponent,
       CredentialListComponent,
       CreateGroupComponent,
-      AddCredentialComponent
+      AddCredentialComponent,
+      UsersAdministrationComponent,
+      GroupsAdministrationComponent
     ],
     imports: [
       AppRoutingModule,
