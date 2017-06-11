@@ -25,6 +25,7 @@
     "@types/mongodb": "^2.2.2",
     "@types/mongoose": "^4.7.13",
     "@types/node": "^7.0.22",
+    "bluebird": "^3.5.0",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "nodemon": "^1.11.0",

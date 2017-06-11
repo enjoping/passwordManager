@@ -15,7 +15,7 @@ const connection = database.getConnection();
 const GroupSchema = new Schema({
     count: Number,
     name: { type: String, required: true},
-    owner: { type: String, required: true},
+    owner: { type: Number, required: true},
 });
 
 GroupSchema.plugin(autoIncrement.plugin, "Group");

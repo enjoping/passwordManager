@@ -45,3 +45,6 @@ Thumbs.db
 # local config file
 /config/default.json
 /config/test.json
+
+#DB
+/db/*

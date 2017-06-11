@@ -16,13 +16,12 @@ export class SecurityNoteRouter extends BaseRouter {
     }
 
     /**
-     * GET group/group-id/note route to retrieve all stored securityNotes.
+     * GET group/group-id/note route to retrieve all stored securityNotes with the given group id.
      * @param req
      * @param res
      */
     protected list(req: Request, res: Response): void {
-        console.log(req.params);
-        securityNoteModel.find()
+        securityNoteModel.find({groupId: req.params.group})
             .then((securityNotes) => {
                 res.status(200);
                 res.json(securityNotes);

@@ -13,9 +13,9 @@ const connection = database.getConnection();
  * SecurityNote schema for MongoDB
  */
 const SecurityNoteSchema = new Schema({
-    name: { type: String, required: true},
-    owner: { type: String, required: true},
-    groupId: Number,
+    name: { type: String, required: true },
+    owner: { type: String, required: true },
+    groupId: {type: Number, required: true },
     fields: [
         {
             name: String,
