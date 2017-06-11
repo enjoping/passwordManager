@@ -28,8 +28,10 @@ import {UserRepositoryService} from './services/repositories/user-repository.ser
 import { UsersAdministrationComponent } from './pages/admin/users-administration';
 import { GroupsAdministrationComponent } from './pages/admin/groups-administration';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { UsersComponent } from './components/users/users.component';
 import UserService from './services/user.service';
 import {LoginService} from './services/login.service';
+import { CreateUserComponent } from './components/users/create-user/create-user.component';
 
 
 Raven
@@ -58,7 +60,9 @@ export class RavenErrorHandler implements ErrorHandler {
       CreateGroupComponent,
       AddCredentialComponent,
       UsersAdministrationComponent,
-      GroupsAdministrationComponent
+      GroupsAdministrationComponent,
+      UsersComponent,
+      CreateUserComponent
     ],
     imports: [
       AppRoutingModule,
@@ -70,6 +74,7 @@ export class RavenErrorHandler implements ErrorHandler {
     ],
     entryComponents: [
       CreateGroupComponent,
+      CreateUserComponent,
       AddCredentialComponent
     ],
     /*

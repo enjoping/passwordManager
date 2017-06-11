@@ -1,3 +1,10 @@
-<p>
-  admin-page works!
-</p>
+<div class="container page">
+  <pm-page-header
+    [button]="'Invite new user'"
+    [header]="'Users administration'"
+    [search]="'Search for a user...'"
+    (buttonClicked)="openModal()"></pm-page-header>
+
+  <!--<pm-user-list></pm-user-list>-->
+
+</div>
