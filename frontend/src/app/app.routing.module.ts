@@ -5,6 +5,7 @@ import {GroupsPageComponent} from './pages/groups/groups-page.component';
 import {GroupPageComponent} from './pages/group/group-page.component';
 import {UsersAdministrationComponent} from './pages/admin/users-administration';
 import {GroupsAdministrationComponent} from './pages/admin/groups-administration';
+import {AuthGuardService} from './services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -13,18 +14,22 @@ const routes: Routes = [
   },
   {
     path: 'groups',
+    canActivate: [ AuthGuardService ],
     component: GroupsPageComponent
   },
   {
     path: 'group/:id',
+    canActivate: [ AuthGuardService ],
     component: GroupPageComponent
   },
   {
     path: 'admin/users',
+    canActivate: [ AuthGuardService ],
     component: UsersAdministrationComponent
   },
   {
     path: 'admin/groups',
+    canActivate: [ AuthGuardService ],
     component: GroupsAdministrationComponent
   },
 ];

@@ -32,6 +32,7 @@ import { UsersComponent } from './components/users/users.component';
 import UserService from './services/user.service';
 import {LoginService} from './services/login.service';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
+import {AuthGuardService} from './services/auth-guard.service';
 
 
 Raven
@@ -89,6 +90,7 @@ export class RavenErrorHandler implements ErrorHandler {
       { provide: UserService, useClass: UserService },
       { provide: SecurityNoteService, useClass: SecurityNoteService },
       { provide: LoginService, useClass: LoginService },
+      { provide: AuthGuardService, useClass: AuthGuardService },
       { provide: GroupRepositoryService, useClass: GroupRepositoryService },
       { provide: SecurityNoteRepositoryService, useClass: SecurityNoteRepositoryService },
       { provide: UserRepositoryService, useClass: UserRepositoryService },
