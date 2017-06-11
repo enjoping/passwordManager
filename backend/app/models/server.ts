@@ -3,6 +3,7 @@
  */
 
 import * as bodyParser from "body-parser";
+import * as cors from "cors";
 import * as express from "express";
 import * as passport from "passport";
 import {Strategy as LocalStrategy} from "passport-local";
@@ -49,6 +50,8 @@ export class Server {
             secret: "keyboard cat",
         }));
         this.app.use(passport.initialize());
+        this.app.use(cors());
+        this.app.options("*", cors());
     }
 
     private addStaticRoute() {
