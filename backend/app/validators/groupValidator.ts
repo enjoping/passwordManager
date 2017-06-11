@@ -12,7 +12,7 @@ export class GroupValidator extends BaseValidator {
             if (typeof req.body["name"] !== "undefined" && typeof req.body["owner"] !== "undefined") {
                 let group = new groupModel({
                     name: this.escapeHTML(req.body["name"]),
-                    owner: this.escapeHTML(req.body["owner"])
+                    owner: req.body["owner"]
                 });
                 if (typeof req.body["count"] !== "undefined")
                     group.count = req.body["count"];

@@ -8,13 +8,13 @@ export class BaseRouter {
     protected router: Router;
     protected basePath: string = "";
 
-    constructor() {
-        this.router = Router();
-        this.setRoutes();
-    }
-
     public getRouter() {
         return this.router;
+    }
+
+    protected init() {
+        this.router = Router();
+        this.setRoutes();
     }
 
     protected setRoutes() {
