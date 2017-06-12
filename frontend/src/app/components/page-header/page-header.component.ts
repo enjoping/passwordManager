@@ -9,6 +9,7 @@ export class PageHeaderComponent {
   @Input() header = '';
 
   @Input() button = '';
+  @Input() buttonVisible = 'true';
 
   @Input() search = 'Search..';
 

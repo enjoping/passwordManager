@@ -1,5 +1,5 @@
 export default class Model {
-  _id: number;
+  _id: number = -1;
 
   _created = true;
 
