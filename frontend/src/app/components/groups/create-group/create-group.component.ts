@@ -49,7 +49,7 @@ export class CreateGroupComponent {
     const email = emailInput.value;
 
     const user = this.userRepository
-      .models.find((user => user.email === email));
+      .models.find((model => model.email === email));
 
     if (!user) {
       // There is no user with this email.

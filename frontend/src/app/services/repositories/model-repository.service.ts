@@ -122,7 +122,7 @@ export class ModelRepositoryService<T extends Model> {
         this.loadModels()
           .then(() => {
             resolve(this.models);
-          })
+          });
       }
     );
   }
