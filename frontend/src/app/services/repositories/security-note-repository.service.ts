@@ -11,9 +11,17 @@ import {LoginService} from '../login.service';
 @Injectable()
 export class SecurityNoteRepositoryService extends ModelRepositoryService<SecurityNote> {
 
-  constructor(noteService: SecurityNoteService,
+  constructor(private noteService: SecurityNoteService,
               eventService: EventService,
               loginService: LoginService) {
     super(noteService, eventService, loginService);
+  }
+
+  setCurrentGroup(group: Group) {
+    this.noteService.setCurrentGroup(group);
+  }
+
+  public createModel(): SecurityNote {
+    return new SecurityNote({ _created: false });
   }
 }

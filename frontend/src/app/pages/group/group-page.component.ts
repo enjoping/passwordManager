@@ -16,12 +16,11 @@ export class GroupPageComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
               private route: ActivatedRoute,
-              private groupRepository: GroupRepositoryService) {
-
-  }
+              private groupRepository: GroupRepositoryService) { }
 
   openModal() {
-    this.modalService.open(AddCredentialComponent, { 'size': 'lg' });
+    const modalRef = this.modalService.open(AddCredentialComponent, { 'size': 'lg' });
+    modalRef.componentInstance.group = this.group;
   }
 
   ngOnInit(): void {

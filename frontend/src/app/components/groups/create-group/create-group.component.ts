@@ -68,11 +68,12 @@ export class CreateGroupComponent {
   }
 
   createGroup(): void {
-    console.log('create group', this.group);
-
     this.groupRepository.saveModel(this.group)
       .then((group) => {
-        console.log('group created', group);
+        this.activeModal.dismiss('success');
+      })
+      .catch((error) => {
+
       });
   }
 }

@@ -5,15 +5,25 @@ import Model from '../models/model';
 import {Http} from '@angular/http';
 import SecurityNote from '../models/security-note.model';
 import {LoginService} from './login.service';
+import Group from '../models/group.model';
 
 @Injectable()
 export class SecurityNoteService implements RestServiceInterface<SecurityNote> {
 
   private route: string;
 
+  private currentGroup: Group;
+
+  // TODO: edit service
+
   constructor(private http: Http,
               private loginService: LoginService) {
-    this.route = environment.apiEndpoint + '/note';
+    this.route = environment.apiEndpoint + '/group/';
+  }
+
+  setCurrentGroup(group: Group) {
+    this.currentGroup = group;
+    this.route = environment.apiEndpoint + '/group/' + group._id + '/security-note';
   }
 
   single(_id: number): Promise<Model> {
