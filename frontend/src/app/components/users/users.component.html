@@ -9,7 +9,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let user of users | async">
-    <th scope="row">{{user.name}}</th>
+    <th scope="row">{{user.username}}</th>
     <td>{{user.email}}</td>
     <td><button type="button" class="btn btn-primary"
                 (click)="edit(user); $event.stopPropagation()">Edit</button></td>

@@ -15,22 +15,29 @@ export class ModelRepositoryService<T extends Model> {
   constructor(private restService: RestServiceInterface<T>,
               private eventService: EventService,
               private loginService: LoginService) {
-    this.loadModels();
   }
 
-  private loadModels() {
-    this.restService.get()
-      .then((models: T[]) => {
-        this.models = models;
-        this.models.forEach(model => this.loadAdditionalModelInformation(model));
-      })
-      .catch((error) => {
-        if (error.status === 401) {
-          // Unauthorized.
-          this.loginService.accessTokenNotValid();
-        }
-        console.log('error', error);
-      });
+  loadModels(): Promise<any> {
+    return new Promise(
+      (resolve, reject) => {
+        this.restService.get()
+          .then((models: T[]) => {
+            this.models = models;
+            this.models.forEach(model => this.loadAdditionalModelInformation(model));
+
+            resolve();
+          })
+          .catch((error) => {
+            if (error.status === 401) {
+              // Unauthorized.
+              this.loginService.accessTokenNotValid();
+            }
+            console.log('error', error);
+
+            reject();
+          });
+      }
+    );
   }
 
   public saveModel(model: T): Promise<T> {

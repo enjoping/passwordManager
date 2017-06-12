@@ -7,6 +7,7 @@ import User from '../../models/user.model';
 import UserService from '../user.service';
 import EventService from '../event/event.service';
 import {LoginService} from '../login.service';
+import {EventReceiver} from '../event/event-receiver.interface';
 
 
 @Injectable()

@@ -4,11 +4,15 @@ import {environment} from '../../environments/environment';
 import 'rxjs/add/operator/toPromise';
 import EventService from './event/event.service';
 import {Router} from '@angular/router';
+import {UserRepositoryService} from './repositories/user-repository.service';
+import User from '../models/user.model';
 
 @Injectable()
 export class LoginService {
 
   accessToken: string;
+
+  currentUser: User;
 
   private route: string;
 
@@ -43,6 +47,8 @@ export class LoginService {
             if (result.ok) {
               // The login was successful.
               this.accessToken = result.text();
+
+              this.eventService.inform(this, 'authorization-status-change', { authorized: true, username: username });
               resolve();
             } else if (result.status === 401) {
               // The password/username is wrong.
@@ -55,7 +61,6 @@ export class LoginService {
           });
       }
     );
-
   }
 
   buildAuthorizationHeaders(): RequestOptions {
