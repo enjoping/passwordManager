@@ -31,9 +31,9 @@ export class AppComponent {
     securityNoteRepository.addModels([ securityNoteInstagram, securityNoteFacebook ]);
 
     groupRepository.addModels([
-      new Group({ _id: 0, name: 'Team Social Media' }),
-      new Group({ _id: 1, name: 'Team Marketing' }),
-      new Group({ _id: 2, name: 'Team Analytics' })
+      new Group({ _id: 0, name: 'Team Social Media', owner: 'MaMu@Mustermail.com'}),
+      new Group({ _id: 1, name: 'Team Marketing', owner: 'MaMu@Mustermail.com'}),
+      new Group({ _id: 2, name: 'Team Analytics', owner: 'MoMu@Mustermail.com'})
     ]);
 
     userRepository.addModels([
