@@ -9,10 +9,27 @@
   </thead>
   <tbody>
   <tr *ngFor="let user of users | async">
-    <th scope="row">{{user.username}}</th>
-    <td>{{user.email}}</td>
-    <td><button type="button" class="btn btn-primary"
-                (click)="edit(user); $event.stopPropagation()">Edit</button></td>
+
+    <th scope="row" *ngIf="user._id === editUserId">
+      <p appEditJoke><input type="text" (keyup.enter)="edit(null); update(user); $event.stopPropagation()" class="form-control" [(ngModel)]="user.username" /></p>
+    </th>
+    <th scope="row" *ngIf="user._id !== editUserId" (click)="toggle(user._id)">
+      <p appEditJoke>{{user.username}}</p>
+    </th>
+
+    <td *ngIf="user._id === editUserId">
+      <input type="text" class="form-control" (keyup.enter)="edit(null); update(user); $event.stopPropagation()" [(ngModel)]="user.email" />
+    </td>
+    <td *ngIf="user._id !== editUserId">
+      {{user.email}}
+    </td>
+
+    <td>
+      <button type="button" class="btn btn-primary" *ngIf="user._id === editUserId"
+              (click)="edit(null); update(user); $event.stopPropagation()">Save</button>
+      <button type="button" class="btn btn-primary" *ngIf="user._id !== editUserId"
+              (click)="edit(user._id); $event.stopPropagation()">Edit</button>
+    </td>
     <td> <button type="button" class="btn btn-primary"
                  (click)="remove(user); $event.stopPropagation()">Delete</button>
     </td>

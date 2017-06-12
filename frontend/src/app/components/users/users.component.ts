@@ -9,6 +9,7 @@ import User from '../../models/user.model';
 })
 export class UsersComponent implements OnInit {
   users: Promise<User[]>;
+  editUserId: any;
 
   constructor(private userRepository: UserRepositoryService) {
 
@@ -21,5 +22,14 @@ export class UsersComponent implements OnInit {
 
   remove(user: User) {
     this.userRepository.deleteModel(user);
+  }
+
+  edit(val) {
+    this.editUserId = val;
+  }
+
+  update(user: User) {
+    console.log(user.username + ' ' + user.email);
+    this.userRepository.saveModel(user);
   }
 }
