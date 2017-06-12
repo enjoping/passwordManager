@@ -6,18 +6,22 @@ import SecurityNote from './models/security-note.model';
 import SecurityNoteField from './models/security-note-field';
 import User from './models/user.model';
 import {UserRepositoryService} from './services/repositories/user-repository.service';
+import EventService from './services/event/event.service';
+import {EventReceiver} from './services/event/event-receiver.interface';
 
 @Component({
     selector: 'pm-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements EventReceiver {
 
-  constructor(groupRepository: GroupRepositoryService,
+  constructor(private groupRepository: GroupRepositoryService,
               securityNoteRepository: SecurityNoteRepositoryService,
-              userRepository: UserRepositoryService) {
+              userRepository: UserRepositoryService,
+              eventService: EventService) {
 
+    eventService.subscribe(this);
 
     const securityNoteInstagram = new SecurityNote({ _id: 0, name: 'Instagram', group: 0 });
     securityNoteInstagram.fields.push(new SecurityNoteField('Username', '@passwordmanager', 'string'));
@@ -30,7 +34,7 @@ export class AppComponent {
 
     securityNoteRepository.addModels([ securityNoteInstagram, securityNoteFacebook ]);
 
-    groupRepository.addModels([
+    this.groupRepository.addModels([
       new Group({ _id: 0, name: 'Team Social Media', owner: 'MaMu@Mustermail.com'}),
       new Group({ _id: 1, name: 'Team Marketing', owner: 'MaMu@Mustermail.com'}),
       new Group({ _id: 2, name: 'Team Analytics', owner: 'MoMu@Mustermail.com'})
@@ -41,5 +45,15 @@ export class AppComponent {
       new User({ _id: 1, name: 'Moritz Mustermann', email: 'MoMu@Mustermail.com' }),
       new User({ _id: 2, name: 'Sybille Mustermann', email: 'SyMu@Mustermail.com' })
     ]);
+  }
+
+
+  onEventReceived(source, key, value) {
+    console.log(key, value);
+    if (key === 'authorization-status-change') {
+      if (value.authorized === true) {
+        this.groupRepository.loadModels().then();
+      }
+    }
   }
 }

@@ -14,8 +14,7 @@ export class ModelRepositoryService<T extends Model> {
 
   constructor(private restService: RestServiceInterface<T>,
               private eventService: EventService,
-              private loginService: LoginService) {
-  }
+              private loginService: LoginService) { }
 
   loadModels(): Promise<any> {
     return new Promise(
@@ -32,7 +31,6 @@ export class ModelRepositoryService<T extends Model> {
               // Unauthorized.
               this.loginService.accessTokenNotValid();
             }
-            console.log('error', error);
 
             reject();
           });
@@ -119,7 +117,14 @@ export class ModelRepositoryService<T extends Model> {
    * @returns {Promise<any[]>}
    */
   public all(): Promise<T[]> {
-    return Promise.resolve(this.models);
+    return new Promise(
+      (resolve, reject) => {
+        this.loadModels()
+          .then(() => {
+            resolve(this.models);
+          })
+      }
+    );
   }
 
   /**

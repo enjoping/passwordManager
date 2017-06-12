@@ -33,6 +33,12 @@ export class LoginService {
     this.router.navigate([ '/' ]);
   }
 
+  setCurrentUser(currentUser: User) {
+    this.currentUser = currentUser;
+
+    this.eventService.inform(this, 'authorization-status-change', { authorized: true, user: this.currentUser });
+  }
+
   login(username: string, password: string) {
     return new Promise(
       (resolve, reject) => {
@@ -48,7 +54,6 @@ export class LoginService {
               // The login was successful.
               this.accessToken = result.text();
 
-              this.eventService.inform(this, 'authorization-status-change', { authorized: true, username: username });
               resolve();
             } else if (result.status === 401) {
               // The password/username is wrong.

@@ -31,7 +31,7 @@ export class LoginComponent {
         this.userRepository.loadModels()
           .then(() => {
 
-            this.loginService.currentUser = this.userRepository.models.find(model => model.username === username);
+            this.loginService.setCurrentUser(this.userRepository.models.find(model => model.username === username));
 
             // Navigate to the groups page.
             this.router.navigate([ '/groups' ]);

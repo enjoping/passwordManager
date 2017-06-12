@@ -8,6 +8,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import {UserRepositoryService} from '../../../services/repositories/user-repository.service';
 import Group from '../../../models/group.model';
 import {GroupRepositoryService} from '../../../services/repositories/group-repository.service';
+import {LoginService} from '../../../services/login.service';
 
 
 @Component({
@@ -20,9 +21,11 @@ export class CreateGroupComponent {
 
   constructor(public activeModal: NgbActiveModal,
               private userRepository: UserRepositoryService,
-              private groupRepository: GroupRepositoryService) {
+              private groupRepository: GroupRepositoryService,
+              private loginService: LoginService) {
 
     this.group = this.groupRepository.createModel();
+    this.group.owner = this.loginService.currentUser._id;
   }
 
 
@@ -34,6 +37,8 @@ export class CreateGroupComponent {
         if (term.length < 2) {
           return [ ];
         }
+
+        console.log(this.userRepository.models);
 
         return this.userRepository.models.filter(v => v.email.toLowerCase().indexOf(term.toLowerCase()) > -1)
           .map(model => model.email);
