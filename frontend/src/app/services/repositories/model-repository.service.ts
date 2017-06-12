@@ -13,9 +13,6 @@ export class ModelRepositoryService<T extends Model> {
   constructor(private restService: RestServiceInterface<T>) {
     this.loadModels();
   }
-
-  // TODO: save method
-
   private loadModels() {
     this.restService.get()
       .then((models: T[]) => {
@@ -105,5 +102,10 @@ export class ModelRepositoryService<T extends Model> {
    */
   public filter(callable: (value: any) => boolean): Promise<T[]> {
     return Promise.resolve(this.models.filter(callable));
+  }
+
+  public deleteModel(model: T) {
+    // TODO delete
+    console.log('delete me');
   }
 }

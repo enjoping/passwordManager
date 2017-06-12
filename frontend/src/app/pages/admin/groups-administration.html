@@ -1,3 +1,9 @@
-<p>
-  admin works!
-</p>
+<div class="container page">
+  <pm-page-header
+    [header]="'Groups administration'"
+    [search]="'Search for a user...'"
+    (buttonClicked)="openModal()"></pm-page-header>
+
+  <pm-admin-groups></pm-admin-groups>
+
+</div>

@@ -1,0 +1,21 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Owner</th>
+    <th></th>
+    <th> </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let group of groups | async">
+    <th scope="row">{{group.name}}</th>
+    <td>{{group.owner}}</td>
+    <td><button type="button" class="btn btn-primary"
+                (click)="edit(group); $event.stopPropagation()">Edit</button></td>
+    <td> <button type="button" class="btn btn-primary"
+                 (click)="remove(group); $event.stopPropagation()">Delete</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
