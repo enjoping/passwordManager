@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {UserRepositoryService} from '../../services/repositories/user-repository.service';
+import User from '../../models/user.model';
 
 @Component({
   selector: 'pm-users',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
+  users: Promise<User[]>;
 
-  constructor() { }
+  constructor(private userRepository: UserRepositoryService) {
 
-  ngOnInit() {
+
   }
 
+  ngOnInit(): void {
+    this.users = this.userRepository.all();
+  }
+
+  remove(user: User) {
+    this.userRepository.deleteModel(user);
+  }
 }

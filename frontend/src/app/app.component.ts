@@ -38,7 +38,8 @@ export class AppComponent {
 
     userRepository.addModels([
       new User({ _id: 0, name: 'Max Mustermann', email: 'MaMu@Mustermail.com' }),
-      new User({ _id: 1, name: 'Moritz Mustermann', email: 'MoMu@Mustermail.com' })
+      new User({ _id: 1, name: 'Moritz Mustermann', email: 'MoMu@Mustermail.com' }),
+      new User({ _id: 2, name: 'Sybille Mustermann', email: 'SyMu@Mustermail.com' })
     ]);
   }
 }

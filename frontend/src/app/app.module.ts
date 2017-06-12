@@ -33,6 +33,7 @@ import UserService from './services/user.service';
 import {LoginService} from './services/login.service';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
 import {AuthGuardService} from './services/auth-guard.service';
+import { AdminGroupsComponent } from './components/groups/admin-groups/admin-groups.component';
 
 
 Raven
@@ -63,7 +64,8 @@ export class RavenErrorHandler implements ErrorHandler {
       UsersAdministrationComponent,
       GroupsAdministrationComponent,
       UsersComponent,
-      CreateUserComponent
+      CreateUserComponent,
+      AdminGroupsComponent
     ],
     imports: [
       AppRoutingModule,

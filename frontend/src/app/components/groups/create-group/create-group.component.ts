@@ -6,6 +6,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {UserRepositoryService} from '../../../services/repositories/user-repository.service';
+import Group from '../../../models/group.model';
+import {GroupRepositoryService} from '../../../services/repositories/group-repository.service';
 
 
 @Component({
@@ -14,17 +16,13 @@ import {UserRepositoryService} from '../../../services/repositories/user-reposit
   styleUrls: [ './create-group.component.scss' ]
 })
 export class CreateGroupComponent {
-  emailAddresses = [ ];
-
-  availableAddresses = [
-    'lukas.schardt@stud.h-da.de'
-  ];
-
-  email = '';
+  group: Group;
 
   constructor(public activeModal: NgbActiveModal,
-              private userRepository: UserRepositoryService) {
+              private userRepository: UserRepositoryService,
+              private groupRepository: GroupRepositoryService) {
 
+    this.group = this.groupRepository.createModel();
   }
 
 
@@ -33,22 +31,34 @@ export class CreateGroupComponent {
       .debounceTime(200)
       .distinctUntilChanged()
       .map((term) => {
-        return term.length < 2
-          ? [ ]
-          : this.availableAddresses.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).splice(0, 10);
+        if (term.length < 2) {
+          return [ ];
+        }
+
+        return this.userRepository.models.filter(v => v.email.toLowerCase().indexOf(term.toLowerCase()) > -1)
+          .map(model => model.email);
       });
   }
 
-  addNewEmail(emailInput) {
-    this.emailAddresses.push(emailInput.value);
+  addNewUser(emailInput) {
+    const email = emailInput.value;
 
-    emailInput.value = '';
+    const user = this.userRepository
+      .models.find((user => user.email === email));
+
+    if (!user) {
+      // There is no user with this email.
+
+    } else {
+      this.group.users.push(user);
+      emailInput.value = '';
+    }
   }
 
   removeUser(email): void {
-    const index = this.emailAddresses.findIndex((v => v === email));
+    const index = this.group.users.findIndex((v => v.email === email));
     if (index > -1) {
-      this.emailAddresses.splice(index, 1);
+      this.group.users.splice(index, 1);
     }
   }
 }

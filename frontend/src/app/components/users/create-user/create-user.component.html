@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Invite new user</h4>
+  <h4 class="modal-title">Invite users</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross clicked')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -7,24 +7,21 @@
 
 <div class="modal-body">
   <form>
-    <div class="form-group">
-      <input class="form-control" placeholder="Email of the user" />
-    </div>
-
-    <hr />
-
-    <div>
-
+    <div *ngFor="let email of emailAddresses" class="form-group row">
+      <div class="col-11">
+        {{email}}
+      </div>
+      <div class="col-1 text-right"><span class="fa fa-remove" (click)="removeUser(email)"></span></div>
     </div>
 
     <hr />
 
     <div class="form-group row">
       <div class="col-9">
-        <input class="form-control" placeholder="Email address" />
+        <input class="form-control" placeholder="Email address" #newEmailInput [ngbTypeahead]="search" />
       </div>
       <div class="col-3">
-        <button class="btn btn-primary">Add</button>
+        <button class="btn btn-primary" (click)="addNewEmail(newEmailInput)">Add</button>
       </div>
     </div>
 
@@ -32,5 +29,5 @@
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary">Send Invitation</button>
+  <button type="button" class="btn btn-primary">Send</button>
 </div>

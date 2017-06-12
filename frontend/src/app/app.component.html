@@ -12,8 +12,18 @@
           <li class="nav-item active">
             <a class="nav-link" routerLink="/groups">Groups</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/admin/users">Admin</a>
+
+          <li class="nav-item dropdown">
+            <div class="col">
+              <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Admin</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownBasic1">
+                  <a routerLink="/admin/users"><button class="dropdown-item">Users administration</button></a>
+                  <a routerLink="/admin/groups"><button class="dropdown-item">Groups administration</button></a>
+                </div>
+              </div>
+            </div>
+
           </li>
         </ul>
       </div>

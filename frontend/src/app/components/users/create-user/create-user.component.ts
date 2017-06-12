@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {UserRepositoryService} from '../../../services/repositories/user-repository.service';
 
 @Component({
   selector: 'pm-create-user-modal',
@@ -7,10 +8,26 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent {
-  tags = [ ];
-  constructor(public activeModal: NgbActiveModal) { }
+  emailAddresses = [ ];
 
-  tagAdded() {
-    console.log('tag added');
+  availableAddresses = [
+    'lukas.schardt@stud.h-da.de'
+  ];
+  email = '';
+
+  constructor(public activeModal: NgbActiveModal,
+              private userRepository: UserRepositoryService) { }
+
+  addNewEmail(emailInput) {
+    this.emailAddresses.push(emailInput.value);
+
+    emailInput.value = '';
+  }
+
+  removeUser(email): void {
+    const index = this.emailAddresses.findIndex((v => v === email));
+    if (index > -1) {
+      this.emailAddresses.splice(index, 1);
+    }
   }
 }

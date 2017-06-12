@@ -22,4 +22,8 @@ export class GroupRepositoryService extends ModelRepositoryService<Group> {
       .filter(securityNote => securityNote.group === model._id)
       .then(securityNotes => model.securityNotes = securityNotes);
   }
+
+  createModel(): Group {
+    return new Group({ '_created': false });
+  }
 }

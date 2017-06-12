@@ -51,7 +51,7 @@ export class ModelRepositoryService<T extends Model> {
     // return promise;
   }
 
-  public createModel() {
+  public createModel(): T {
     throw new Error('Model cannot be created. Functions needs to be overriden.');
   }
 
