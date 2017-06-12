@@ -9,6 +9,7 @@ const authenticate = expressJwt({secret : "p4ssw0rdM4n4g3R!"});
 export class BaseRouter {
     protected router: Router;
     protected basePath: string = "";
+    protected authenticate = authenticate;
 
     public getRouter() {
         return this.router;
@@ -21,13 +22,13 @@ export class BaseRouter {
 
     protected setRoutes() {
         this.router.route(this.basePath + "/")
-            .get(authenticate, this.list)
-            .post(authenticate, this.create);
+            .get(this.authenticate, this.list)
+            .post(this.authenticate, this.create);
 
         this.router.route(this.basePath + "/:id")
-            .get(authenticate, this.get)
-            .patch(authenticate, this.update)
-            .delete(authenticate, this.erase);
+            .get(this.authenticate, this.get)
+            .patch(this.authenticate, this.update)
+            .delete(this.authenticate, this.erase);
     }
 
     protected list(req: Request, res: Response) {
