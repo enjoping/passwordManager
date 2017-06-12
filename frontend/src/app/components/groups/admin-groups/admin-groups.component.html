@@ -9,12 +9,31 @@
   </thead>
   <tbody>
   <tr *ngFor="let group of groups | async">
-    <th scope="row">{{group.name}}</th>
-    <td>{{group.owner}}</td>
-    <td><button type="button" class="btn btn-primary"
-                (click)="edit(group); $event.stopPropagation()">Edit</button></td>
-    <td> <button type="button" class="btn btn-primary"
-                 (click)="remove(group); $event.stopPropagation()">Delete</button>
+    <!--Groupname-->
+    <th scope="row" *ngIf="group._id === editGroupId">
+      <input type="text" (keyup.enter)="edit(null); update(group); $event.stopPropagation()" class="form-control" [(ngModel)]="group.name" />
+    </th>
+    <th scope="row" *ngIf="group._id !== editGroupId" (click)="edit(group)">
+      {{group.name}}
+    </th>
+    <!--Email-->
+    <td *ngIf="group._id === editGroupId">
+      <input type="text" (keyup.enter)="edit(null); update(group); $event.stopPropagation()" class="form-control" [(ngModel)]="group.owner" />
+    </td>
+    <td *ngIf="group._id !== editGroupId" (click)="edit(group)">
+      {{group.owner}}
+    </td>
+    <!--Save/Edit-->
+    <td>
+      <button type="button" class="btn btn-primary" *ngIf="group._id === editGroupId"
+              (click)="edit(null); update(group); $event.stopPropagation()">Save</button>
+      <button type="button" class="btn btn-primary" *ngIf="group._id !== editGroupId"
+              (click)="edit(group); $event.stopPropagation()">Edit</button>
+    </td>
+    <!--Delete-->
+    <td>
+      <button type="button" class="btn btn-primary"
+              (click)="remove(group); $event.stopPropagation()">Delete</button>
     </td>
   </tr>
   </tbody>

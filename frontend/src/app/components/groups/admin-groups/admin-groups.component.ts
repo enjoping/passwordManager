@@ -11,13 +11,39 @@ export class AdminGroupsComponent implements OnInit {
 
   groups: Promise<Group[]>;
 
-  constructor(private groupReposity: GroupRepositoryService) {
+  editGroupId: any;
+  editGroupName: any;
+  editGroupOwner: any;
 
+  constructor(private groupRepository: GroupRepositoryService) {
 
   }
 
   ngOnInit(): void {
-    this.groups = this.groupReposity.all();
+    this.groups = this.groupRepository.all();
+    this.editGroupId = -1;
+    this.editGroupName = '';
+    this.editGroupOwner = '';
   }
 
+  remove(group: Group) {
+    this.groupRepository.deleteModel(group);
+  }
+
+  edit(group: Group) {
+    if (group) {
+      this.editGroupId = group._id;
+      this.editGroupName = group.name;
+      this.editGroupOwner = group.owner;
+    } else {
+      this.editGroupId = -1;
+      this.editGroupName = '';
+      this.editGroupOwner = '';
+    }
+  }
+
+  update(group: Group) {
+    console.log(group.name + ' ' + group.owner);
+    this.groupRepository.saveModel(group);
+  }
 }

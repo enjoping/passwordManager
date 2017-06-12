@@ -9,17 +9,39 @@ import User from '../../models/user.model';
 })
 export class UsersComponent implements OnInit {
   users: Promise<User[]>;
+  editUserId: any;
+  editUserName: any;
+  editUserMail: any;
 
   constructor(private userRepository: UserRepositoryService) {
-
 
   }
 
   ngOnInit(): void {
     this.users = this.userRepository.all();
+    this.editUserId = -1;
+    this.editUserName = '';
+    this.editUserMail = '';
   }
 
   remove(user: User) {
     this.userRepository.deleteModel(user);
+  }
+
+  edit(user: User) {
+    if (user) {
+      this.editUserId = user._id;
+      this.editUserName = user.username;
+      this.editUserMail = user.email;
+    } else {
+      this.editUserId = -1;
+      this.editUserName = '';
+      this.editUserMail = '';
+    }
+  }
+
+  update(user: User) {
+    console.log(user.username + ' ' + user.email);
+    this.userRepository.saveModel(user);
   }
 }
