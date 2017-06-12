@@ -1,6 +1,8 @@
 import Model from '../../models/model';
 import {RestServiceInterface} from '../rest.service.interface';
 import Group from '../../models/group.model';
+import EventService from '../event/event.service';
+import {LoginService} from '../login.service';
 
 /**
  * Our generic repository service. We can implement concrete Repositories by extending a
@@ -10,9 +12,12 @@ export class ModelRepositoryService<T extends Model> {
 
   public models: T[] = [ ];
 
-  constructor(private restService: RestServiceInterface<T>) {
+  constructor(private restService: RestServiceInterface<T>,
+              private eventService: EventService,
+              private loginService: LoginService) {
     this.loadModels();
   }
+
   private loadModels() {
     this.restService.get()
       .then((models: T[]) => {
@@ -20,32 +25,50 @@ export class ModelRepositoryService<T extends Model> {
         this.models.forEach(model => this.loadAdditionalModelInformation(model));
       })
       .catch((error) => {
+        if (error.status === 401) {
+          // Unauthorized.
+          this.loginService.accessTokenNotValid();
+        }
         console.log('error', error);
       });
   }
 
   public saveModel(model: T): Promise<T> {
-    if (model._created) {
-      const index = this.models.findIndex(row => row._id === model._id);
-      if (index !== -1) {
-        this.models[index] = model;
+    return new Promise(
+      (resolve, reject) => {
+        const promise =
+          (model._created)
+            ? this.restService.patch(model)
+            : this.restService.post(model);
+
+        promise
+          .then((result) => {
+            this.eventService.log(result);
+
+            if (model._created) {
+              const index = this.models.findIndex(row => row._id === model._id);
+              if (index !== -1) {
+                this.models[index] = model;
+              }
+            } else {
+              model._created = true;
+              this.models.push(model);
+            }
+
+            this.loadAdditionalModelInformation(model);
+            resolve(model);
+          })
+          .catch((error) => {
+            if (error.status === 401) {
+              // Unauthorized.
+              this.loginService.accessTokenNotValid();
+            }
+
+            this.eventService.log(error);
+            reject();
+          });
       }
-    } else {
-      this.models.push(model);
-    }
-
-    this.loadAdditionalModelInformation(model);
-
-    // TODO: implement API as soon as endpoint is working.
-
-    return Promise.resolve(model);
-
-    // const promise =
-    //   (model._created)
-    //     ? this.restService.patch(model)
-    //     : this.restService.post(model);
-    //
-    // return promise;
+    );
   }
 
   public createModel(): T {
@@ -105,7 +128,15 @@ export class ModelRepositoryService<T extends Model> {
   }
 
   public deleteModel(model: T) {
-    // TODO delete
-    console.log('delete me');
+    this.restService.remove(model)
+      .then((result) => {
+
+      })
+      .catch((error) => {
+        if (error.status === 401) {
+          // Unauthorized.
+          this.loginService.accessTokenNotValid();
+        }
+      });
   }
 }

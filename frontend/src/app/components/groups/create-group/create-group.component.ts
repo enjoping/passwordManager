@@ -61,4 +61,13 @@ export class CreateGroupComponent {
       this.group.users.splice(index, 1);
     }
   }
+
+  createGroup(): void {
+    console.log('create group', this.group);
+
+    this.groupRepository.saveModel(this.group)
+      .then((group) => {
+        console.log('group created', group);
+      });
+  }
 }

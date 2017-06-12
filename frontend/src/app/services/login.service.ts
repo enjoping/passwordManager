@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Http, RequestOptions} from '@angular/http';
+import {Headers, Http, RequestOptions} from '@angular/http';
 import {environment} from '../../environments/environment';
 import 'rxjs/add/operator/toPromise';
 import EventService from './event/event.service';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class LoginService {
@@ -12,8 +13,20 @@ export class LoginService {
   private route: string;
 
   constructor(private http: Http,
+              private router: Router,
               private eventService: EventService) {
     this.route = environment.apiEndpoint + '/login';
+  }
+
+  /**
+   * Can be called by any service if we receive an 401 response, which means the
+   * access token is not valid anymore.
+   */
+  accessTokenNotValid() {
+    this.accessToken = null;
+    this.eventService.inform(this, 'authorization-status-change', { authorized: false });
+
+    this.router.navigate([ '/' ]);
   }
 
   login(username: string, password: string) {
@@ -29,7 +42,7 @@ export class LoginService {
 
             if (result.ok) {
               // The login was successful.
-              this.accessToken = result.toString();
+              this.accessToken = result.text();
               resolve();
             } else if (result.status === 401) {
               // The password/username is wrong.
@@ -49,6 +62,6 @@ export class LoginService {
     const headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.accessToken);
 
-    return new RequestOptions(headers);
+    return new RequestOptions({ headers: headers });
   }
 }
