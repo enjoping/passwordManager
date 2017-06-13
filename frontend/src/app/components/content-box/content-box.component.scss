@@ -27,4 +27,8 @@ h2 {
 .card-block {
   height: 200px;
   overflow-y: scroll;
+
+  @media (max-width: 767px) {
+    height: auto;
+  }
 }

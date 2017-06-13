@@ -9,3 +9,9 @@ h1 {
 .page-header {
   margin-bottom: 20px;
 }
+
+@media (max-width: 767px) {
+  .btn {
+    margin-top: 10px;
+  }
+}
