@@ -1,6 +1,10 @@
 <div class="card">
   <div class="card-header">
-    <h2>{{header}}</h2>
+    <h2 (click)="clicked()">{{header}}</h2>
+    <div class="controls">
+      <span class="fa fa-remove" (click)="removeClicked()"></span>
+      <span class="fa fa-edit" *ngIf="showEdit" (click)="editClicked()"></span>
+    </div>
   </div>
   <div class="card-block">
     <ng-content></ng-content>

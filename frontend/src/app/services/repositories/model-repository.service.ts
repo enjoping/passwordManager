@@ -154,7 +154,10 @@ export class ModelRepositoryService<T extends Model> {
   public deleteModel(model: T) {
     this.restService.remove(model)
       .then((result) => {
-
+        const index = this.models.findIndex(row => row._id === model._id);
+        if (index !== -1) {
+          this.models.splice(index, 1);
+        }
       })
       .catch((error) => {
         if (error.status === 401) {
