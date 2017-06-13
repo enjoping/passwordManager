@@ -32,6 +32,11 @@ export class AddCredentialComponent implements OnInit {
     this.securityNote.fields.push(new SecurityNoteField('Password', '', 'password'));
   }
 
+  changeFieldType(index, value): void {
+    this.securityNote.fields[index].fieldType =
+      value ? 'password' : 'text';
+  }
+
   addFieldToNote(keyInput, valueInput): void {
     const key = keyInput.value;
     const value = valueInput.value;
@@ -44,7 +49,6 @@ export class AddCredentialComponent implements OnInit {
   createSecurityNote() {
     this.securityNote.group = this.group._id;
 
-    console.log('create security note', this.securityNote);
 
     this.securityNoteRepository.setCurrentGroup(this.group);
     this.securityNoteRepository.saveModel(this.securityNote)

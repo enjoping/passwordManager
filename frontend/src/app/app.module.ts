@@ -32,6 +32,7 @@ import {LoginService} from './services/login.service';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
 import {AuthGuardService} from './services/auth-guard.service';
 import { AdminGroupsComponent } from './components/groups/admin-groups/admin-groups.component';
+import {ClipboardModule} from 'ngx-clipboard/dist';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { AdminGroupsComponent } from './components/groups/admin-groups/admin-gro
       FormsModule,
       HttpModule,
       NgbModule.forRoot(),
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      ClipboardModule
     ],
     entryComponents: [
       CreateGroupComponent,
