@@ -14,7 +14,7 @@ const connection = database.getConnection();
  */
 const SecurityNoteSchema = new Schema({
     name: { type: String, required: true },
-    owner: { type: String, required: true },
+    owner: { type: Number, required: true },
     groupId: {type: Number, required: true },
     fields: [
         {
