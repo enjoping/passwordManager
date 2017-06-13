@@ -2,7 +2,7 @@
   <div class="col-9 offset-1">
     <div class="row">
       <div class="col-4" *ngFor="let group of groups | async">
-        <pm-content-box [header]="group.name" (click)="navigateToGroup(group)">
+        <pm-content-box [header]="group.name" (headerClick)="navigateToGroup(group)" (removeClick)="removeGroup(group)">
           <div class="security-note" *ngFor="let securityNote of group.securityNotes">
             {{securityNote.name}}
           </div>

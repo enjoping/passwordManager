@@ -41,7 +41,8 @@ export default class GroupService implements RestServiceInterface<Group> {
   public post(group: Group): Promise<Group> {
     return this.http.post(this.route, group, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
-        return new Group().jsonFill(response);
+        const jsonResponse = response.json();
+        return new Group().jsonFill(jsonResponse);
       })
       .toPromise();
   }

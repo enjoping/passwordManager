@@ -67,6 +67,7 @@ export class ModelRepositoryService<T extends Model> {
               }
             } else {
               model._created = true;
+              model._id = result._id;
               this.models.push(model);
             }
 
