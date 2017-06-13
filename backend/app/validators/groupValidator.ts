@@ -5,21 +5,23 @@ import { Request } from "express"
 import { BaseValidator } from "./baseValidator";
 const groupModel = require("../models/groupModel");
 
-
 export class GroupValidator extends BaseValidator {
-    static validateGroupSchema(req: Request): any {
+    public static validateGroupSchema(req: Request): any {
         if (typeof req.body === "object") {
-            if (typeof req.body["name"] !== "undefined" && typeof req.body["owner"] !== "undefined") {
-                let group = new groupModel({
-                    name: this.escapeHTML(req.body["name"]),
-                    owner: req.body["owner"]
+            if (typeof req.body.name !== "undefined") {
+                const group = new groupModel({
+                    name: this.escapeHTML(req.body.name),
+                    owner: req.user.id,
                 });
-                if (typeof req.body["count"] !== "undefined")
-                    group.count = req.body["count"];
+                if (typeof req.body.count !== "undefined") {
+                    group.count = req.body.count;
+                }
                 return group;
-            } else
-                return { "error" : "There is no group name or owner property in the request!" };
-        } else
-            return { "error" : "The request was no object!" };
+            } else {
+                return {error: "There is no group name or owner property in the request!"};
+            }
+        } else {
+            return {error: "The request was no object!"};
+        }
     }
 }

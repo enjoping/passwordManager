@@ -2,7 +2,6 @@
  * Created by marcelboes on 05.06.17.
  */
 import { Request, Response, NextFunction } from "express";
-import * as passport from "passport";
 const userModel = require("./../models/userModel");
 
 import { BaseRouter } from "./baseRouter";
@@ -13,6 +12,17 @@ export class UserRouter extends BaseRouter {
     constructor() {
         super();
         this.init();
+    }
+
+    protected setRoutes() {
+        this.router.route(this.basePath + "/")
+            .get(this.authenticate, this.list)
+            .post(this.create);
+
+        this.router.route(this.basePath + "/:id")
+            .get(this.authenticate, this.get)
+            .patch(this.authenticate, this.update)
+            .delete(this.authenticate, this.erase);
     }
 
     /**
