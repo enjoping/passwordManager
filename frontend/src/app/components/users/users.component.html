@@ -1,50 +1,46 @@
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th></th>
-    <th> </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let user of users | async">
-    <!--Username-->
-    <th scope="row" *ngIf="user._id === editUserId">
-      <p appEditJoke><input type="text" (keyup.enter)="edit(null); update(user); $event.stopPropagation()" class="form-control" [(ngModel)]="user.username" /></p>
-    </th>
-    <th scope="row" *ngIf="user._id !== editUserId" (click)="edit(user)">
-      <p appEditJoke>{{user.username}}</p>
-    </th>
-    <!--Email-->
-    <td *ngIf="user._id === editUserId">
-      <input type="text" (keyup.enter)="edit(null); update(user); $event.stopPropagation()" class="form-control" [(ngModel)]="user.email" />
-    </td>
-    <td *ngIf="user._id !== editUserId" (click)="edit(user)">
-      {{user.email}}
-    </td>
-    <!--Save/Edit-->
-    <td>
-      <button type="button" class="btn btn-primary" *ngIf="user._id === editUserId"
-              (click)="edit(null); update(user); $event.stopPropagation()">Save</button>
-      <button type="button" class="btn btn-primary" *ngIf="user._id !== editUserId"
-              (click)="edit(user); $event.stopPropagation()">Edit</button>
-    </td>
-    <!--Delete-->
-    <td>
-      <button type="button" class="btn btn-primary"
-              (click)="remove(user); $event.stopPropagation()">Delete</button>
-    </td>
-  </tr>
-  </tbody>
-</table>
-
-<div class="col-4" *ngFor="let group of groups | async">
-  <a [routerLink]="['/group', group._id]">
-    <pm-content-box [header]="group.name">
-      <div class="security-note" *ngFor="let securityNote of group.securityNotes">
-        {{securityNote.name}}
-      </div>
-    </pm-content-box>
-  </a>
+<div class="container">
+  <div class="row col-md-10">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="first">Name</th>
+        <th class="first">Email</th>
+        <th class="second"> </th>
+        <th class="second"> </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users | async">
+        <!--Username-->
+        <th scope="row" *ngIf="user._id === editUserId">
+          <input type="text" (keyup.enter)="edit(null); update(user); $event.stopPropagation()" class="form-control" [(ngModel)]="user.username" />
+        </th>
+        <th scope="row" *ngIf="user._id !== editUserId" (click)="edit(user)">
+          {{user.username}}
+        </th>
+        <!--Email-->
+        <td *ngIf="user._id === editUserId">
+          <input type="text" (keyup.enter)="edit(null); update(user); $event.stopPropagation()" class="form-control" [(ngModel)]="user.email" />
+        </td>
+        <td *ngIf="user._id !== editUserId" (click)="edit(user)">
+          {{user.email}}
+        </td>
+        <!--Save/Edit-->
+        <td>
+          <div class="span5">
+            <button type="button" class="btn btn-primary custom" *ngIf="user._id === editUserId"
+                    (click)="edit(null); update(user); $event.stopPropagation()">Save</button>
+            <button type="button" class="btn btn-primary custom" *ngIf="user._id !== editUserId"
+                    (click)="edit(user); $event.stopPropagation()">Edit</button>
+          </div>
+        </td>
+        <!--Delete-->
+        <td>
+          <button type="button" class="btn btn-primary btn-block custom"
+                  (click)="remove(user); $event.stopPropagation()">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
