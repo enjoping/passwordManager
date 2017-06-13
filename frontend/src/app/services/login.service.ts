@@ -71,6 +71,7 @@ export class LoginService {
   buildAuthorizationHeaders(): RequestOptions {
     const headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.accessToken);
+    headers.append('Content-Type', 'application/json');
 
     return new RequestOptions({ headers: headers });
   }

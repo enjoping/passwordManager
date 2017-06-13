@@ -35,6 +35,7 @@ export class SecurityNoteService implements RestServiceInterface<SecurityNote> {
   }
 
   public get(): Promise<SecurityNote[]> {
+    console.log(this.route);
     return this.http.get(this.route, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
         const jsonResponse = response.json();

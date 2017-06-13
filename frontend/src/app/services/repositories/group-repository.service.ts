@@ -23,9 +23,15 @@ export class GroupRepositoryService extends ModelRepositoryService<Group> {
 
 
   protected loadAdditionalModelInformation(model: Group) {
-    this.securityNoteRepsitory
-      .filter(securityNote => securityNote.group === model._id)
-      .then(securityNotes => model.securityNotes = securityNotes);
+    // Set the current group so the security note repository knows which notes to load.
+    this.securityNoteRepsitory.setCurrentGroup(model);
+
+    console.log('load security notes');
+    return this.securityNoteRepsitory.loadModels()
+      .then(() => {
+        model.securityNotes = this.securityNoteRepsitory.models;
+        return Promise.resolve();
+      });
   }
 
   createModel(): Group {

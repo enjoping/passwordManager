@@ -22,9 +22,19 @@ export class ModelRepositoryService<T extends Model> {
         this.restService.get()
           .then((models: T[]) => {
             this.models = models;
-            this.models.forEach(model => this.loadAdditionalModelInformation(model));
 
-            resolve();
+            // Build a promise chain.
+            const promises = [ ];
+
+            this.models.forEach(model => {
+              this.eventService.log(model);
+              promises.push(this.loadAdditionalModelInformation(model));
+            });
+
+            Promise.all(promises)
+              .then(() => {
+                  resolve();
+              });
           })
           .catch((error) => {
             if (error.status === 401) {
@@ -87,7 +97,9 @@ export class ModelRepositoryService<T extends Model> {
     });
   }
 
-  protected loadAdditionalModelInformation(model: T) { }
+  protected loadAdditionalModelInformation(model: T): Promise<any> {
+    return Promise.resolve();
+  }
 
   /**
    * Returns a single model with the specified id.

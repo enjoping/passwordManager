@@ -19,7 +19,7 @@ const SecurityNoteSchema = new Schema({
     fields: [
         {
             name: String,
-            type: String,
+            fieldType: String,
             value: String
         }
     ]
