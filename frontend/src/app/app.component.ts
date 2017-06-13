@@ -12,7 +12,7 @@ import {EventReceiver} from './services/event/event-receiver.interface';
 @Component({
     selector: 'pm-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements EventReceiver {
 

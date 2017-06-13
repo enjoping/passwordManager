@@ -1,4 +1,4 @@
-<nav class="navbar navbar-toggleable-md">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
   <button class="navbar-toggler navbar-toggler-right" type="button"
           data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,16 +7,17 @@
 
   <div class="container">
     <div class="row">
-      <div class="collapse navbar-collapse col" id="navbarSupportedContent">
+      <div class="col-12">
+        <div class="collapse navbar-collapse col" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" routerLink="/groups">Groups</a>
           </li>
 
           <li class="nav-item dropdown">
             <div class="col">
               <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Admin</button>
+                <a href="#" class="nav-link" id="dropdownBasic1" ngbDropdownToggle>Admin</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownBasic1">
                   <a routerLink="/admin/users"><button class="dropdown-item">Users administration</button></a>
                   <a routerLink="/admin/groups"><button class="dropdown-item">Groups administration</button></a>
@@ -26,6 +27,7 @@
 
           </li>
         </ul>
+      </div>
       </div>
     </div>
   </div>
