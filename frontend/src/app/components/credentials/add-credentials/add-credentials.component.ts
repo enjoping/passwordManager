@@ -44,8 +44,6 @@ export class AddCredentialComponent implements OnInit {
   createSecurityNote() {
     this.securityNote.group = this.group._id;
     this.securityNote.owner = this.loginService.currentUser._id;
-    
-    console.log(this.securityNote);
 
     this.securityNoteRepository.setCurrentGroup(this.group);
     this.securityNoteRepository.saveModel(this.securityNote)
