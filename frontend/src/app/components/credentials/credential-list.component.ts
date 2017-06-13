@@ -12,4 +12,10 @@ import SecurityNote from '../../models/security-note.model';
 export class CredentialListComponent {
 
   @Input() credentials: SecurityNote[];
+
+  constructor(private securityNoteRepository: SecurityNoteRepositoryService) { }
+
+  removeCredential(credential: SecurityNote) {
+    this.securityNoteRepository.deleteModel(credential);
+  }
 }

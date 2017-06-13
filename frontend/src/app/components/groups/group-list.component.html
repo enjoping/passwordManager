@@ -2,13 +2,11 @@
   <div class="col-9 offset-1">
     <div class="row">
       <div class="col-4" *ngFor="let group of groups | async">
-        <a [routerLink]="['/group', group._id]">
-          <pm-content-box [header]="group.name">
-            <div class="security-note" *ngFor="let securityNote of group.securityNotes">
-              {{securityNote.name}}
-            </div>
-          </pm-content-box>
-        </a>
+        <pm-content-box [header]="group.name" (click)="navigateToGroup(group)">
+          <div class="security-note" *ngFor="let securityNote of group.securityNotes">
+            {{securityNote.name}}
+          </div>
+        </pm-content-box>
       </div>
     </div>
   </div>

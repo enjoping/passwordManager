@@ -1,5 +1,26 @@
+.card {
+  margin: 10px 0;
+}
+
 h2 {
   font-size: 14px;
+  display: inline-block;
+
+  cursor: pointer;
+}
+
+.controls {
+  display: inline-block;
+  float: right;
+
+  span {
+    padding: 3px 4px;
+    cursor: pointer;
+    vertical-align: baseline;
+    &:hover {
+      font-weight: bold;
+    }
+  }
 }
 
 .card-block {
