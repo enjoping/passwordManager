@@ -28,4 +28,12 @@ export class GroupListComponent implements OnInit {
   navigateToGroup(group) {
     this.router.navigate([ '/group', group._id ]);
   }
+
+  removeGroup(group) {
+    const securityNotePromises = [ ];
+    group.securityNotes.forEach((securityNote) => {
+      this.securityNoteRepository.deleteModel(securityNote);
+    });
+    this.groupRepository.deleteModel(group);
+  }
 }

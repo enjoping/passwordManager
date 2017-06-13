@@ -8,7 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class ContentBoxComponent implements OnInit {
   @Input() header = '';
 
-  @Output() click = new EventEmitter();
+  @Output() headerClick = new EventEmitter();
   @Output() editClick = new EventEmitter();
   @Output() removeClick = new EventEmitter();
 
@@ -28,6 +28,6 @@ export class ContentBoxComponent implements OnInit {
   }
 
   clicked() {
-    this.click.emit();
+    this.headerClick.emit();
   }
 }
