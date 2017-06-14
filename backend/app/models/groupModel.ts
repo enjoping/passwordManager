@@ -14,6 +14,7 @@ const connection = database.getConnection();
  */
 const GroupSchema = new Schema({
     count: Number,
+    members: { type: Array, required: true },
     name: { type: String, required: true},
     owner: { type: Number, required: true},
 });
