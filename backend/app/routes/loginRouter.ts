@@ -28,7 +28,7 @@ export class LoginRouter extends BaseRouter {
         req.headers.token = jwt.sign({
             id: req.user._id,
         } as object, secretToken, {
-            expiresIn: 120,
+            expiresIn: 7200,
         });
         next();
     }
