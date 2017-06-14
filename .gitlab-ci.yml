@@ -30,7 +30,7 @@ deploy_develop:
   script:
     - echo "Building the app"
     - cd "${CI_PROJECT_DIR}/frontend"
-    - ng build
+    - ng build --prod
     - cp -rv dist ../backend
     - echo "Deploy to develop server"
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
