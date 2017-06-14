@@ -7,7 +7,6 @@ const groupModel = require("./../models/groupModel");
 
 import { BaseRouter } from "./baseRouter";
 const securityNoteModel = require("./../models/securityNoteModel");
-import { SecurityNoteValidator } from "../validators/securityNoteValidator";
 
 export class GroupMemberRouter extends BaseRouter {
     constructor() {
@@ -34,7 +33,7 @@ export class GroupMemberRouter extends BaseRouter {
     }
 
     /**
-     * GET group/group-id/member/:id route to retrieve a single securityNote by id.
+     * GET group/group-id/member/:id route to retrieve a single membership by the users id.
      * @param req
      * @param res
      */
@@ -64,7 +63,7 @@ export class GroupMemberRouter extends BaseRouter {
     }
 
     /**
-     * POST group/group-id/member route to create a new securityNote.
+     * POST group/group-id/member route to add a member to a group.
      * @param req
      * @param res
      */
@@ -105,7 +104,7 @@ export class GroupMemberRouter extends BaseRouter {
     }
 
     /**
-     * DELETE group/group-id/member/:id route to remove a user from a group.
+     * DELETE group/group-id/member/:id route to remove a member from a group.
      * @param req
      * @param res
      */
