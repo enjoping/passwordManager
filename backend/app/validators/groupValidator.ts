@@ -1,7 +1,8 @@
 /**
  * Created by marcelboes on 04.06.17.
  */
-import { Request } from "express"
+import * as crypto from "crypto";
+import { Request } from "express";
 import { BaseValidator } from "./baseValidator";
 const groupModel = require("../models/groupModel");
 
@@ -9,7 +10,9 @@ export class GroupValidator extends BaseValidator {
     public static validateGroupSchema(req: Request): any {
         if (typeof req.body === "object") {
             if (typeof req.body.name !== "undefined") {
+                const groupPass = crypto.randomBytes(64).toString("base64");
                 const group = new groupModel({
+                    members: [{id: req.user.id, password: groupPass}],
                     name: this.escapeHTML(req.body.name),
                     owner: req.user.id,
                 });
