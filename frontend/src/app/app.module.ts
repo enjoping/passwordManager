@@ -25,7 +25,6 @@ import {AddCredentialComponent} from './components/credentials/add-credentials/a
 import {UserRepositoryService} from './services/repositories/user-repository.service';
 import { UsersAdministrationComponent } from './pages/admin/users-administration';
 import { GroupsAdministrationComponent } from './pages/admin/groups-administration';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { UsersComponent } from './components/users/users.component';
 import UserService from './services/user.service';
 import {LoginService} from './services/login.service';
@@ -61,7 +60,6 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
       FormsModule,
       HttpModule,
       NgbModule.forRoot(),
-      BrowserAnimationsModule,
       ClipboardModule
     ],
     entryComponents: [
