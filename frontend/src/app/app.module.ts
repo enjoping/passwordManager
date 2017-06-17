@@ -32,6 +32,8 @@ import { CreateUserComponent } from './components/users/create-user/create-user.
 import {AuthGuardService} from './services/auth-guard.service';
 import { AdminGroupsComponent } from './components/groups/admin-groups/admin-groups.component';
 import {ClipboardModule} from 'ngx-clipboard/dist';
+import {MemberService} from './services/member.service';
+import {MemberRepositoryService} from './services/repositories/member-repository.service';
 
 
 @NgModule({
@@ -78,11 +80,13 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
       { provide: EventService, useClass: EventService },
       { provide: UserService, useClass: UserService },
       { provide: SecurityNoteService, useClass: SecurityNoteService },
+      { provide: MemberService, useClass: MemberService },
       { provide: LoginService, useClass: LoginService },
       { provide: AuthGuardService, useClass: AuthGuardService },
       { provide: GroupRepositoryService, useClass: GroupRepositoryService },
       { provide: SecurityNoteRepositoryService, useClass: SecurityNoteRepositoryService },
-      { provide: UserRepositoryService, useClass: UserRepositoryService }
+      { provide: UserRepositoryService, useClass: UserRepositoryService },
+      { provide: MemberRepositoryService, useClass: MemberRepositoryService }
     ],
     bootstrap: [AppComponent]
 })

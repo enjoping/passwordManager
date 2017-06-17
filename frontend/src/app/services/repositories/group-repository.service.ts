@@ -17,19 +17,18 @@ export class GroupRepositoryService extends ModelRepositoryService<Group> {
   constructor(groupService: GroupService,
               eventService: EventService,
               loginService: LoginService,
-              private securityNoteRepsitory: SecurityNoteRepositoryService) {
+              private securityNoteRepository: SecurityNoteRepositoryService) {
     super(groupService, eventService, loginService);
   }
 
 
   protected loadAdditionalModelInformation(model: Group) {
     // Set the current group so the security note repository knows which notes to load.
-    this.securityNoteRepsitory.setCurrentGroup(model);
+    this.securityNoteRepository.setCurrentGroup(model);
 
-    console.log('load security notes');
-    return this.securityNoteRepsitory.loadModels()
+    return this.securityNoteRepository.loadModels()
       .then(() => {
-        model.securityNotes = this.securityNoteRepsitory.models;
+        model.securityNotes = this.securityNoteRepository.models;
         return Promise.resolve();
       });
   }
