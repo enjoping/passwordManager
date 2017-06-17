@@ -34,7 +34,7 @@ export class AdminGroupsComponent implements OnInit {
     if (group) {
       this.editGroupId = group._id;
       this.editGroupName = group.name;
-      this.editGroupOwner = group.owner;
+      this.editGroupOwner = group.user;
     } else {
       this.editGroupId = -1;
       this.editGroupName = '';
@@ -43,7 +43,7 @@ export class AdminGroupsComponent implements OnInit {
   }
 
   update(group: Group) {
-    console.log(group.name + ' ' + group.owner);
+    console.log(group.name + ' ' + group.user);
     this.groupRepository.saveModel(group);
   }
 }

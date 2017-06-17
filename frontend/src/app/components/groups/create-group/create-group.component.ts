@@ -9,6 +9,7 @@ import {UserRepositoryService} from '../../../services/repositories/user-reposit
 import Group from '../../../models/group.model';
 import {GroupRepositoryService} from '../../../services/repositories/group-repository.service';
 import {LoginService} from '../../../services/login.service';
+import Member from '../../../models/member.model';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class CreateGroupComponent {
               private loginService: LoginService) {
 
     this.group = this.groupRepository.createModel();
-    this.group.owner = this.loginService.currentUser._id;
+    this.group.user = this.loginService.currentUser;
   }
 
 
@@ -37,8 +38,6 @@ export class CreateGroupComponent {
         if (term.length < 2) {
           return [ ];
         }
-
-        console.log(this.userRepository.models);
 
         return this.userRepository.models.filter(v => v.email.toLowerCase().indexOf(term.toLowerCase()) > -1)
           .map(model => model.email);
@@ -55,15 +54,19 @@ export class CreateGroupComponent {
       // There is no user with this email.
 
     } else {
-      this.group.users.push(user);
+      // Create a new member from the user. The password will be set by the server.
+      const member = new Member({ user: user._id, password: 'random-password' });
+      this.group.members.push(member);
+
+
       emailInput.value = '';
     }
   }
 
   removeUser(email): void {
-    const index = this.group.users.findIndex((v => v.email === email));
+    const index = this.group.members.findIndex((v => v.user.email === email));
     if (index > -1) {
-      this.group.users.splice(index, 1);
+      this.group.members.splice(index, 1);
     }
   }
 
