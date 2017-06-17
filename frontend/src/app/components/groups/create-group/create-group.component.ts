@@ -10,6 +10,7 @@ import Group from '../../../models/group.model';
 import {GroupRepositoryService} from '../../../services/repositories/group-repository.service';
 import {LoginService} from '../../../services/login.service';
 import Member from '../../../models/member.model';
+import {MemberRepositoryService} from '../../../services/repositories/member-repository.service';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class CreateGroupComponent {
   constructor(public activeModal: NgbActiveModal,
               private userRepository: UserRepositoryService,
               private groupRepository: GroupRepositoryService,
+              private memberRepository: MemberRepositoryService,
               private loginService: LoginService) {
 
     this.group = this.groupRepository.createModel();
@@ -55,10 +57,11 @@ export class CreateGroupComponent {
 
     } else {
       // Create a new member from the user. The password will be set by the server.
-      const member = new Member({ user: user._id, password: 'random-password' });
+      const member = this.memberRepository.createModel();
+      member.jsonFill({ user: user._id, password: 'random-password' });
       this.group.members.push(member);
 
-
+      // Reset the email input.
       emailInput.value = '';
     }
   }
@@ -73,10 +76,17 @@ export class CreateGroupComponent {
   createGroup(): void {
     this.groupRepository.saveModel(this.group)
       .then((group) => {
+        const promises = [ ];
+        this.group.members.forEach((member) => {
+          promises.push(this.memberRepository.saveModel(member));
+        });
+        return Promise.all(promises);
+      })
+      .then(() => {
         this.activeModal.dismiss('success');
       })
       .catch((error) => {
-
+        console.log(error);
       });
   }
 }
