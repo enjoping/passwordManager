@@ -14,9 +14,9 @@ const connection = database.getConnection();
  * User schema for MongoDB
  */
 const UserSchema = new Schema({
-    email: String,
-    password: String,
-    publicKey: String,
+    email: { type: String, required: true},
+    password: { type: String, required: true},
+    publicKey: { type: String, required: true},
     username: {type: String, required: true},
 });
 
