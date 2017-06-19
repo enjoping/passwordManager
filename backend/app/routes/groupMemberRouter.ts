@@ -33,7 +33,7 @@ export class GroupMemberRouter extends BaseRouter {
     }
 
     /**
-     * GET group/group-id/member/:id route to retrieve a single membership by the users id.
+     * GET group/group-id/member/:id route to retrieve a single membership by the users id. 
      * @param req
      * @param res
      */

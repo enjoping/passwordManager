@@ -47,8 +47,10 @@ export class MemberService implements RestServiceInterface<Member> {
   }
 
   public post(note: Member): Promise<Member> {
+    console.log('create new member', note);
     return this.http.post(this.route, note, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
+        console.log('member created', response.json());
         return new Member(response);
       })
       .toPromise();

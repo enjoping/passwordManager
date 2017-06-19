@@ -49,16 +49,18 @@ export class CreateGroupComponent {
   addNewUser(emailInput) {
     const email = emailInput.value;
 
-    const user = this.userRepository
-      .models.find((model => model.email === email));
+    const user = this.userRepository.models
+      .find((model => model.email === email));
 
     if (!user) {
       // There is no user with this email.
-
     } else {
       // Create a new member from the user. The password will be set by the server.
       const member = this.memberRepository.createModel();
-      member.jsonFill({ user: user._id, password: 'random-password' });
+      member.jsonFill({ password: 'random-password' });
+      member.user = user;
+      member.id = -1;
+      member.group = this.group._id;
       this.group.members.push(member);
 
       // Reset the email input.
@@ -76,10 +78,13 @@ export class CreateGroupComponent {
   createGroup(): void {
     this.groupRepository.saveModel(this.group)
       .then((group) => {
+        console.log('group created', group);
         const promises = [ ];
         this.group.members.forEach((member) => {
+          member.group = group._id;
           promises.push(this.memberRepository.saveModel(member));
         });
+        this.memberRepository.setCurrentGroup(this.group);
         return Promise.all(promises);
       })
       .then(() => {
