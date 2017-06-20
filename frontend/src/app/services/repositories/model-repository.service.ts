@@ -3,11 +3,13 @@ import {RestServiceInterface} from '../rest.service.interface';
 import Group from '../../models/group.model';
 import EventService from '../event/event.service';
 import {LoginService} from '../login.service';
+import {Injectable} from '@angular/core';
 
 /**
  * Our generic repository service. We can implement concrete Repositories by extending a
  * typed instance of this service.
  */
+@Injectable()
 export class ModelRepositoryService<T extends Model> {
 
   public models: T[] = [ ];

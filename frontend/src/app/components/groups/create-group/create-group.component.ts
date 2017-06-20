@@ -78,7 +78,6 @@ export class CreateGroupComponent {
   createGroup(): void {
     this.groupRepository.saveModel(this.group)
       .then((group) => {
-        console.log('group created', group);
         const promises = [ ];
         this.group.members.forEach((member) => {
           member.group = group._id;
