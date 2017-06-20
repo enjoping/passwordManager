@@ -20,6 +20,10 @@ export class LoginService {
               private router: Router,
               private eventService: EventService) {
     this.route = environment.apiEndpoint + '/login';
+
+    if (localStorage.getItem('pw-token')) {
+      this.accessToken = localStorage.getItem('pw-token');
+    }
   }
 
   /**
@@ -28,6 +32,7 @@ export class LoginService {
    */
   accessTokenNotValid() {
     this.accessToken = null;
+    localStorage.removeItem('pw-token');
     this.eventService.inform(this, 'authorization-status-change', { authorized: false });
 
     this.router.navigate([ '/' ]);
@@ -53,6 +58,7 @@ export class LoginService {
             if (result.ok) {
               // The login was successful.
               this.accessToken = result.text();
+              localStorage.setItem('pw-token', this.accessToken);
 
               resolve();
             } else if (result.status === 401) {
