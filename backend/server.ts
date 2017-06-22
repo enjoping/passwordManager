@@ -8,10 +8,10 @@ import { Server } from "./app/models/server";
 
 import { GroupMemberRouter } from "./app/routes/groupMemberRouter";
 import { GroupRouter } from "./app/routes/groupRouter";
+import { InviteRouter } from "./app/routes/inviteRouter";
 import { LoginRouter } from "./app/routes/loginRouter";
 import { SecurityNoteRouter } from "./app/routes/securityNoteRouter";
 import { UserRouter } from "./app/routes/userRouter";
-import { InviteRouter } from "./app/routes/inviteRouter";
 
 const server = new Server(config.get("port"));
 
