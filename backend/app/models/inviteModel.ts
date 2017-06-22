@@ -4,7 +4,6 @@
 
 import { Schema } from "mongoose";
 import * as autoIncrement from "mongoose-auto-increment";
-import * as passportLocalMongoose from "passport-local-mongoose";
 import { Database } from "./database";
 
 const database = Database.getInstance();
