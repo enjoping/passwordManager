@@ -35,6 +35,8 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
 import {MemberService} from './services/member.service';
 import {MemberRepositoryService} from './services/repositories/member-repository.service';
 import {ModelRepositoryService} from './services/repositories/model-repository.service';
+import InviteService from './services/invite.service';
+import {InviteRepositoryService} from './services/repositories/invite-repository.service';
 
 
 @NgModule({
@@ -87,7 +89,10 @@ import {ModelRepositoryService} from './services/repositories/model-repository.s
       { useClass: GroupRepositoryService, provide: GroupRepositoryService },
       { useClass: SecurityNoteRepositoryService, provide: SecurityNoteRepositoryService },
       { useClass: UserRepositoryService, provide: UserRepositoryService },
-      { useClass: MemberRepositoryService, provide: MemberRepositoryService }
+      { useClass: MemberRepositoryService, provide: MemberRepositoryService },
+      { provide: InviteService, useClass: InviteService },
+      { provide: LoginService, useClass: LoginService },
+      { provide: InviteRepositoryService, useClass: InviteRepositoryService }
     ],
     bootstrap: [AppComponent]
 })
