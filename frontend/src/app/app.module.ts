@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
+import {ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -32,6 +32,9 @@ import { CreateUserComponent } from './components/users/create-user/create-user.
 import {AuthGuardService} from './services/auth-guard.service';
 import { AdminGroupsComponent } from './components/groups/admin-groups/admin-groups.component';
 import {ClipboardModule} from 'ngx-clipboard/dist';
+import {MemberService} from './services/member.service';
+import {MemberRepositoryService} from './services/repositories/member-repository.service';
+import {ModelRepositoryService} from './services/repositories/model-repository.service';
 
 
 @NgModule({
@@ -74,15 +77,17 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
         https://github.com/angular/angular-cli/issues/3834
      */
     providers: [
-      { provide: GroupService, useClass: GroupService },
-      { provide: EventService, useClass: EventService },
-      { provide: UserService, useClass: UserService },
-      { provide: SecurityNoteService, useClass: SecurityNoteService },
-      { provide: LoginService, useClass: LoginService },
-      { provide: AuthGuardService, useClass: AuthGuardService },
-      { provide: GroupRepositoryService, useClass: GroupRepositoryService },
-      { provide: SecurityNoteRepositoryService, useClass: SecurityNoteRepositoryService },
-      { provide: UserRepositoryService, useClass: UserRepositoryService }
+      { useClass: GroupService, provide: GroupService },
+      { useClass: EventService, provide: EventService },
+      { useClass: UserService, provide: UserService },
+      { useClass: SecurityNoteService, provide: SecurityNoteService },
+      { useClass: MemberService, provide: MemberService },
+      { useClass: LoginService, provide: LoginService },
+      { useClass: AuthGuardService, provide: AuthGuardService },
+      { useClass: GroupRepositoryService, provide: GroupRepositoryService },
+      { useClass: SecurityNoteRepositoryService, provide: SecurityNoteRepositoryService },
+      { useClass: UserRepositoryService, provide: UserRepositoryService },
+      { useClass: MemberRepositoryService, provide: MemberRepositoryService }
     ],
     bootstrap: [AppComponent]
 })
