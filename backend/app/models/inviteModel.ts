@@ -19,7 +19,5 @@ const InviteSchema = new Schema({
     creationDate: { type: Date, required: true }
 });
 
-InviteSchema.plugin(passportLocalMongoose);
-
 InviteSchema.plugin(autoIncrement.plugin, "Invite");
 module.exports = connection.model("Invite", InviteSchema);
