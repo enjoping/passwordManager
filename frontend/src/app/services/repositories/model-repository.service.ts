@@ -68,7 +68,7 @@ export class ModelRepositoryService<T extends Model> {
               }
             } else {
               model._created = true;
-              // TODO this doesn't assign the backend Id to model id...
+              // TODO this doesn't assign the backend id to model id...
               model._id = result._id;
               const body = result.toString();
               console.log('Model id ' + model._id + ' Result id ' + result._id);
@@ -107,16 +107,15 @@ export class ModelRepositoryService<T extends Model> {
   }
 
   /**
-   * Returns a single model with the specified id.
+   * Returns a single model with the specified id or token.
    *
    * @param _id
    * @returns {Promise<T>}
    */
-  get(_id: number): Promise<T> {
+  get(_id: any): Promise<T> {
     return new Promise(
       (resolve, reject) => {
         const model = this.models.find(row => row._id === _id);
-
         if (!model) {
           // There is no group with this id.
           reject();

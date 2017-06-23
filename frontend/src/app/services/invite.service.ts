@@ -17,8 +17,8 @@ export default class InviteService implements RestServiceInterface<Invite> {
     this.route = environment.apiEndpoint + '/invite';
   }
 
-  single(_id: number): Promise<Invite> {
-    return this.http.get(this.route + '/' + _id, this.loginService.buildAuthorizationHeaders())
+  single(token: any): Promise<Invite> {
+    return this.http.get(this.route + '/' + token)
       .map((response) => {
         return new Invite().jsonFill(response);
       })

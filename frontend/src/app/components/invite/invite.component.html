@@ -1,3 +1,28 @@
-<p>
-  invite works!
-</p>
+<div class="card">
+  <div class="card-header">
+    <h2>Register</h2>
+    <h6>{{tokenMail}}</h6>
+  </div>
+  <div class="card-block">
+    <form>
+      <div class="form-group" [ngClass]="{ 'has-danger': loginFailed}">
+        <input class="form-control" type="text" placeholder="Enter your username." #txtUsername
+               (input)="loginFailed = false;" />
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-danger': loginFailed}">
+        <input class="form-control" type="password" placeholder="Enter your password." #txtPassword
+               (input)="loginFailed = false;" />
+        <div class="form-control-feedback" *ngIf="loginFailed">Sorry, the login failed.</div>
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-danger': loginFailed}">
+        <input class="form-control" type="password" placeholder="Repeat your password." #txtPassword
+               (input)="loginFailed = false;" />
+        <div class="form-control-feedback" *ngIf="loginFailed">Sorry, the login failed.</div>
+      </div>
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-lg btn-outline-secondary"
+                (click)="login(txtUsername.value, txtPassword.value)">Register</button>
+      </div>
+    </form>
+  </div>
+</div>

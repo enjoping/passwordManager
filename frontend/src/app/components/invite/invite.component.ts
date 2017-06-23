@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'pm-invite',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./invite.component.scss']
 })
 export class InviteComponent implements OnInit {
+  @Input() email = '';
+
+  private tokenMail: string;
 
   constructor() { }
 
   ngOnInit() {
+    this.tokenMail = 'noch@nicht.implementiert';
   }
 
 }

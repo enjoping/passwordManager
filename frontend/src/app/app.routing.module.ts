@@ -6,6 +6,7 @@ import {GroupPageComponent} from './pages/group/group-page.component';
 import {UsersAdministrationComponent} from './pages/admin/users-administration';
 import {GroupsAdministrationComponent} from './pages/admin/groups-administration';
 import {AuthGuardService} from './services/auth-guard.service';
+import {InvitePageComponent} from './pages/invite/invite-page.component';
 
 const routes: Routes = [
   {
@@ -31,10 +32,11 @@ const routes: Routes = [
     path: 'admin/groups',
     canActivate: [ AuthGuardService ],
     component: GroupsAdministrationComponent
-  },  {
-    path: 'invite',
+  },
+  {
+    path: 'invite/:id',
     canActivate: [ AuthGuardService ],
-    component: GroupsAdministrationComponent
+    component: InvitePageComponent
   },
 ];
 
