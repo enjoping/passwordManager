@@ -12,6 +12,7 @@ export class UsersComponent implements OnInit {
   editUserId: any;
   editUserName: any;
   editUserMail: any;
+  detailView: any;
 
   constructor(private userRepository: UserRepositoryService) {
 
@@ -22,6 +23,7 @@ export class UsersComponent implements OnInit {
     this.editUserId = -1;
     this.editUserName = '';
     this.editUserMail = '';
+    this.detailView = false;
   }
 
   remove(user: User) {
@@ -43,5 +45,9 @@ export class UsersComponent implements OnInit {
   update(user: User) {
     console.log(user.username + ' ' + user.email);
     this.userRepository.saveModel(user);
+  }
+
+  toggleDetail(any) {
+    this.detailView = any;
   }
 }

@@ -37,6 +37,7 @@ import {MemberRepositoryService} from './services/repositories/member-repository
 import {ModelRepositoryService} from './services/repositories/model-repository.service';
 import InviteService from './services/invite.service';
 import {InviteRepositoryService} from './services/repositories/invite-repository.service';
+import { InviteComponent } from './components/invite/invite.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import {InviteRepositoryService} from './services/repositories/invite-repository
       GroupsAdministrationComponent,
       UsersComponent,
       CreateUserComponent,
-      AdminGroupsComponent
+      AdminGroupsComponent,
+      InviteComponent
     ],
     imports: [
       AppRoutingModule,

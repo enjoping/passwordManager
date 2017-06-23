@@ -1,16 +1,33 @@
 <div class="container">
   <div class="row col-md-10">
+    <button type="button" class="btn btn-primary btn-block custom"
+          (click)="toggleDetail(true); $event.stopPropagation()">Detail</button>
+    <button type="button" class="btn btn-primary btn-block custom"
+          (click)="toggleDetail(false); $event.stopPropagation()">Simple</button>
+  </div>
+  <div class="row col-md-10">
     <table class="table table-striped">
       <thead>
-      <tr>
+      <tr *ngIf="!detailView">
         <th class="first">Name</th>
         <th class="first">Email</th>
+        <th class="second"> </th>
+        <th class="second"> </th>
+      </tr>
+      <tr *ngIf="detailView">
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
         <th class="second"> </th>
         <th class="second"> </th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let user of users | async">
+        <!--Detail-->
+        <td *ngIf="detailView">
+          {{user._id}}
+        </td>
         <!--Username-->
         <th scope="row" *ngIf="user._id === editUserId">
           <input type="text" (keyup.enter)="edit(null); update(user); $event.stopPropagation()" class="form-control" [(ngModel)]="user.username" />

@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'admin/groups',
     canActivate: [ AuthGuardService ],
     component: GroupsAdministrationComponent
+  },  {
+    path: 'invite',
+    canActivate: [ AuthGuardService ],
+    component: GroupsAdministrationComponent
   },
 ];
 
