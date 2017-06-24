@@ -4,4 +4,5 @@ export default class Invite extends Model {
   email: string;
   inviteToken: string;
   creationDate: Date;
+  _body: any;
 }

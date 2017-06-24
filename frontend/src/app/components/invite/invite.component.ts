@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./invite.component.scss']
 })
 export class InviteComponent implements OnInit {
-  @Input() email = '';
+  @Input() mail = '';
 
   private tokenMail: string;
 
