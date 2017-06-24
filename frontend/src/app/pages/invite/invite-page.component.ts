@@ -10,6 +10,7 @@ import InviteService from 'app/services/invite.service';
 export class InvitePageComponent implements OnInit {
   private invite: Invite;
   private shownEmail: string;
+  private inviteToken: string;
 
   constructor(private inviteService: InviteService,
               private route: ActivatedRoute
@@ -25,6 +26,7 @@ export class InvitePageComponent implements OnInit {
           // TODO fix this if model json parser was fixed
           const obj = JSON.parse(invite._body); // JSON Object
           this.shownEmail = obj.email;
+          this.inviteToken = obj.inviteToken;
           console.log(this.invite.email);
         })
         .catch(() => {

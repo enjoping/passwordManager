@@ -1,30 +1,29 @@
 <div class="container">
   <div class="row col-md-10">
-    <button type="button" class="btn btn-primary btn-block custom"
-          (click)="toggleDetail(true); $event.stopPropagation()">Detail</button>
-    <button type="button" class="btn btn-primary btn-block custom"
-          (click)="toggleDetail(false); $event.stopPropagation()">Simple</button>
-  </div>
-  <div class="row col-md-10">
+    <button *ngIf="!detailView" type="button" class="btn btn-primary btn-block custom"
+            (click)="toggleDetail(true); $event.stopPropagation()">Details</button>
+    <button *ngIf="detailView" type="button" class="btn btn-primary btn-block custom"
+            (click)="toggleDetail(false); $event.stopPropagation()">Basic</button>
     <table class="table table-striped">
       <thead>
       <tr *ngIf="!detailView">
         <th class="first">Name</th>
         <th class="first">Email</th>
         <th class="second"> </th>
-        <th class="second"> </th>
+        <th class="second"></th>
       </tr>
       <tr *ngIf="detailView">
         <th>Id</th>
         <th>Name</th>
         <th>Email</th>
+        <th>Key</th>
         <th class="second"> </th>
         <th class="second"> </th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let user of users | async">
-        <!--Detail-->
+        <!--Detail Id-->
         <td *ngIf="detailView">
           {{user._id}}
         </td>
@@ -41,6 +40,11 @@
         </td>
         <td *ngIf="user._id !== editUserId" (click)="edit(user)">
           {{user.email}}
+        </td>
+        <!--Detail key-->
+        <td *ngIf="detailView">
+          <span class="glyphicon">&#xe205;</span>
+          {{user.publicKey}}
         </td>
         <!--Save/Edit-->
         <td>
