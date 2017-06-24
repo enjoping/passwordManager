@@ -1,6 +1,5 @@
 export default class Model {
-  _id: number = -1;
-
+  _id: number;
   _created = true;
 
   constructor(jsonObject?: any) {
@@ -13,6 +12,7 @@ export default class Model {
     for (const prop in jsonObject) {
       if (jsonObject.hasOwnProperty(prop)) {
         this[prop] = jsonObject[prop];
+        // console.log(prop);
       }
     }
     return this;

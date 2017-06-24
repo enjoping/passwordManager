@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Register</h2>
+    <h6>{{mail}}</h6>
+
+  </div>
+  <div class="card-block">
+    <form>
+      <div class="form-group" [ngClass]="{ 'has-danger': registrationFailed}">
+        <input class="form-control" type="text" placeholder="Enter your username." #txtUsername
+               (input)="registrationFailed = false;" />
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-danger': registrationFailed}">
+        <input class="form-control" type="password" placeholder="Enter your password." #txtPassword
+               (input)="registrationFailed = false;" />
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-danger': registrationFailed}">
+        <input class="form-control" type="password" placeholder="Repeat your password." #txtPassword2
+               (input)="registrationFailed = false;" />
+        <div class="form-control-feedback" *ngIf="registrationFailed">Sorry, the registration failed.</div>
+      </div>
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-lg btn-outline-secondary"
+                (click)="createNewUser(txtUsername.value, txtPassword.value, txtPassword2.value)">Register</button>
+      </div>
+    </form>
+  </div>
+</div>

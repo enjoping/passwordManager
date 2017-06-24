@@ -21,7 +21,7 @@ export class InviteRouter extends BaseRouter {
             .post(this.create);
 
         this.router.route(this.basePath + "/:id")
-            .get(this.authenticate, this.get)
+            .get(this.get)
             .patch(this.authenticate, this.update)
             .delete(this.authenticate, this.erase);
     }

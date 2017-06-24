@@ -1,5 +1,5 @@
 export interface RestServiceInterface<Model> {
-  single(_id: number): Promise<Model>;
+  single(_id: any): Promise<Model>;
   get(): Promise<Model[]>;
   post(model: Model): Promise<Model>;
   patch(model: Model): Promise<Model>;
