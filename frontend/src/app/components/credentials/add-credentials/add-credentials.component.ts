@@ -37,11 +37,12 @@ export class AddCredentialComponent implements OnInit {
       value ? 'password' : 'text';
   }
 
-  addFieldToNote(keyInput, valueInput): void {
+  addFieldToNote(keyInput, valueInput, typeInput): void {
     const key = keyInput.value;
     const value = valueInput.value;
+    const type = typeInput.value ? 'password' : 'text';
 
-    this.securityNote.fields.push(new SecurityNoteField(key, value, 'text'));
+    this.securityNote.fields.push(new SecurityNoteField(key, value, type));
 
     keyInput.value = valueInput.value = '';
   }
