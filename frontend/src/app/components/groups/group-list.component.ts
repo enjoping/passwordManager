@@ -35,7 +35,8 @@ export class GroupListComponent implements OnInit {
   removeGroup(group) {
     const modalRef = this.modalService.open(ConfirmDialogComponent);
     modalRef.componentInstance.dialogTitle = 'Remove group.';
-    modalRef.componentInstance.dialogContent = 'Do you really want to remove this group and all security notes in this group? The action cannot be undone.';
+    modalRef.componentInstance.dialogContent = 'Do you really want to remove this group and all security notes in this group? '
+      + 'The action cannot be undone.';
 
     modalRef.result
       .then((result) => {
