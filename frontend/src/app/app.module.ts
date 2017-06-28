@@ -86,19 +86,18 @@ import {ConfirmDialogComponent} from './components/dialogs/confirm-dialog.compon
         https://github.com/angular/angular-cli/issues/3834
      */
     providers: [
+      { useClass: LoginService, provide: LoginService },
       { useClass: GroupService, provide: GroupService },
       { useClass: EventService, provide: EventService },
       { useClass: UserService, provide: UserService },
       { useClass: SecurityNoteService, provide: SecurityNoteService },
       { useClass: MemberService, provide: MemberService },
-      { useClass: LoginService, provide: LoginService },
+      { useClass: InviteService, provide: InviteService },
       { useClass: AuthGuardService, provide: AuthGuardService },
       { useClass: GroupRepositoryService, provide: GroupRepositoryService },
       { useClass: SecurityNoteRepositoryService, provide: SecurityNoteRepositoryService },
       { useClass: UserRepositoryService, provide: UserRepositoryService },
       { useClass: MemberRepositoryService, provide: MemberRepositoryService },
-      { useClass: InviteService, provide: InviteService },
-      { useClass: LoginService, provide: LoginService },
       { useClass: InviteRepositoryService, provide: InviteRepositoryService }
     ],
     bootstrap: [AppComponent]
