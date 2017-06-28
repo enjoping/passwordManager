@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import SecurityNote from '../../../models/security-note.model';
 import SecurityNoteField from '../../../models/security-note-field';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import Group from '../../../models/group.model';
-import {GroupRepositoryService} from '../../../services/repositories/group-repository.service';
-import {SecurityNoteRepositoryService} from '../../../services/repositories/security-note-repository.service';
-import {LoginService} from '../../../services/login.service';
+import { GroupRepositoryService } from '../../../services/repositories/group-repository.service';
+import { SecurityNoteRepositoryService } from '../../../services/repositories/security-note-repository.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'pm-add-credential-modal',

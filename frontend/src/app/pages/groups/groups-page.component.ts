@@ -1,6 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {CreateGroupComponent} from '../../components/groups/create-group/create-group.component';
+import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateGroupComponent } from '../../components/groups/create-group/create-group.component';
 
 @Component({
   selector: 'pm-groups-page',

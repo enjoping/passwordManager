@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {EventReceiver} from './event-receiver.interface';
+import { Injectable } from '@angular/core';
+import { EventReceiver } from './event-receiver.interface';
 
 
 /**

@@ -1,16 +1,14 @@
-
-import {Component, Input} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Observable} from 'rxjs/Observable';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
-import {UserRepositoryService} from '../../../services/repositories/user-repository.service';
+import { UserRepositoryService } from '../../../services/repositories/user-repository.service';
 import Group from '../../../models/group.model';
-import {GroupRepositoryService} from '../../../services/repositories/group-repository.service';
-import {LoginService} from '../../../services/login.service';
-import Member from '../../../models/member.model';
-import {MemberRepositoryService} from '../../../services/repositories/member-repository.service';
+import { GroupRepositoryService } from '../../../services/repositories/group-repository.service';
+import { LoginService } from '../../../services/login.service';
+import { MemberRepositoryService } from '../../../services/repositories/member-repository.service';
 
 
 @Component({

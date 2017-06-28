@@ -1,8 +1,7 @@
-import {Component} from '@angular/core';
-import {LoginService} from '../../services/login.service';
-import EventService from '../../services/event/event.service';
-import {Router} from '@angular/router';
-import {UserRepositoryService} from '../../services/repositories/user-repository.service';
+import { Component } from '@angular/core';
+import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
+import { UserRepositoryService } from '../../services/repositories/user-repository.service';
 
 @Component({
   selector: 'pm-login',

@@ -1,10 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {CreateGroupComponent} from '../../components/groups/create-group/create-group.component';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
 import Group from '../../models/group.model';
-import {GroupRepositoryService} from '../../services/repositories/group-repository.service';
-import {AddCredentialComponent} from '../../components/credentials/add-credentials/add-credentials.component';
+import { GroupRepositoryService } from '../../services/repositories/group-repository.service';
+import { AddCredentialComponent } from '../../components/credentials/add-credentials/add-credentials.component';
 
 @Component({
   selector: 'pm-group-page',

@@ -1,7 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import Group from '../../models/group.model';
-import {GroupRepositoryService} from '../../services/repositories/group-repository.service';
-import {SecurityNoteRepositoryService} from '../../services/repositories/security-note-repository.service';
+import { Component, Input } from '@angular/core';
+import { SecurityNoteRepositoryService } from '../../services/repositories/security-note-repository.service';
 import SecurityNote from '../../models/security-note.model';
 
 @Component({

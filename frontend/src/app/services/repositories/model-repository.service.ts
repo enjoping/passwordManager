@@ -1,9 +1,7 @@
 import Model from '../../models/model';
-import {RestServiceInterface} from '../rest.service.interface';
-import Group from '../../models/group.model';
+import { RestServiceInterface } from '../rest.service.interface';
 import EventService from '../event/event.service';
-import {LoginService} from '../login.service';
-import {Injectable} from '@angular/core';
+import { LoginService } from '../login.service';
 
 /**
  * Our generic repository service. We can implement concrete Repositories by extending a

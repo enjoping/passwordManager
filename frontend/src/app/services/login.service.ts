@@ -1,10 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions} from '@angular/http';
-import {environment} from '../../environments/environment';
+import { Injectable } from '@angular/core';
+import { Headers, Http, RequestOptions } from '@angular/http';
+import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/toPromise';
 import EventService from './event/event.service';
-import {Router} from '@angular/router';
-import {UserRepositoryService} from './repositories/user-repository.service';
+import { Router } from '@angular/router';
 import User from '../models/user.model';
 
 @Injectable()

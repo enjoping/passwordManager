@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import User from '../../models/user.model';
 import { UserRepositoryService } from 'app/services/repositories/user-repository.service';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginService } from 'app/services/login.service';
-import {InviteService} from 'app/services/invite.service';
 
 @Component({
   selector: 'pm-invite',
