@@ -11,7 +11,7 @@ import { AddCredentialComponent } from '../../components/credentials/add-credent
 })
 export class GroupPageComponent implements OnInit {
 
-  private group: Group;
+  public group: Group;
 
   constructor(private modalService: NgbModal,
               private route: ActivatedRoute,

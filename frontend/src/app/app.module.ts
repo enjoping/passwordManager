@@ -6,7 +6,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { GroupService } from './services/group.service';
-import EventService from './services/event/event.service';
 import { LoginPageComponent } from './pages/login/login-page.component';
 import { AppRoutingModule } from './app.routing.module';
 import { LoginComponent } from './components/login/login.component';
@@ -40,6 +39,7 @@ import { InviteComponent } from './components/invite/invite.component';
 import { InvitePageComponent } from './pages/invite/invite-page.component';
 import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog.component';
 import { RegisterService } from './services/register.service';
+import { EventService } from './services/event/event.service';
 
 
 @NgModule({

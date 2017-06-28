@@ -13,7 +13,7 @@ import { EventReceiver } from './event-receiver.interface';
  *
  */
 @Injectable()
-export default class EventService {
+export class EventService {
 
   /**
    * A list of a all event receivers.

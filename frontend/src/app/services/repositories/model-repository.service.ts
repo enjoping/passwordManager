@@ -1,7 +1,7 @@
 import Model from '../../models/model';
 import { RestServiceInterface } from '../rest.service.interface';
-import EventService from '../event/event.service';
 import { LoginService } from '../login.service';
+import { EventService } from '../event/event.service';
 
 /**
  * Our generic repository service. We can implement concrete Repositories by extending a

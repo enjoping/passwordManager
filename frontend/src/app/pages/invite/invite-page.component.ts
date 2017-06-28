@@ -9,7 +9,7 @@ import { RegisterService } from '../../services/register.service';
   templateUrl: './invite-page.component.html',
 })
 export class InvitePageComponent implements OnInit {
-  private invite: Invite;
+  public invite: Invite;
   private shownEmail: string;
   private inviteToken: string;
 

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import Group from '../../models/group.model';
 import { ModelRepositoryService } from './model-repository.service';
-import EventService from '../event/event.service';
 import { LoginService } from '../login.service';
 import Member from '../../models/member.model';
 import { MemberService } from '../member.service';
+import { EventService } from '../event/event.service';
 
 
 @Injectable()
