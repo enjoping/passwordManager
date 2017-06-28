@@ -87,9 +87,9 @@ import { RegisterService } from './services/register.service';
         https://github.com/angular/angular-cli/issues/3834
      */
     providers: [
+      { useClass: EventService, provide: EventService },
       { useClass: LoginService, provide: LoginService },
       { useClass: GroupService, provide: GroupService },
-      { useClass: EventService, provide: EventService },
       { useClass: UserService, provide: UserService },
       { useClass: SecurityNoteService, provide: SecurityNoteService },
       { useClass: MemberService, provide: MemberService },
