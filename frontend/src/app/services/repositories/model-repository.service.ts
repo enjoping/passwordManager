@@ -9,7 +9,6 @@ import {Injectable} from '@angular/core';
  * Our generic repository service. We can implement concrete Repositories by extending a
  * typed instance of this service.
  */
-@Injectable()
 export class ModelRepositoryService<T extends Model> {
 
   public models: T[] = [ ];

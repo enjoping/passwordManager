@@ -19,8 +19,7 @@ export class InviteComponent implements OnInit {
 
   constructor(private userRepository: UserRepositoryService,
               private loginService: LoginService,
-              private router: Router,
-              private inviteService: InviteService) { }
+              private router: Router) { }
 
   ngOnInit() {
   }
