@@ -8,7 +8,7 @@ import {LoginService} from './login.service';
 import Invite from '../models/invite.model';
 
 @Injectable()
-export default class InviteService implements RestServiceInterface<Invite> {
+export class InviteService implements RestServiceInterface<Invite> {
 
   private route: string;
 

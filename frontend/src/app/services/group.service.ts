@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
 import {LoginService} from './login.service';
 
 @Injectable()
-export default class GroupService implements RestServiceInterface<Group> {
+export class GroupService implements RestServiceInterface<Group> {
 
   private route: string;
 

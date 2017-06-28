@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
 import {LoginService} from './login.service';
 
 @Injectable()
-export default class UserService implements RestServiceInterface<User> {
+export class UserService implements RestServiceInterface<User> {
 
   private route: string;
 

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import GroupService from '../group.service';
+import {GroupService} from '../group.service';
 import Group from '../../models/group.model';
 import {ModelRepositoryService} from './model-repository.service';
 import {SecurityNoteRepositoryService} from './security-note-repository.service';
