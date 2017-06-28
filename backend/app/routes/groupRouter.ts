@@ -2,7 +2,7 @@
  * Created by Joe Pietler on 31.05.17.
  */
 
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 const groupModel = require("./../models/groupModel");
 
 import { BaseRouter } from "./baseRouter";
@@ -15,13 +15,59 @@ export class GroupRouter extends BaseRouter {
         this.init();
     }
 
+    protected setRoutes(): void {
+        this.router.route(this.basePath + "/")
+            .get(this.authenticate, this.list)
+            .post(this.authenticate, this.create);
+
+        this.router.route(this.basePath + "/:id")
+            .get(this.authenticate, this.shouldUserAccessGroup, this.get)
+            .patch(this.authenticate, this.shouldUserEditGroup, this.update)
+            .delete(this.authenticate, this.shouldUserEditGroup, this.erase);
+    }
+
+    private shouldUserAccessGroup(req: Request, res: Response, next: NextFunction): void {
+        groupModel.findById(req.params.id)
+            .then(group => {
+                let isMember: boolean = false;
+                for (let memberItem of group.members) {
+                    if (memberItem.id == req.user.id) {
+                        isMember = true;
+                        next();
+                    }
+                }
+                if (!isMember) {
+                    res.status(401);
+                    res.send({ error: "User have no permission to access this group." });
+                }
+            })
+            .catch(() => {
+                next();
+            });
+    }
+
+    private shouldUserEditGroup(req: Request, res: Response, next: NextFunction): void {
+        groupModel.findById(req.params.id)
+            .then(group => {
+                if (group.owner == req.user.id)
+                    next();
+                else {
+                    res.status(401);
+                    res.send({ error: "User have no permission to edit this group." });
+                }
+            })
+            .catch(() => {
+                next();
+            });
+    }
+
     /**
      * GET /group route to retrieve all stored groups.
      * @param req
      * @param res
      */
     protected list(req: Request, res: Response): void {
-        groupModel.find()
+        groupModel.find({"members.id": req.user.id})
             .then(groups => {
                 res.status(200);
                 res.json(groups);
