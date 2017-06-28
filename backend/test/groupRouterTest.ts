@@ -20,10 +20,7 @@ chai.use(chaiHttp);
 describe("Groups", () => {
     before(done => {
         let user = {
-            username: "testUserName",
-            email: "test@test.de",
-            password: "testPW",
-            publicKey: "aPublicKey"
+
         };
         chai.request(server)
             .post("/api/1.0/login")
