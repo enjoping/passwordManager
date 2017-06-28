@@ -26,6 +26,12 @@ export class GroupRouter extends BaseRouter {
             .delete(this.authenticate, this.shouldUserEditGroup, this.erase);
     }
 
+    /**
+     * This method checks, if the current user are allowed to access the requested group.
+     * @param req
+     * @param res
+     * @param next
+     */
     private shouldUserAccessGroup(req: Request, res: Response, next: NextFunction): void {
         groupModel.findById(req.params.id)
             .then(group => {
@@ -46,6 +52,12 @@ export class GroupRouter extends BaseRouter {
             });
     }
 
+    /**
+     * This method checks, if the current user are allowed to edit the requested group.
+     * @param req
+     * @param res
+     * @param next
+     */
     private shouldUserEditGroup(req: Request, res: Response, next: NextFunction): void {
         groupModel.findById(req.params.id)
             .then(group => {
