@@ -3,6 +3,7 @@
  */
 // this will force the config module to load config/test.json
 process.env.NODE_ENV = "test";
+import * as config from "config";
 
 // Model & server
 const groupModel = require("../app/models/groupModel");
@@ -19,13 +20,12 @@ chai.use(chaiHttp);
 // Tests
 describe("Groups", () => {
     before(done => {
-        let user = {
-
-        };
         chai.request(server)
             .post("/api/1.0/login")
-            .send(user)
-            .end((err, res) => {
+            .set('Token', 'text/plain')
+            .set('content-type', 'application/x-www-form-urlencoded')
+            .send(config.get("user"))
+            .end(function(err, res) {
                 res.should.have.status(200);
                 done();
             });
