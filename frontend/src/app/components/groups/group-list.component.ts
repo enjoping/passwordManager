@@ -4,6 +4,8 @@ import {GroupRepositoryService} from '../../services/repositories/group-reposito
 import {SecurityNoteRepositoryService} from '../../services/repositories/security-note-repository.service';
 import SecurityNote from '../../models/security-note.model';
 import {Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
 
 @Component({
   selector: 'pm-group-list',
@@ -16,7 +18,8 @@ export class GroupListComponent implements OnInit {
 
   constructor(private groupRepository: GroupRepositoryService,
               private securityNoteRepository: SecurityNoteRepositoryService,
-              private router: Router) {
+              private router: Router,
+              private modalService: NgbModal) {
 
 
   }
@@ -30,10 +33,18 @@ export class GroupListComponent implements OnInit {
   }
 
   removeGroup(group) {
-    const securityNotePromises = [ ];
-    group.securityNotes.forEach((securityNote) => {
-      this.securityNoteRepository.deleteModel(securityNote);
-    });
-    this.groupRepository.deleteModel(group);
+    const modalRef = this.modalService.open(ConfirmDialogComponent);
+    modalRef.componentInstance.dialogTitle = 'Remove group.';
+    modalRef.componentInstance.dialogContent = 'Do you really want to remove this group and all security notes in this group? The action cannot be undone.';
+
+    modalRef.result
+      .then((result) => {
+        const securityNotePromises = [ ];
+        group.securityNotes.forEach((securityNote) => {
+          this.securityNoteRepository.deleteModel(securityNote);
+        });
+        this.groupRepository.deleteModel(group);
+      })
+      .catch((result ) => { });
   }
 }

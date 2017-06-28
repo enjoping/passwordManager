@@ -13,8 +13,7 @@ export class InvitePageComponent implements OnInit {
   private inviteToken: string;
 
   constructor(private inviteService: InviteService,
-              private route: ActivatedRoute
-  ) {}
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {

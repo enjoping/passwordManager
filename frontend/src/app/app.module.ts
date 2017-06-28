@@ -39,6 +39,7 @@ import InviteService from './services/invite.service';
 import {InviteRepositoryService} from './services/repositories/invite-repository.service';
 import { InviteComponent } from './components/invite/invite.component';
 import { InvitePageComponent } from './pages/invite/invite-page.component';
+import {ConfirmDialogComponent} from './components/dialogs/confirm-dialog.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { InvitePageComponent } from './pages/invite/invite-page.component';
       CreateUserComponent,
       AdminGroupsComponent,
       InviteComponent,
-      InvitePageComponent
+      InvitePageComponent,
+      ConfirmDialogComponent
     ],
     imports: [
       AppRoutingModule,
@@ -74,7 +76,8 @@ import { InvitePageComponent } from './pages/invite/invite-page.component';
     entryComponents: [
       CreateGroupComponent,
       CreateUserComponent,
-      AddCredentialComponent
+      AddCredentialComponent,
+      ConfirmDialogComponent
     ],
     /*
       ERROR thrown: Cannot read property 'provide' of null. App worked fine, even with the error thrown, but
@@ -94,9 +97,9 @@ import { InvitePageComponent } from './pages/invite/invite-page.component';
       { useClass: SecurityNoteRepositoryService, provide: SecurityNoteRepositoryService },
       { useClass: UserRepositoryService, provide: UserRepositoryService },
       { useClass: MemberRepositoryService, provide: MemberRepositoryService },
-      { provide: InviteService, useClass: InviteService },
-      { provide: LoginService, useClass: LoginService },
-      { provide: InviteRepositoryService, useClass: InviteRepositoryService }
+      { useClass: InviteService, provide: InviteService },
+      { useClass: LoginService, provide: LoginService },
+      { useClass: InviteRepositoryService, provide: InviteRepositoryService }
     ],
     bootstrap: [AppComponent]
 })
