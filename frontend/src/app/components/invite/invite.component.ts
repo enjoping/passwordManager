@@ -4,6 +4,8 @@ import { UserRepositoryService } from 'app/services/repositories/user-repository
 import { Router } from '@angular/router';
 import { LoginService } from 'app/services/login.service';
 
+declare var KeyManager: any;
+
 @Component({
   selector: 'pm-invite',
   templateUrl: './invite.component.html',
@@ -24,25 +26,27 @@ export class InviteComponent implements OnInit {
   }
 
   createNewUser(username, password, password2) {
+
+    console.log(KeyManager.test());
     if (this.passMatch(password, password2) && (username !== '') && (password !== '')) {
-        const user: User = new User();
-        user._created = false;
-        user.email = this.mail;
-        user.password = password;
-        user.username = username;
-        user.publicKey = this.generateRandom(64, '#aA!');
-        user.pendingInvite = true;
-        this.userRepository.saveModel(user)
-          .then(() => {
-            this.login(username, password);
-          })
-          .then(() => {
-            // TODO DELETE INVITE TOKEN after registration/login?
-            // this.inviteService.remove(this.invitetoken);
-          })
-          .catch((status) => {
-            this.registrationFailed = true;
-          });
+      const user: User = new User();
+      user._created = false;
+      user.email = this.mail;
+      user.password = password;
+      user.username = username;
+      user.publicKey = this.generateRandom(64, '#aA!');
+      user.pendingInvite = true;
+      this.userRepository.saveModel(user)
+        .then(() => {
+          this.login(username, password);
+        })
+        .then(() => {
+          // TODO DELETE INVITE TOKEN after registration/login?
+          // this.inviteService.remove(this.invitetoken);
+        })
+        .catch((status) => {
+          this.registrationFailed = true;
+        });
     } else {
       this.registrationFailed = true;
     }

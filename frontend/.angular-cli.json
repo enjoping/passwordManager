@@ -25,7 +25,9 @@
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.min.js"
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+        "../src/assets/encryption/keyStorage.js",
+        "../src/assets/encryption/index.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
