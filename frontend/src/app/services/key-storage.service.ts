@@ -185,16 +185,25 @@ export class KeyStorageService {
     );
   }
 
-  generateKeypair() {
-    return window.crypto.subtle.generateKey(
-      {
-        name: "RSA-OAEP",
-        modulusLength: 4096,
-        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-        hash: {name: "SHA-256"},
-      },
-      true,
-      ["encrypt", "decrypt"]
+  generateKeypair(): Promise<any> {
+    return new Promise(
+      (resolve, reject) => {
+        window.crypto.subtle.generateKey({
+            name: "RSA-OAEP",
+            modulusLength: 4096,
+            publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+            hash: {name: "SHA-256"},
+          },
+          true,
+          ["encrypt", "decrypt"]
+        ).then(
+          (success) => {
+            resolve(success);
+          },
+          (error) => {
+            reject(error);
+          }
+        )}
     );
   }
 
