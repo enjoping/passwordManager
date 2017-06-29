@@ -70,7 +70,7 @@ export class KeyStorageService {
     });
   };
 
-  getKey(propertyName, propertyValue) {
+  getKey(propertyName, propertyValue): Promise<any> {
     const that = this;
     return new Promise(function (fulfill, reject) {
       let request;
@@ -207,6 +207,24 @@ export class KeyStorageService {
     );
   }
 
+  generateGroupKeyPair(): Promise<any> {
+    return new Promise(
+      (resolve, reject) => {
+        window.crypto.subtle.generateKey({
+            name: "AES-CBC",
+            length: 256,
+          }, true, ["encrypt", "decrypt"])
+          .then(
+            (key) => {
+              resolve(key);
+            },
+            (error) => {
+              reject(error);
+          });
+      }
+    );
+  }
+
   importGroupKey(password) {
     password = this.str2ab8(this.ab2str(password));
     return window.crypto.subtle.importKey(
@@ -260,7 +278,18 @@ export class KeyStorageService {
         fulfill(this.ab2str8(spki));
       });
     });
+  }
 
+  exportRawKey(key) {
+    return new Promise(
+      (resolve, reject) => {
+        window.crypto.subtle.exportKey("raw", key)
+          .then(
+            key => resolve(key),
+            error => reject(error)
+          );
+      }
+    )
   }
 
   spki2key(spki) {

@@ -9,6 +9,7 @@ import Group from '../../../models/group.model';
 import { GroupRepositoryService } from '../../../services/repositories/group-repository.service';
 import { LoginService } from '../../../services/login.service';
 import { MemberRepositoryService } from '../../../services/repositories/member-repository.service';
+import {KeyStorageService} from '../../../services/key-storage.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class CreateGroupComponent {
               private userRepository: UserRepositoryService,
               private groupRepository: GroupRepositoryService,
               private memberRepository: MemberRepositoryService,
-              private loginService: LoginService) {
+              private loginService: LoginService,
+              private keyStorage: KeyStorageService) {
 
     this.group = this.groupRepository.createModel();
     this.group.user = this.loginService.currentUser;
@@ -74,6 +76,25 @@ export class CreateGroupComponent {
   }
 
   createGroup(): void {
+    this.keyStorage.generateGroupKeyPair()
+      .then((keyPair) => {
+        return this.keyStorage.exportRawKey(keyPair);
+      })
+      .then((password) => {
+        return this.keyStorage.getKey('name',
+            'passwordManager_' + this.loginService.currentUser.username)
+          .then((key) => {
+            return this.keyStorage.encrypt(key.publicKey, this.keyStorage.ab2str8(password))
+          });
+      })
+      .then((encryptedPassword) => {
+        this.group.password = this.keyStorage.ab2str8(encryptedPassword);
+        return this.groupRepository.saveModel(this.group);
+      })
+      .then((group) => {
+        // The group has been created.
+      });
+
     this.groupRepository.saveModel(this.group)
       .then((group) => {
         const promises = [ ];
