@@ -3,8 +3,8 @@ import User from '../../models/user.model';
 import { UserRepositoryService } from 'app/services/repositories/user-repository.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'app/services/login.service';
-declare var KeyManager: any;
-declare var MyData: any;
+declare const KeyManager: any;
+declare const MyData: any;
 // declare function testCallIndex(): any;
 
 @Component({
@@ -31,7 +31,7 @@ export class InviteComponent implements OnInit {
   }
 
   createNewUser(username, password, password2) {
-    var that = this;
+    const that = this;
     if (this.passMatch(password, password2) && (username !== '') && (password !== '')) {
       const user: User = new User();
       user._created = false;
@@ -42,7 +42,7 @@ export class InviteComponent implements OnInit {
 
       KeyManager.generateKeypair().then(function (key) {
         KeyManager.exportKey(key.publicKey).then((publicKey) => {
-          //create user with publicKey
+          // create user with publicKey
           user.publicKey = publicKey;
           that.userRepository.saveModel(user)
             .then(() => {
