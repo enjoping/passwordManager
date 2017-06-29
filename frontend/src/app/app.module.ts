@@ -40,6 +40,7 @@ import { InvitePageComponent } from './pages/invite/invite-page.component';
 import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog.component';
 import { RegisterService } from './services/register.service';
 import { EventService } from './services/event/event.service';
+import {KeyStorageService} from './services/key-storage.service';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { EventService } from './services/event/event.service';
       { useClass: UserRepositoryService, provide: UserRepositoryService },
       { useClass: MemberRepositoryService, provide: MemberRepositoryService },
       { useClass: RegisterService, provide: RegisterService },
-      { useClass: InviteRepositoryService, provide: InviteRepositoryService }
+      { useClass: InviteRepositoryService, provide: InviteRepositoryService },
+      { useClass: KeyStorageService, provide: KeyStorageService }
     ],
     bootstrap: [AppComponent]
 })
