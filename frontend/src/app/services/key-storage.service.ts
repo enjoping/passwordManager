@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {EventService} from './event/event.service';
+import {SecurityNoteRepositoryService} from './repositories/security-note-repository.service';
+import SecurityNote from '../models/security-note.model';
 
 @Injectable()
 export class KeyStorageService {
@@ -45,7 +47,33 @@ export class KeyStorageService {
         }
       };
     });
-  };
+  }
+
+  encryptSecurityNoteFields(groupKey: any, securityNote: SecurityNote) {
+    return new Promise((fulfill) => {
+      let toBeEncrypted = 0;
+      securityNote.fields.forEach((field) => {
+        if(field.fieldType === 'password') {
+          toBeEncrypted++;
+          let counter = window.crypto.getRandomValues(new Uint8Array(16));
+          console.log('attempt to encrypt field', field);
+
+          this.encryptField(groupKey, field.value, counter)
+            .then((encrypted) => {
+              console.log('field encrypted', field);
+              field.value = this.ab2str8(encrypted);
+              field.counter = this.ab2str8(counter);
+              if(--toBeEncrypted === 0) {
+                fulfill(securityNote);
+              }
+            });
+        }
+      });
+      if(toBeEncrypted === 0) {
+        fulfill(securityNote);
+      }
+    });
+  }
 
   saveKey(publicKey, privateKey, name) {
     return new Promise((fulfill, reject) => {
@@ -112,7 +140,7 @@ export class KeyStorageService {
         reject(evt.target.error);
       };
     });
-  };
+  }
 
   listKeys() {
     const that = this;

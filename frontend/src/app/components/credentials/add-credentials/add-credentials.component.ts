@@ -7,6 +7,7 @@ import Group from '../../../models/group.model';
 import { GroupRepositoryService } from '../../../services/repositories/group-repository.service';
 import { SecurityNoteRepositoryService } from '../../../services/repositories/security-note-repository.service';
 import { LoginService } from '../../../services/login.service';
+import {KeyStorageService} from '../../../services/key-storage.service';
 
 @Component({
   selector: 'pm-add-credential-modal',
@@ -19,10 +20,9 @@ export class AddCredentialComponent implements OnInit {
   group: Group;
 
   constructor(public activeModal: NgbActiveModal,
-              private route: ActivatedRoute,
-              private groupRepository: GroupRepositoryService,
               private securityNoteRepository: SecurityNoteRepositoryService,
-              private loginService: LoginService) {
+              private loginService: LoginService,
+              private keyStorage: KeyStorageService) {
 
     this.securityNote = this.securityNoteRepository.createModel();
   }
@@ -50,12 +50,26 @@ export class AddCredentialComponent implements OnInit {
   createSecurityNote() {
     this.securityNote.group = this.group._id;
 
-
-    this.securityNoteRepository.setCurrentGroup(this.group);
-    this.securityNoteRepository.saveModel(this.securityNote)
-      .then((securityNote) => {
-        // We successfully crated a new security note.
-        this.activeModal.dismiss('success');
+    this.keyStorage.getKey('name', 'passwordManager_' + this.loginService.currentUser.username)
+      .then((keyPair) => {
+        return this.keyStorage.decrypt(keyPair.privateKey, this.group.members[0].password)
+      })
+      .then((password) => {
+        return this.keyStorage.importGroupKey(password);
+      })
+      .then((groupKey) => {
+        return this.keyStorage.encryptSecurityNoteFields(groupKey, this.securityNote);
+      })
+      .then((encryptedSecurityNote) => {
+        this.securityNoteRepository.setCurrentGroup(this.group);
+        this.securityNoteRepository.saveModel(encryptedSecurityNote)
+          .then((securityNote) => {
+            // We successfully crated a new security note.
+            this.activeModal.dismiss('success');
+          });
       });
+
+
+
   }
 }
