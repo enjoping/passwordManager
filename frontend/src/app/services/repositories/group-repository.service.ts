@@ -1,11 +1,10 @@
-import {Injectable} from '@angular/core';
-import GroupService from '../group.service';
+import { Injectable } from '@angular/core';
+import { GroupService } from '../group.service';
 import Group from '../../models/group.model';
-import {ModelRepositoryService} from './model-repository.service';
-import {SecurityNoteRepositoryService} from './security-note-repository.service';
-import {DomEventsPlugin} from '@angular/platform-browser/src/dom/events/dom_events';
-import EventService from '../event/event.service';
-import {LoginService} from '../login.service';
+import { ModelRepositoryService } from './model-repository.service';
+import { SecurityNoteRepositoryService } from './security-note-repository.service';
+import { LoginService } from '../login.service';
+import { EventService } from '../event/event.service';
 
 
 /**

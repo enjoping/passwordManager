@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
-import {environment} from '../../environments/environment';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { environment } from '../../environments/environment';
 import User from '../models/user.model';
-import {RestServiceInterface} from './rest.service.interface';
+import { RestServiceInterface } from './rest.service.interface';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import {LoginService} from './login.service';
+import { LoginService } from './login.service';
 
 @Injectable()
-export default class UserService implements RestServiceInterface<User> {
+export class UserService implements RestServiceInterface<User> {
 
   private route: string;
 

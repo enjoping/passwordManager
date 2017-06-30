@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {UserRepositoryService} from '../../../services/repositories/user-repository.service';
-import User from '../../../models/user.model';
-import {InviteRepositoryService} from '../../../services/repositories/invite-repository.service';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserRepositoryService } from '../../../services/repositories/user-repository.service';
+import { InviteRepositoryService } from '../../../services/repositories/invite-repository.service';
 import Invite from '../../../models/invite.model';
 
 @Component({

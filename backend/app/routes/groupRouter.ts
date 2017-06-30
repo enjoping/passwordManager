@@ -113,21 +113,20 @@ export class GroupRouter extends BaseRouter {
      * @param res
      */
     protected create(req: Request, res: Response): void {
-        const newGroup = GroupValidator.validateGroupSchema(req);
-        if (!newGroup.hasOwnProperty("error")) {
+        GroupValidator.validateGroupSchema(req).then((newGroup) => {
             newGroup.save()
-                .then(group => {
+                .then((group) => {
                     res.status(200);
                     res.json(group);
                 })
-                .catch(err => {
+                .catch((err) => {
                     res.status(500);
                     res.send(err);
-                })
-        } else {
+                });
+        }).catch((err) => {
             res.status(400);
-            res.send(newGroup);
-        }
+            res.send(err);
+        });
     }
 
     /**
@@ -136,28 +135,27 @@ export class GroupRouter extends BaseRouter {
      * @param res
      */
     protected update(req: Request, res: Response): void {
-        const group = GroupValidator.validateGroupSchema(req);
-        if (!group.hasOwnProperty("error")) {
+        GroupValidator.validateGroupSchema(req).then(() => {
             groupModel.findById(req.params.id)
-                .then(group => {
+                .then((group) => {
                     Object.assign(group, req.body).save()
-                        .then(group => {
+                        .then((savedGroup) => {
                             res.status(200);
-                            res.json(group);
+                            res.json(savedGroup);
                         })
-                        .catch(err => {
+                        .catch((err) => {
                             res.status(400);
                             res.send(err);
-                        })
+                        });
                 })
-                .catch(err => {
+                .catch((err) => {
                     res.status(400);
                     res.send(err);
                 });
-        } else {
+        }).catch((err) => {
             res.status(400);
-            res.send(group);
-        }
+            res.send(err);
+        });
     }
 
     /**

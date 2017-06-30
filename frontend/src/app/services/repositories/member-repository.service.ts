@@ -1,13 +1,10 @@
-import {Injectable} from '@angular/core';
-import GroupService from '../group.service';
+import { Injectable } from '@angular/core';
 import Group from '../../models/group.model';
-import {ModelRepositoryService} from './model-repository.service';
-import {SecurityNoteService} from '../security-note.service';
-import SecurityNote from '../../models/security-note.model';
-import EventService from '../event/event.service';
-import {LoginService} from '../login.service';
+import { ModelRepositoryService } from './model-repository.service';
+import { LoginService } from '../login.service';
 import Member from '../../models/member.model';
-import {MemberService} from '../member.service';
+import { MemberService } from '../member.service';
+import { EventService } from '../event/event.service';
 
 
 @Injectable()

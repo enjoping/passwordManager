@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import {environment} from '../../environments/environment';
-import {RestServiceInterface} from './rest.service.interface';
+import { environment } from '../../environments/environment';
+import { RestServiceInterface } from './rest.service.interface';
 import Model from '../models/model';
-import {Http} from '@angular/http';
-import SecurityNote from '../models/security-note.model';
-import {LoginService} from './login.service';
+import { Http } from '@angular/http';
+import { LoginService } from './login.service';
 import Group from '../models/group.model';
 import Member from '../models/member.model';
 

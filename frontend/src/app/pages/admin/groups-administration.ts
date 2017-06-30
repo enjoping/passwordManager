@@ -11,4 +11,7 @@ export class GroupsAdministrationComponent implements OnInit {
   ngOnInit() {
   }
 
+  openModal() {
+   // dummy function
+  }
 }

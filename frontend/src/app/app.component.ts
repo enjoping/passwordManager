@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import {GroupRepositoryService} from './services/repositories/group-repository.service';
-import {SecurityNoteRepositoryService} from './services/repositories/security-note-repository.service';
-import {UserRepositoryService} from './services/repositories/user-repository.service';
-import EventService from './services/event/event.service';
-import {EventReceiver} from './services/event/event-receiver.interface';
+import { GroupRepositoryService } from './services/repositories/group-repository.service';
+import { EventReceiver } from './services/event/event-receiver.interface';
+import { EventService } from './services/event/event.service';
 
 @Component({
     selector: 'pm-root',
