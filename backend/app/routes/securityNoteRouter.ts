@@ -2,10 +2,11 @@
  * Created by Joe Pietler on 31.05.17.
  */
 
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 import { BaseRouter } from "./baseRouter";
 const securityNoteModel = require("./../models/securityNoteModel");
+const groupModel = require("./../models/groupModel");
 import { SecurityNoteValidator } from "../validators/securityNoteValidator";
 
 export class SecurityNoteRouter extends BaseRouter {
@@ -14,6 +15,66 @@ export class SecurityNoteRouter extends BaseRouter {
         this.basePath = "/:group/security-note";
         this.init();
     }
+
+    protected setRoutes(): void {
+        this.router.route(this.basePath + "/")
+            .get(this.authenticate, this.list)
+            .post(this.authenticate, this.shouldUserAccessGroup, this.create);
+
+        this.router.route(this.basePath + "/:id")
+            .get(this.authenticate, this.shouldUserAccessGroup, this.get)
+            .patch(this.authenticate, this.shouldUserEditNote, this.update)
+            .delete(this.authenticate, this.shouldUserEditNote, this.erase);
+    }
+
+    /**
+     * This method checks, if the current user are allowed to access the requested group.
+     * @param req
+     * @param res
+     * @param next
+     */
+    private shouldUserAccessGroup(req: Request, res: Response, next: NextFunction): void {
+        groupModel.findById(req.params.groupId)
+            .then(group => {
+                let isMember: boolean = false;
+                for (let memberItem of group.members) {
+                    if (memberItem.id == req.user.id) {
+                        isMember = true;
+                        next();
+                    }
+                }
+                if (!isMember) {
+                    res.status(401);
+                    res.send({ error: "User have no permission to create this note!" });
+                }
+            })
+            .catch(() => {
+                res.status(400);
+                res.send({ error: "There is no group with the given id to create a note!" });
+            });
+    }
+
+    /**
+     * This method checks, if the current user are allowed to edit the requested note.
+     * @param req
+     * @param res
+     * @param next
+     */
+    private shouldUserEditNote(req: Request, res: Response, next: NextFunction): void {
+        securityNoteModel.findById(req.params.id)
+            .then(note => {
+                if (note.owner == req.user.id)
+                    next();
+                else {
+                    res.status(401);
+                    res.send({ error: "User have no permission to edit this note!" });
+                }
+            })
+            .catch(() => {
+                next();
+            });
+    }
+
 
     /**
      * GET group/group-id/note route to retrieve all stored securityNotes with the given group id.
