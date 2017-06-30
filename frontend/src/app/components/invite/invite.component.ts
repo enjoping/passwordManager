@@ -4,6 +4,7 @@ import { UserRepositoryService } from 'app/services/repositories/user-repository
 import { Router } from '@angular/router';
 import { LoginService } from 'app/services/login.service';
 import {KeyStorageService} from '../../services/key-storage.service';
+import {EventService} from '../../services/event/event.service';
 
 @Component({
   selector: 'pm-invite',
@@ -18,6 +19,7 @@ export class InviteComponent {
 
   constructor(private userRepository: UserRepositoryService,
               private router: Router,
+              private eventService: EventService,
               private keyStorageService: KeyStorageService) { }
 
   createNewUser(username, password, password2) {
@@ -26,28 +28,33 @@ export class InviteComponent {
 
       this.keyStorageService.generateKeypair()
         .then((keyPair) => {
+          console.log('keypair generated', keyPair);
           // Retrieve the public key from the generated key pair.
-          return this.keyStorageService.exportKey(keyPair.publicKey);
-        })
-        .then((publicKey) => {
-          // We successfully created the public key. Create the user.
-          const user = this.userRepository.createModel();
-          user.jsonFill({
-            email: this.mail,
-            password: password,
-            username: username,
-            publicKey: publicKey,
-            pendingInvite: true,
-          });
+          return this.keyStorageService.exportKey(keyPair.publicKey)
+            .then((publicKey) => {
+              // We successfully created the public key. Create the user.
+              const user = this.userRepository.createModel();
+              user.jsonFill({
+                email: this.mail,
+                password: password,
+                username: username,
+                publicKey: publicKey,
+                pendingInvite: true,
+              });
 
-          return this.userRepository.saveModel(user);
+              return this.userRepository.saveModel(user);
+            })
+            .then(() => {
+              return this.keyStorageService.saveKey(keyPair.publicKey, keyPair.privateKey, 'passwordManager_' + username);
+            })
         })
         .then(() => {
           // The user has been created. Navigate to the login page.
-          this.router.navigate([ '/login' ]).then();
+          this.router.navigate([ '/' ]).then();
         })
         .catch((error) => {
           // Something went wrong.
+          console.log('an error occured', error);
           this.registrationFailed = true;
         });
     } else {

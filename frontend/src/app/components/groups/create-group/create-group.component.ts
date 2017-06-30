@@ -76,6 +76,7 @@ export class CreateGroupComponent {
   }
 
   createGroup(): void {
+    // Generate the password for the group to be used to encrypt/decrypt the security notes.
     this.keyStorage.generateGroupKeyPair()
       .then((keyPair) => {
         return this.keyStorage.exportRawKey(keyPair);
@@ -89,14 +90,12 @@ export class CreateGroupComponent {
       })
       .then((encryptedPassword) => {
         this.group.password = this.keyStorage.ab2str8(encryptedPassword);
+        console.log('group password generated', this.group.password);
         return this.groupRepository.saveModel(this.group);
       })
       .then((group) => {
+        console.log('group created', group);
         // The group has been created.
-      });
-
-    this.groupRepository.saveModel(this.group)
-      .then((group) => {
         const promises = [ ];
         this.group.members.forEach((member) => {
           member.group = group._id;
@@ -109,7 +108,7 @@ export class CreateGroupComponent {
         this.activeModal.dismiss('success');
       })
       .catch((error) => {
-        console.log(error);
+        console.log('error', error);
       });
   }
 }

@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {EventService} from './event/event.service';
 
 @Injectable()
 export class KeyStorageService {
@@ -7,7 +8,7 @@ export class KeyStorageService {
   private dbName = 'KeyStore';
   private objectStoreName = 'keys';
 
-  constructor() {
+  constructor(private eventService: EventService) {
     if (!window.crypto || !window.crypto.subtle) {
       alert("Your current browser does not support the Web Cryptography API! This page will not work.");
       return;
@@ -19,10 +20,11 @@ export class KeyStorageService {
 
   open() {
     const that = this;
-    return new Promise(function (fulfill, reject) {
+    return new Promise((fulfill, reject) => {
       const req = indexedDB.open(that.dbName, 1);
-      req.onsuccess = function (evt: any) {
+      req.onsuccess = (evt: any) => {
         that.db = evt.target.result;
+        this.eventService.log('keyStorage opened');
         fulfill();
       };
       req.onerror = function (evt: any) {
@@ -46,9 +48,11 @@ export class KeyStorageService {
   };
 
   saveKey(publicKey, privateKey, name) {
-    const that = this;
-    return new Promise(function (fulfill, reject) {
+    return new Promise((fulfill, reject) => {
+      this.eventService.log('trying to save keypair');
       window.crypto.subtle.exportKey('spki', publicKey).then((spki) => {
+        this.eventService.log('key exported');
+
         const savedObject = {
           publicKey: publicKey,
           privateKey: privateKey,
@@ -56,17 +60,27 @@ export class KeyStorageService {
           spki: spki
         };
 
-        const transaction = that.getTransaction(() => {}, (evt) => {
-          reject(evt.error);
-        });
-        const objectStore = transaction.objectStore(that.objectStoreName);
+        this.eventService.log(savedObject);
+
+        const transaction = this.getTransaction(
+          () => {
+            this.eventService.log('key successfully saved');
+            this.eventService.log(savedObject);
+
+            fulfill();
+          },
+          (evt) => {
+            console.log(evt, evt.error);
+            reject(evt.error);
+          });
+        const objectStore = transaction.objectStore(this.objectStoreName);
         objectStore.add(savedObject);
-        fulfill();
+
+      }, (error) => {
+        this.eventService.log('an error occured');
+        this.eventService.log(error);
+        reject(error);
       });
-      // Some error with promiselike
-      //   .catch(function (err) {
-      //   reject(err);
-      // });
     });
   };
 
