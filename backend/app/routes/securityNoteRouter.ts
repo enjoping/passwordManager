@@ -45,12 +45,12 @@ export class SecurityNoteRouter extends BaseRouter {
                 }
                 if (!isMember) {
                     res.status(401);
-                    res.send({ error: "User have no permission to create this note." });
+                    res.send({ error: "User have no permission to create this note!" });
                 }
             })
             .catch(() => {
                 res.status(400);
-                res.send({ error: "There is no group with the given id to create a note." });
+                res.send({ error: "There is no group with the given id to create a note!" });
             });
     }
 
@@ -67,7 +67,7 @@ export class SecurityNoteRouter extends BaseRouter {
                     next();
                 else {
                     res.status(401);
-                    res.send({ error: "User have no permission to edit this note." });
+                    res.send({ error: "User have no permission to edit this note!" });
                 }
             })
             .catch(() => {

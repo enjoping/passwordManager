@@ -44,7 +44,7 @@ export class GroupRouter extends BaseRouter {
                 }
                 if (!isMember) {
                     res.status(401);
-                    res.send({ error: "User have no permission to access this group." });
+                    res.send({ error: "User have no permission to access this group!" });
                 }
             })
             .catch(() => {
@@ -65,7 +65,7 @@ export class GroupRouter extends BaseRouter {
                     next();
                 else {
                     res.status(401);
-                    res.send({ error: "User have no permission to edit this group." });
+                    res.send({ error: "User have no permission to edit this group!" });
                 }
             })
             .catch(() => {
