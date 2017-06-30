@@ -18,7 +18,7 @@ export class SecurityNoteRouter extends BaseRouter {
 
     protected setRoutes(): void {
         this.router.route(this.basePath + "/")
-            .get(this.authenticate, this.list)
+            .get(this.authenticate, this.shouldUserAccessGroup, this.list)
             .post(this.authenticate, this.shouldUserAccessGroup, this.create);
 
         this.router.route(this.basePath + "/:id")
@@ -45,7 +45,7 @@ export class SecurityNoteRouter extends BaseRouter {
                 }
                 if (!isMember) {
                     res.status(401);
-                    res.send({ error: "User have no permission to create this note!" });
+                    res.send({ error: "User have no permission to do this!" });
                 }
             })
             .catch(() => {
