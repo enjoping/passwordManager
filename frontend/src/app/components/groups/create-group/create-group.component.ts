@@ -97,11 +97,11 @@ export class CreateGroupComponent {
         console.log('group created', group);
         // The group has been created.
         const promises = [ ];
+        this.memberRepository.setCurrentGroup(this.group);
         this.group.members.forEach((member) => {
           member.group = group._id;
           promises.push(this.memberRepository.saveModel(member));
         });
-        this.memberRepository.setCurrentGroup(this.group);
         return Promise.all(promises);
       })
       .then(() => {

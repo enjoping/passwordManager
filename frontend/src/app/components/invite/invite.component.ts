@@ -28,7 +28,6 @@ export class InviteComponent {
 
       this.keyStorageService.generateKeypair()
         .then((keyPair) => {
-          console.log('keypair generated', keyPair);
           // Retrieve the public key from the generated key pair.
           return this.keyStorageService.exportKey(keyPair.publicKey)
             .then((publicKey) => {
@@ -54,7 +53,6 @@ export class InviteComponent {
         })
         .catch((error) => {
           // Something went wrong.
-          console.log('an error occured', error);
           this.registrationFailed = true;
         });
     } else {
