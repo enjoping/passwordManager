@@ -34,7 +34,7 @@ export class SecurityNoteRouter extends BaseRouter {
      * @param next
      */
     private shouldUserAccessGroup(req: Request, res: Response, next: NextFunction): void {
-        groupModel.findById(req.params.groupId)
+        groupModel.findById(req.params.group)
             .then(group => {
                 let isMember: boolean = false;
                 for (let memberItem of group.members) {
