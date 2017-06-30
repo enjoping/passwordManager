@@ -117,17 +117,13 @@ export class InviteRouter extends BaseRouter {
      * @param res
      */
     protected erase(req: Request, res: Response): void {
-        inviteModel.findOneAndRemove({ inviteToken: req.params.id })
-            .then(invite => {
-                if (invite != null)
-                    res.sendStatus(204);
-                else {
-                    res.status(400);
-                    res.send({ error : "There is no invite with the given ID in the database!" });
-                }
+        inviteModel.findById(req.params.id)
+            .then(() => {
+                res.sendStatus(204);
             })
             .catch(() => {
-                res.status(500);
+                res.status(400);
+                res.send({ error : "There is no invite with the given ID in the database!" });
             });
     }
 }
