@@ -112,12 +112,12 @@ export class InviteRouter extends BaseRouter {
     }
 
     /**
-     * DELETE /invite/:id route to delete a single invite by inviteToken.
+     * DELETE /invite/:id route to delete a single invite by id.
      * @param req
      * @param res
      */
     protected erase(req: Request, res: Response): void {
-        inviteModel.findById(req.params.id)
+        inviteModel.findByIdAndRemove(req.params.id)
             .then(() => {
                 res.sendStatus(204);
             })
