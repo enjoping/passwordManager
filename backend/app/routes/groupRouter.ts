@@ -3,7 +3,8 @@
  */
 
 import { NextFunction, Request, Response } from "express";
-const groupModel = require("./../models/groupModel");
+const groupModel = require("../models/groupModel");
+const securityModel = require("../models/securityNoteModel");
 
 import { BaseRouter } from "./baseRouter";
 import { GroupValidator } from "../validators/groupValidator";
@@ -167,6 +168,19 @@ export class GroupRouter extends BaseRouter {
         groupModel.findByIdAndRemove(req.params.id)
             .then(() => {
                 res.sendStatus(204);
+                securityModel.find({groupId: req.params.id})
+                    .then(notes => {
+                        for (let note of notes) {
+                            securityModel.remove(note, err => {
+                                if (err != null)
+                                    console.log(err);
+                                console.log(note + " was deleted successful.");
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             })
             .catch(() => {
                 res.status(400);
