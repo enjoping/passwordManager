@@ -50,7 +50,7 @@ export class SecurityNoteRouter extends BaseRouter {
             })
             .catch(() => {
                 res.status(400);
-                res.send({ error: "There is no group with the given id to create a note!" });
+                res.send({ error: "There is no group with the given id to create or get a note!" });
             });
     }
 
