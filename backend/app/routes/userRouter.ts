@@ -1,8 +1,9 @@
 /**
  * Created by marcelboes on 05.06.17.
  */
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 const userModel = require("./../models/userModel");
+const inviteModel = require("../models/inviteModel");
 
 import { BaseRouter } from "./baseRouter";
 import { UserValidator } from "../validators/userValidator";
@@ -63,7 +64,6 @@ export class UserRouter extends BaseRouter {
      * POST /user route to create a new user.
      * @param req
      * @param res
-     * @param next
      */
     protected create(req: Request, res: Response): void {
         const user = UserValidator.validateUserSchema(req);
@@ -83,6 +83,10 @@ export class UserRouter extends BaseRouter {
                 _id: account._id,
                 username: account.username,
             };
+            inviteModel.findOneAndRemove({ email: account.email} )
+                .then(() => {
+                    console.log("Successfully removed invite with email address " + account.email);
+                });
             res.json(savedUser);
         });
     }
