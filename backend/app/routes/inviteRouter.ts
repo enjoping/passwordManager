@@ -37,9 +37,8 @@ export class InviteRouter extends BaseRouter {
                 res.status(200);
                 res.json(invites);
             })
-            .catch(err => {
-                res.status(500);
-                res.send(err);
+            .catch(() => {
+                res.sendStatus(500);
             });
     }
 

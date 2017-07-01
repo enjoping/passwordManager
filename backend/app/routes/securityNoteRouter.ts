@@ -87,9 +87,8 @@ export class SecurityNoteRouter extends BaseRouter {
                 res.status(200);
                 res.json(securityNotes);
             })
-            .catch((err) => {
-                res.status(500);
-                res.send(err);
+            .catch(() => {
+                res.sendStatus(500);
             });
     }
 
@@ -123,9 +122,8 @@ export class SecurityNoteRouter extends BaseRouter {
                     res.status(200);
                     res.json(securityNote);
                 })
-                .catch(err => {
-                    res.status(500);
-                    res.send(err);
+                .catch(() => {
+                    res.sendStatus(500);
                 })
         } else {
             res.status(400);

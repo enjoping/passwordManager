@@ -37,9 +37,8 @@ export class UserRouter extends BaseRouter {
                 res.status(200);
                 res.json(users);
             })
-            .catch(err => {
-                res.status(500);
-                res.send(err);
+            .catch(() => {
+                res.sendStatus(500);
             });
     }
 
