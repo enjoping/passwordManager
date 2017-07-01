@@ -21,10 +21,10 @@ export class GroupValidator extends BaseValidator {
                     }
                     fulfill(group);
                 } else {
-                    reject("There is no group name or owner property in the request!");
+                    reject({ error: "There is no group name or owner property in the request!" });
                 }
             } else {
-                reject("The request was no object!");
+                reject({ error: "The request was no object!" });
             }
         });
     }

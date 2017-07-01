@@ -19,10 +19,10 @@ export class SecurityNoteValidator extends BaseValidator {
                 }
                 return note;
             } else {
-                return {error: "There is no security note name in the request!"};
+                return { error: "There is no security note name in the request!" };
             }
         } else {
-            return {error: "The request was no object!"};
+            return { error: "The request was no object!" };
         }
     }
 }

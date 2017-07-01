@@ -9,10 +9,10 @@ const inviteModel = require("../models/inviteModel");
 export class InviteValidator extends BaseValidator {
     public static validateInviteSchema(req: Request): any {
         if (typeof req.body !== "object") {
-            return {error: "The request was no object!"};
+            return { error: "The request was no object!" };
         }
         if (typeof req.body.email === "undefined") {
-            return {error: "The field email is required."};
+            return { error: "The field email is required." };
         }
         const secret = "1nv1t3t0k3n";
         const encryptedInviteToken = crypto.createHmac("sha256", secret)

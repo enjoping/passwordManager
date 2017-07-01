@@ -84,8 +84,9 @@ export class UserRouter extends BaseRouter {
                 username: account.username,
             };
             inviteModel.findOneAndRemove({ email: account.email} )
-                .then(() => {
-                    console.log("Successfully removed invite with email address " + account.email);
+                .then(invite => {
+                    if (invite != null)
+                        console.log("Successfully removed invite with email address " + invite.email);
                 });
             res.json(savedUser);
         });

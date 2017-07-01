@@ -18,6 +18,7 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 let loginToken = "";
+let userId = 0;
 
 // Tests
 describe("Groups", () => {
@@ -29,6 +30,7 @@ describe("Groups", () => {
                 .send(config.get("user"))
                 .end((err, res) => {
                     res.should.have.status(200);
+                    userId = res.body._id;
                     chai.request(server)
                         .post("/api/1.0/login")
                         .set("Token", "text/plain")
@@ -99,7 +101,7 @@ describe("Groups", () => {
     // Test the /GET/:id group
     describe("/GET/:id group", () => {
         it("it should GET a group by the given id", (done) => {
-            let group = new groupModel({ name: "aGroupName", owner: 1, members: [{id: 1, password: "groupPW"}], });
+            let group = new groupModel({ name: "aGroupName", owner: userId, members: [{id: userId, password: "groupPW"}], });
             group.save((err, group) => {
                 chai.request(server)
                     .get("/api/1.0/group/" + group._id)
@@ -119,7 +121,7 @@ describe("Groups", () => {
     // Test the /PATCH/:id route
     describe("/PATCH/:id group", () => {
         it("it should UPDATE a group by the given id", (done) => {
-            let group = new groupModel({ name: "aGroupName", owner: 1, members: [{id: 1, password: "groupPW"}], });
+            let group = new groupModel({ name: "aGroupName", owner: userId, members: [{id: userId, password: "groupPW"}], });
             group.save((err, group) => {
                 chai.request(server)
                     .patch("/api/1.0/group/" + group._id)
@@ -139,7 +141,7 @@ describe("Groups", () => {
     // Test the /DELETE/:id route
     describe("/DELETE/:id group", () => {
         it("it should DELETE a group by the given id", (done) => {
-            let group = new groupModel({ name: "aGroupName", owner: 1, members: [{id: 1, password: "groupPW"}], });
+            let group = new groupModel({ name: "aGroupName", owner: userId, members: [{id: userId, password: "groupPW"}], });
             group.save((err, group) => {
                 chai.request(server)
                     .del("/api/1.0/group/" + group._id)

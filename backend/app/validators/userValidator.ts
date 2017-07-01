@@ -8,11 +8,11 @@ const userModel = require("../models/userModel");
 export class UserValidator extends BaseValidator {
     public static validateUserSchema(req: Request): any {
         if (typeof req.body !== "object") {
-            return {error: "The request was no object!"};
+            return { error: "The request was no object!" };
         }
         if (typeof req.body.username === "undefined" || typeof req.body.email === "undefined"
             || typeof req.body.password === "undefined" || typeof req.body.publicKey === "undefined") {
-            return {error: "There fields username, email, password and publicKey are required."};
+            return { error: "There fields username, email, password and publicKey are required." };
         }
         const user = new userModel({
             email: this.escapeHTML(req.body.email),

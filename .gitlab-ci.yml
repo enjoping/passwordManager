@@ -43,6 +43,7 @@ deploy_develop:
     - cd "${CI_PROJECT_DIR}"
     - rsync -avz backend/ "fwe@h2652485.stratoserver.net:/home/fwe/passwordmanager/${CI_COMMIT_REF_NAME}"
     - ssh -v fwe@h2652485.stratoserver.net "pm2 restart all"
+    - ssh -v fwe@h2652485.stratoserver.net "cd /home/fwe/passwordmanager/${CI_COMMIT_REF_NAME} && bash ./build.sh"
   environment:
     name: $CI_COMMIT_REF_NAME
     url: http://fwe.h2652485.stratoserver.net

@@ -56,6 +56,11 @@ export class Server {
 
     private addStaticRoute() {
         /**
+         * Deliver the installation page
+         */
+        this.app.use("/install", express.static(__dirname + "/../../installation"));
+
+        /**
          * Deliver the angular frontend
          */
         this.app.use("/", express.static(__dirname + "/../../dist"));
