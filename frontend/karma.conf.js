@@ -15,7 +15,13 @@ module.exports = function (config) {
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
+    scripts: [
+      "./node_modules/jquery/dist/jquery.js",
+    ],
     files: [
+      "./node_modules/jquery/dist/jquery.js",
+      './src/assets/encryption/keyStorage.js',
+      './src/assets/encryption/index.js',
       { pattern: './src/test.ts', watched: false }
     ],
     preprocessors: {
