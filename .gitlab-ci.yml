@@ -34,8 +34,8 @@ deploy_develop:
     - cp -rv dist ../backend
     - rm -r dist
     - ng build -e build
-    - mkdir ../backend/frontend
-    - cp -rv dist/ ../backend/frontend
+    - mv dist frontend
+    - cp -rv frontend ../backend
     - echo "Deploy to develop server"
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - 'which rsync || ( apt-get update -y && apt-get install rsync -y )'
