@@ -48,3 +48,5 @@ Thumbs.db
 
 #DB
 /db/*
+backend/build
+build.tar.gz
