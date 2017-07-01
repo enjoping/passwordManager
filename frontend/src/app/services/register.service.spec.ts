@@ -21,11 +21,11 @@ import Invite from '../models/invite.model';
 import { RegisterService } from './register.service';
 
 function makeInvite(): Invite {
-  let fakeInvite = new Invite();
+  const fakeInvite = new Invite();
   fakeInvite._id = 1;
   fakeInvite.email = 'Test@invite.com';
   fakeInvite.inviteToken = '123abc';
-  fakeInvite.creationDate = new Date("December 17, 1995 03:24:00");
+  fakeInvite.creationDate = new Date('December 17, 1995 03:24:00');
   return fakeInvite;
 }
 ////////  Tests  /////////////
@@ -51,7 +51,7 @@ describe('Register (mockBackend)', () => {
 
   it('can instantiate service with "new"', inject([Http], (http: Http) => {
     expect(http).not.toBeNull('http should be provided');
-    let service = new RegisterService(http);
+    const service = new RegisterService(http);
     expect(service instanceof RegisterService).toBe(true, 'new service should be ok');
   }));
 
@@ -71,7 +71,7 @@ describe('Register (mockBackend)', () => {
       backend = be;
       service = new RegisterService(http);
       fakeInvite = makeInvite();
-      let options = new ResponseOptions({status: 200, body: {data: fakeInvite}});
+      const options = new ResponseOptions({status: 200, body: {data: fakeInvite}});
       response = new Response(options);
     }));
 
@@ -105,8 +105,8 @@ describe('Register (mockBackend)', () => {
       backend = be;
       service = new RegisterService(http);
       fakeInvite = makeInvite();
-      let options = new ResponseOptions({status: 400, body: {"error":
-        "There is no invite with the given invite token in the database!" }});
+      const options = new ResponseOptions({status: 400, body: {'error':
+        'There is no invite with the given invite token in the database!' }});
       response = new Response(options);
     }));
 
