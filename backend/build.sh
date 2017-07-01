@@ -8,6 +8,7 @@ cp ./docker-compose.yml ./build/
 cp ./init.sh ./build/
 mkdir ./build/application/config
 cp ./config/build.json ./build/application/config/default.json
-cp -r ./dist ./build/application/
+mkdir ./build/application/dist
+cp -r ./frontend/ ./build/application/dist
 cp -r ./installation ./build/application/
 tar czf build.tar.gz ./build
