@@ -74,40 +74,41 @@ export class InviteRouter extends BaseRouter {
      * @param res
      */
     protected create(req: Request, res: Response): void {
-        const invite = InviteValidator.validateInviteSchema(req);
-        if (inviteModel.hasOwnProperty("error")) {
-            res.status(400);
-            res.json(inviteModel);
-            return;
-        }
-        inviteModel.findOne({ email: req.body.email })
-            .then(inviteResult => {
-                if (inviteResult != null) {
-                    res.status(400);
-                    res.send({ error: "Email is already on the invite list!" });
-                } else {
-                    userModel.findOne({ email: req.body.email })
-                        .then(user => {
-                            if (user != null) {
-                                res.status(400);
-                                res.send({ error: "Email is already in the system!" });
-                            } else {
-                                invite.save()
-                                    .then(invite => {
-                                        res.status(200);
-                                        res.json(invite);
-                                    })
-                                    .catch(err => {
+        InviteValidator.validateInviteSchema(req)
+            .then(invite => {
+                inviteModel.findOne({ email: req.body.email })
+                    .then(inviteResult => {
+                        if (inviteResult != null) {
+                            res.status(400);
+                            res.send({ error: "Email is already on the invite list!" });
+                        } else {
+                            userModel.findOne({ email: req.body.email })
+                                .then(user => {
+                                    if (user != null) {
                                         res.status(400);
-                                        res.send(err);
-                                    })
-                            }
-                        });
-                }
+                                        res.send({ error: "Email is already in the system!" });
+                                    } else {
+                                        invite.save()
+                                            .then(invite => {
+                                                res.status(200);
+                                                res.json(invite);
+                                            })
+                                            .catch(err => {
+                                                res.status(400);
+                                                res.send(err);
+                                            })
+                                    }
+                                });
+                        }
+                    })
+                    .catch(() => {
+                        res.sendStatus(500);
+                    });
             })
-            .catch(() => {
-                res.sendStatus(500);
-            })
+            .catch(err => {
+                res.status(400);
+                res.json(err);
+            });
     }
 
     /**

@@ -65,30 +65,31 @@ export class UserRouter extends BaseRouter {
      * @param res
      */
     protected create(req: Request, res: Response): void {
-        const user = UserValidator.validateUserSchema(req);
-        if (user.hasOwnProperty("error")) {
-            res.status(400);
-            res.json(user);
-            return;
-        }
-        userModel.register(user, req.body.password, (err, account) => {
-            if (err) {
-                res.status(400);
-                res.json({ error: err.message });
-                return;
-            }
-            const savedUser = {
-                __v: account.__v,
-                _id: account._id,
-                username: account.username,
-            };
-            inviteModel.findOneAndRemove({ email: account.email} )
-                .then(invite => {
-                    if (invite != null)
-                        console.log("Successfully removed invite with email address " + invite.email);
+        UserValidator.validateUserSchema(req)
+            .then(user => {
+                userModel.register(user, req.body.password, (err, account) => {
+                    if (err) {
+                        res.status(400);
+                        res.json({ error: err.message });
+                        return;
+                    }
+                    const savedUser = {
+                        __v: account.__v,
+                        _id: account._id,
+                        username: account.username,
+                    };
+                    inviteModel.findOneAndRemove({ email: account.email} )
+                        .then(invite => {
+                            if (invite != null)
+                                console.log("Successfully removed invite with email address " + invite.email);
+                        });
+                    res.json(savedUser);
                 });
-            res.json(savedUser);
-        });
+            })
+            .catch(err => {
+                res.status(400);
+                res.json(err);
+            });
     }
 
     /**
@@ -97,28 +98,29 @@ export class UserRouter extends BaseRouter {
      * @param res
      */
     protected update(req: Request, res: Response): void {
-        const user = UserValidator.validateUserSchema(req);
-        if (typeof user.errors === "undefined") {
-            userModel.findById(req.params.id)
-                .then(user => {
-                    Object.assign(user, req.body).save()
-                        .then(user => {
-                            res.status(200);
-                            res.json(user);
-                        })
-                        .catch(err => {
-                            res.status(400);
-                            res.send(err);
-                        })
-                })
-                .catch(err => {
-                    res.status(400);
-                    res.send(err);
-                });
-        } else {
-            res.status(400);
-            res.send(user);
-        }
+        UserValidator.validateUserSchema(req)
+            .then(() => {
+                userModel.findById(req.params.id)
+                    .then(user => {
+                        Object.assign(user, req.body).save()
+                            .then(user => {
+                                res.status(200);
+                                res.json(user);
+                            })
+                            .catch(err => {
+                                res.status(400);
+                                res.send(err);
+                            })
+                    })
+                    .catch(err => {
+                        res.status(400);
+                        res.send(err);
+                    });
+            })
+            .catch(err => {
+                res.status(400);
+                res.send(err);
+            });
     }
 
     /**

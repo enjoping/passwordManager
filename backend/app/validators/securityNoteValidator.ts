@@ -6,23 +6,25 @@ import { BaseValidator } from "./baseValidator";
 const securityNoteModel = require("../models/securityNoteModel");
 
 export class SecurityNoteValidator extends BaseValidator {
-    public static validateSecurityNoteSchema(req: Request): any {
-        if (typeof req.body === "object") {
-            if (typeof req.body.name !== "undefined") {
-                const note = new securityNoteModel({
-                    groupId: req.params.group,
-                    name: this.escapeHTML(req.body.name),
-                    owner: req.user.id,
-                });
-                if (typeof req.body.fields !== "undefined") {
-                    note.fields = req.body.fields;
+    public static validateSecurityNoteSchema(req: Request): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (typeof req.body === "object") {
+                if (typeof req.body.name !== "undefined") {
+                    const note = new securityNoteModel({
+                        groupId: req.params.group,
+                        name: this.escapeHTML(req.body.name),
+                        owner: req.user.id,
+                    });
+                    if (typeof req.body.fields !== "undefined") {
+                        note.fields = req.body.fields;
+                    }
+                    resolve(note);
+                } else {
+                    reject({ error: "There is no security note name in the request!" });
                 }
-                return note;
             } else {
-                return { error: "There is no security note name in the request!" };
+                reject({ error: "The request was no object!" });
             }
-        } else {
-            return { error: "The request was no object!" };
-        }
+        });
     }
 }

@@ -113,19 +113,21 @@ export class GroupRouter extends BaseRouter {
      * @param res
      */
     protected create(req: Request, res: Response): void {
-        GroupValidator.validateGroupSchema(req).then((newGroup) => {
-            newGroup.save()
-                .then((group) => {
-                    res.status(200);
-                    res.json(group);
-                })
-                .catch(() => {
-                    res.sendStatus(500);
-                });
-        }).catch((err) => {
-            res.status(400);
-            res.send(err);
-        });
+        GroupValidator.validateGroupSchema(req)
+            .then(newGroup => {
+                newGroup.save()
+                    .then((group) => {
+                        res.status(200);
+                        res.json(group);
+                    })
+                    .catch(() => {
+                        res.sendStatus(500);
+                    });
+            })
+            .catch(err => {
+                res.status(400);
+                res.send(err);
+            });
     }
 
     /**
