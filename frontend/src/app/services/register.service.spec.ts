@@ -105,7 +105,8 @@ describe('Register (mockBackend)', () => {
       backend = be;
       service = new RegisterService(http);
       fakeInvite = makeInvite();
-      let options = new ResponseOptions({status: 400, body: {"error": "There is no invite with the given invite token in the database!" }});
+      let options = new ResponseOptions({status: 400, body: {"error":
+        "There is no invite with the given invite token in the database!" }});
       response = new Response(options);
     }));
 
