@@ -20,7 +20,8 @@ const SecurityNoteSchema = new Schema({
         {
             name: String,
             fieldType: String,
-            value: String
+            value: String,
+            counter: String,
         }
     ]
 });

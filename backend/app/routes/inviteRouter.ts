@@ -112,22 +112,18 @@ export class InviteRouter extends BaseRouter {
     }
 
     /**
-     * DELETE /invite/:id route to delete a single invite by inviteToken.
+     * DELETE /invite/:id route to delete a single invite by id.
      * @param req
      * @param res
      */
     protected erase(req: Request, res: Response): void {
-        inviteModel.findOneAndRemove({ inviteToken: req.params.id })
-            .then(invite => {
-                if (invite != null)
-                    res.sendStatus(204);
-                else {
-                    res.status(400);
-                    res.send({ error : "There is no invite with the given ID in the database!" });
-                }
+        inviteModel.findByIdAndRemove(req.params.id)
+            .then(() => {
+                res.sendStatus(204);
             })
             .catch(() => {
-                res.status(500);
+                res.status(400);
+                res.send({ error : "There is no invite with the given ID in the database!" });
             });
     }
 }

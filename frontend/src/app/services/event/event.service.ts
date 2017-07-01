@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {EventReceiver} from './event-receiver.interface';
+import { Injectable } from '@angular/core';
+import { EventReceiver } from './event-receiver.interface';
 
 
 /**
@@ -13,7 +13,7 @@ import {EventReceiver} from './event-receiver.interface';
  *
  */
 @Injectable()
-export default class EventService {
+export class EventService {
 
   /**
    * A list of a all event receivers.

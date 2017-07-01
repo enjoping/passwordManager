@@ -1,12 +1,12 @@
-import {RouterModule, Routes} from '@angular/router';
-import {NgModule} from '@angular/core';
-import {LoginPageComponent} from './pages/login/login-page.component';
-import {GroupsPageComponent} from './pages/groups/groups-page.component';
-import {GroupPageComponent} from './pages/group/group-page.component';
-import {UsersAdministrationComponent} from './pages/admin/users-administration';
-import {GroupsAdministrationComponent} from './pages/admin/groups-administration';
-import {AuthGuardService} from './services/auth-guard.service';
-import {InvitePageComponent} from './pages/invite/invite-page.component';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { LoginPageComponent } from './pages/login/login-page.component';
+import { GroupsPageComponent } from './pages/groups/groups-page.component';
+import { GroupPageComponent } from './pages/group/group-page.component';
+import { UsersAdministrationComponent } from './pages/admin/users-administration';
+import { GroupsAdministrationComponent } from './pages/admin/groups-administration';
+import { AuthGuardService } from './services/auth-guard.service';
+import { InvitePageComponent } from './pages/invite/invite-page.component';
 
 const routes: Routes = [
   {
