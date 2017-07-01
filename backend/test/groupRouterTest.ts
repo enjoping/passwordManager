@@ -17,18 +17,31 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
+let loginToken = "";
+
 // Tests
 describe("Groups", () => {
     before(done => {
-        chai.request(server)
-            .post("/api/1.0/login")
-            .set('Token', 'text/plain')
-            .set('content-type', 'application/x-www-form-urlencoded')
-            .send(config.get("user"))
-            .end(function(err, res) {
-                res.should.have.status(200);
-                done();
-            });
+        userModel.remove({}, () => {
+            console.log("All users was removed successful.");
+            chai.request(server)
+                .post("/api/1.0/user")
+                .send(config.get("user"))
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    chai.request(server)
+                        .post("/api/1.0/login")
+                        .set("Token", "text/plain")
+                        .set("content-type", "application/x-www-form-urlencoded")
+                        .send("grant_type=password")
+                        .send(config.get("user"))
+                        .end((err, loginResponse) => {
+                            res.should.have.status(200);
+                            loginToken = loginResponse["text"];
+                            done();
+                        });
+                });
+        });
     });
     beforeEach(done => {
         groupModel.remove({}, () => {
@@ -41,6 +54,7 @@ describe("Groups", () => {
         it("it should GET all the groups", (done) => {
             chai.request(server)
                 .get("/api/1.0/group")
+                .set("Authorization", "Bearer " + loginToken)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a("array");
@@ -56,12 +70,14 @@ describe("Groups", () => {
             let group = {};
             chai.request(server)
                 .post("/api/1.0/group")
+                .set("Authorization", "Bearer " + loginToken)
                 .send(group)
                 .end((err, res) => {
                     res.should.have.status(400);
                     res.body.should.be.a("object");
-                    res.body.should.have.property("errors");
-                    res.body.errors.should.have.property("name");
+                    res.body.should.have.property("error");
+                    res.body.error.should.be.a("string");
+                    res.body.error.should.eq("There is no group name or owner property in the request!");
                     done();
                 });
         });
@@ -69,6 +85,7 @@ describe("Groups", () => {
             let group = { name: "aGroupName" };
             chai.request(server)
                 .post("/api/1.0/group")
+                .set("Authorization", "Bearer " + loginToken)
                 .send(group)
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -82,16 +99,17 @@ describe("Groups", () => {
     // Test the /GET/:id group
     describe("/GET/:id group", () => {
         it("it should GET a group by the given id", (done) => {
-            let group = new groupModel({name: "aGroupName"});
+            let group = new groupModel({ name: "aGroupName", owner: 1, members: [{id: 1, password: "groupPW"}], });
             group.save((err, group) => {
                 chai.request(server)
                     .get("/api/1.0/group/" + group._id)
+                    .set("Authorization", "Bearer " + loginToken)
                     .send(group)
                     .end((err, res) => {
                         res.should.have.status(200);
                         res.body.should.be.a("object");
                         res.body.should.have.property("name").eql("aGroupName");
-                        res.body.should.have.property("_id").eql(String(group._id));
+                        res.body.should.have.property("_id").eql(group._id);
                         done();
                     });
             });
@@ -101,16 +119,17 @@ describe("Groups", () => {
     // Test the /PATCH/:id route
     describe("/PATCH/:id group", () => {
         it("it should UPDATE a group by the given id", (done) => {
-            let group = new groupModel({name: "aGroupName"});
+            let group = new groupModel({ name: "aGroupName", owner: 1, members: [{id: 1, password: "groupPW"}], });
             group.save((err, group) => {
                 chai.request(server)
                     .patch("/api/1.0/group/" + group._id)
+                    .set("Authorization", "Bearer " + loginToken)
                     .send({name: "otherGroupName"})
                     .end((err, res) => {
                         res.should.have.status(200);
                         res.body.should.be.a("object");
-                        res.body.should.have.property("nModified").eql(1);
-                        res.body.should.have.property("ok").eql(1);
+                        res.body.should.have.property("_id");
+                        res.body.should.have.property("name").eq("otherGroupName");
                         done();
                     });
             });
@@ -120,10 +139,11 @@ describe("Groups", () => {
     // Test the /DELETE/:id route
     describe("/DELETE/:id group", () => {
         it("it should DELETE a group by the given id", (done) => {
-            let group = new groupModel({name: "aGroupName"});
+            let group = new groupModel({ name: "aGroupName", owner: 1, members: [{id: 1, password: "groupPW"}], });
             group.save((err, group) => {
                 chai.request(server)
                     .del("/api/1.0/group/" + group._id)
+                    .set("Authorization", "Bearer " + loginToken)
                     .end((err, res) => {
                         res.should.have.status(204);
                         done();
