@@ -85,9 +85,8 @@ export class GroupRouter extends BaseRouter {
                 res.status(200);
                 res.json(groups);
             })
-            .catch(err => {
-                res.status(500);
-                res.send(err);
+            .catch(() => {
+                res.sendStatus(500);
             });
     }
 
@@ -120,9 +119,8 @@ export class GroupRouter extends BaseRouter {
                     res.status(200);
                     res.json(group);
                 })
-                .catch((err) => {
-                    res.status(500);
-                    res.send(err);
+                .catch(() => {
+                    res.sendStatus(500);
                 });
         }).catch((err) => {
             res.status(400);
