@@ -49,7 +49,7 @@ deploy_develop:
     - ssh -v fwe@h2652485.stratoserver.net "pm2 restart all"
     - cd "${CI_PROJECT_DIR}/landingpage"
     - npm install
-    - rsync -avz landingpage/ "fwe@h2652485.stratoserver.net:/home/fwe/passwordmanager/landingpage/${CI_COMMIT_REF_NAME}"
+    - rsync -avz ./ "fwe@h2652485.stratoserver.net:/home/fwe/passwordmanager/landingpage/${CI_COMMIT_REF_NAME}"
     - ssh -v fwe@h2652485.stratoserver.net "cd /home/fwe/passwordmanager/${CI_COMMIT_REF_NAME} && bash ./build.sh"
   environment:
     name: $CI_COMMIT_REF_NAME
