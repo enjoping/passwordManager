@@ -12,3 +12,4 @@ cp -r ./frontend ./build/application
 mv ./build/application/frontend ./build/application/dist
 cp -r ./installation ./build/application/
 tar czf build.tar.gz ./build
+cp build.tar.gz ../landingpage/

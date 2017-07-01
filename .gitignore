@@ -50,3 +50,4 @@ Thumbs.db
 /db/*
 backend/build
 build.tar.gz
+landingpage/node_modules
