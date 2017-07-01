@@ -115,20 +115,21 @@ export class SecurityNoteRouter extends BaseRouter {
      * @param res
      */
     protected create(req: Request, res: Response): void {
-        const newSecurityNote = SecurityNoteValidator.validateSecurityNoteSchema(req);
-        if (!newSecurityNote.hasOwnProperty("error")) {
-            newSecurityNote.save()
-                .then(securityNote => {
-                    res.status(200);
-                    res.json(securityNote);
-                })
-                .catch(() => {
-                    res.sendStatus(500);
-                })
-        } else {
-            res.status(400);
-            res.send(newSecurityNote);
-        }
+        SecurityNoteValidator.validateSecurityNoteSchema(req)
+            .then(newSecurityNote => {
+                newSecurityNote.save()
+                    .then(securityNote => {
+                        res.status(200);
+                        res.json(securityNote);
+                    })
+                    .catch(() => {
+                        res.sendStatus(500);
+                    })
+            })
+            .catch(err => {
+                res.status(400);
+                res.send(err);
+            });
     }
 
     /**
@@ -137,28 +138,29 @@ export class SecurityNoteRouter extends BaseRouter {
      * @param res
      */
     protected update(req: Request, res: Response): void {
-        const securityNote = SecurityNoteValidator.validateSecurityNoteSchema(req);
-        if (typeof securityNote["errors"] === "undefined") {
-            securityNoteModel.findById(req.params.id)
-                .then(securityNote => {
-                    Object.assign(securityNote, req.body).save()
-                        .then(securityNote => {
-                            res.status(200);
-                            res.json(securityNote);
-                        })
-                        .catch(err => {
-                            res.status(400);
-                            res.send(err);
-                        })
-                })
-                .catch(err => {
-                    res.status(400);
-                    res.send(err);
-                });
-        } else {
-            res.status(400);
-            res.send(securityNote);
-        }
+        SecurityNoteValidator.validateSecurityNoteSchema(req)
+            .then(securityNoteModel => {
+                securityNoteModel.findById(req.params.id)
+                    .then(securityNote => {
+                        Object.assign(securityNote, req.body).save()
+                            .then(securityNote => {
+                                res.status(200);
+                                res.json(securityNote);
+                            })
+                            .catch(err => {
+                                res.status(400);
+                                res.send(err);
+                            })
+                    })
+                    .catch(err => {
+                        res.status(400);
+                        res.send(err);
+                    });
+            })
+            .catch(err => {
+                res.status(400);
+                res.send(err);
+            });
     }
 
     /**

@@ -7,7 +7,7 @@ import { BaseValidator } from "./baseValidator";
 const groupModel = require("../models/groupModel");
 
 export class GroupValidator extends BaseValidator {
-    public static validateGroupSchema(req: Request): any {
+    public static validateGroupSchema(req: Request): Promise<any> {
         return new Promise((fulfill, reject) => {
             if (typeof req.body === "object") {
                 if (typeof req.body.name !== "undefined") {
