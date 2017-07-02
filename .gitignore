@@ -45,3 +45,9 @@ Thumbs.db
 # local config file
 /config/default.json
 /config/test.json
+
+#DB
+/db/*
+backend/build
+build.tar.gz
+landingpage/node_modules

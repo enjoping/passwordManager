@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create new group</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross clicked')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <input class="form-control" placeholder="Name of the group" [(ngModel)]="group.name" name="groupName" />
+    </div>
+
+    <hr />
+
+    <div *ngFor="let member of group.members" class="form-group row">
+      <div class="col-10 col-md-11">
+        {{member.user.email}}
+      </div>
+      <div class="col-2 col-md-1 text-right"><span class="fa fa-remove"(click)="removeUser(member.user.email)"></span></div>
+    </div>
+
+    <hr />  
+
+    <div class="form-group row">
+      <div class="col-8 col-md-9">
+        <input class="form-control" placeholder="Email address" #newEmailInput [ngbTypeahead]="search" />
+      </div>
+      <div class="col-4 col-md-3">
+        <button class="btn btn-primary" (click)="addNewUser(newEmailInput)">Add</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="createGroup()">Create</button>
+</div>

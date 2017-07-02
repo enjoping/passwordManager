@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Login</h2>
+  </div>
+  <div class="card-block">
+    <form>
+      <div class="form-group" [ngClass]="{ 'has-danger': loginFailed}">
+        <input class="form-control" type="text" placeholder="Username" #txtUsername
+               (input)="loginFailed = false;" />
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-danger': loginFailed}">
+        <input class="form-control" type="password" placeholder="Password" #txtPassword
+               (input)="loginFailed = false;" />
+        <div class="form-control-feedback" *ngIf="loginFailed">Sorry, the login failed.</div>
+      </div>
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-lg btn-outline-secondary"
+                (click)="login(txtUsername.value, txtPassword.value)">Login</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row col-md-10">
+    <button *ngIf="!detailView" type="button" class="btn btn-primary btn-block custom"
+            (click)="toggleDetail(true); $event.stopPropagation()">Details</button>
+    <button *ngIf="detailView" type="button" class="btn btn-primary btn-block custom"
+            (click)="toggleDetail(false); $event.stopPropagation()">Basic</button>
+    <table class="table table-striped">
+      <thead>
+      <tr *ngIf="!detailView">
+        <th class="first">Name</th>
+        <th class="first">Email</th>
+        <th class="second"> </th>
+        <th class="second"></th>
+      </tr>
+      <tr *ngIf="detailView">
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Key</th>
+        <th class="second"> </th>
+        <th class="second"> </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users | async">
+        <!--Detail Id-->
+        <td *ngIf="detailView">
+          {{user._id}}
+        </td>
+        <!--Username-->
+        <th scope="row" *ngIf="user._id === editUserId">
+          <input type="text" (keyup.enter)="edit(null); update(user); $event.stopPropagation()" class="form-control" [(ngModel)]="user.username" />
+        </th>
+        <th scope="row" *ngIf="user._id !== editUserId" (click)="edit(user)">
+          {{user.username}}
+        </th>
+        <!--Email-->
+        <td *ngIf="user._id === editUserId">
+          <input type="text" (keyup.enter)="edit(null); update(user); $event.stopPropagation()" class="form-control" [(ngModel)]="user.email" />
+        </td>
+        <td *ngIf="user._id !== editUserId" (click)="edit(user)">
+          {{user.email}}
+        </td>
+        <!--Detail key-->
+        <td *ngIf="detailView">
+          <span class="glyphicon">&#xe205;</span>
+          {{user.publicKey}}
+        </td>
+        <!--Save/Edit-->
+        <td>
+          <div class="span5">
+            <button type="button" class="btn btn-primary custom" *ngIf="user._id === editUserId"
+                    (click)="edit(null); update(user); $event.stopPropagation()">Save</button>
+            <button type="button" class="btn btn-primary custom" *ngIf="user._id !== editUserId"
+                    (click)="edit(user); $event.stopPropagation()">Edit</button>
+          </div>
+        </td>
+        <!--Delete-->
+        <td>
+          <button type="button" class="btn btn-primary btn-block custom"
+                  (click)="remove(user); $event.stopPropagation()">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

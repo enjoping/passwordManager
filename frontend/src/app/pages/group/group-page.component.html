@@ -1,0 +1,10 @@
+<div class="container page">
+  <pm-page-header *ngIf="group"
+    [button]="'Add new credentials'"
+    [header]="group.name"
+    [search]="'Search for credentials...'"
+    (buttonClicked)="openModal()"></pm-page-header>
+
+  <pm-credential-list *ngIf="group" [credentials]="group.securityNotes" [group]="group"></pm-credential-list>
+</div>
+

@@ -1,0 +1,59 @@
+image: node:7.10.0
+
+cache:
+  paths:
+   - backend/node_modules/
+   - frontend/node_modules/
+
+before_script:
+  - cd "${CI_PROJECT_DIR}/backend"
+  - npm install
+  - cd "${CI_PROJECT_DIR}/frontend"
+  - npm install -g @angular/cli
+  - npm install
+
+stages:
+  - test
+  - deploy
+
+test:
+  stage: test
+  script:
+    - echo "Running tests"
+    - cd "${CI_PROJECT_DIR}/frontend"
+    - ng lint
+    - cd "${CI_PROJECT_DIR}/backend"
+    - npm run lint
+
+deploy_develop:
+  stage: deploy
+  script:
+    - echo "Building the app"
+    - cd "${CI_PROJECT_DIR}/frontend"
+    - ng build -e ${CI_COMMIT_REF_NAME}
+    - cp -rv dist ../backend
+    - rm -r dist
+    - ng build -e build
+    - mv dist frontend
+    - cp -rv frontend ../backend
+    - echo "Deploy to develop server"
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - 'which rsync || ( apt-get update -y && apt-get install rsync -y )'
+    - mkdir "${HOME}/.ssh"
+    - cd "${HOME}/.ssh"
+    - echo "${SSH_PRIVATE_KEY}" > id_rsa
+    - chmod 700 id_rsa
+    - echo "${SSH_HOST_KEY}" > known_hosts
+    - cd "${CI_PROJECT_DIR}"
+    - rsync -avz backend/ "fwe@h2652485.stratoserver.net:/home/fwe/passwordmanager/${CI_COMMIT_REF_NAME}"
+    - ssh -v fwe@h2652485.stratoserver.net "pm2 restart all"
+    - cd "${CI_PROJECT_DIR}/landingpage"
+    - npm install
+    - rsync -avz ./ "fwe@h2652485.stratoserver.net:/home/fwe/passwordmanager/landingpage/${CI_COMMIT_REF_NAME}"
+    - ssh -v fwe@h2652485.stratoserver.net "cd /home/fwe/passwordmanager/${CI_COMMIT_REF_NAME} && bash ./build.sh"
+  environment:
+    name: $CI_COMMIT_REF_NAME
+    url: http://fwe.h2652485.stratoserver.net
+  only:
+    - develop
+    - master

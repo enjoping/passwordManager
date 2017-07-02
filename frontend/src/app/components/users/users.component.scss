@@ -1,0 +1,60 @@
+table {
+  table-layout: fixed;
+}
+
+th.first {
+  width: 33%;
+}
+th.second {
+  width: 17%;
+}
+
+.custom {
+  width: 74px !important;
+}
+
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)
+{
+  .custom {
+    width: 100% !important;
+  }
+
+  /* Force table to not be like tables anymore */
+  table, thead, tbody, th, td, tr
+  {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr
+  {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  tr
+  {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  td
+  {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    white-space: nowrap;
+  }
+
+  td:before
+  {
+    /* Now like a table header */
+    position: relative; /* Top/left values mimic padding */
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    white-space: nowrap;
+  }
+}
