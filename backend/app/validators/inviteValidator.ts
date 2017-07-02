@@ -26,4 +26,29 @@ export class InviteValidator extends BaseValidator {
             }));
         });
     }
+
+    public static validateInviteStatus(req: Request): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (typeof req.body !== "object") {
+                reject({ error: "The request was no object!" });
+            }
+            if (typeof req.body.inviteToken === "undefined") {
+                reject({ error: "There is no invite token in the request!" });
+            }
+            inviteModel.findOne({inviteToken: req.body.inviteToken})
+                .then(invite => {
+                    if (invite == null) {
+                        reject({ error: "There is no invite with the given token in the database! User creation aborted!" })
+                    }
+                    if (Date.now() - 60000 * 60  < invite.creationDate) {
+                        resolve(invite);
+                    } else {
+                        reject({ error: "Invite time expired!" });
+                    }
+                })
+                .catch(() => {
+                    reject({ error: "Unknown error occurred." })
+                });
+        });
+    }
 }

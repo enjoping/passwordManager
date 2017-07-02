@@ -14,10 +14,10 @@ const connection = database.getConnection();
  * User schema for MongoDB
  */
 const UserSchema = new Schema({
-    email: { type: String, required: true},
-    password: String,
-    publicKey: { type: String, required: true},
-    username: {type: String, required: true},
+    email: { type: String, required: true },
+    publicKey: { type: String, required: true },
+    username: {type: String, required: true },
+    roleId: { type: Number, required: true }
 });
 
 UserSchema.plugin(passportLocalMongoose);

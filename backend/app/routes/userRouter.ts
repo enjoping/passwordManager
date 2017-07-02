@@ -1,12 +1,12 @@
 /**
  * Created by marcelboes on 05.06.17.
  */
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 const userModel = require("./../models/userModel");
-const inviteModel = require("../models/inviteModel");
 
 import { BaseRouter } from "./baseRouter";
 import { UserValidator } from "../validators/userValidator";
+import { InviteValidator } from "../validators/inviteValidator";
 
 export class UserRouter extends BaseRouter {
 
@@ -18,15 +18,71 @@ export class UserRouter extends BaseRouter {
     protected setRoutes() {
         this.router.route(this.basePath + "/")
             .get(this.authenticate, this.list)
-            .post(this.create);
+            .post(this.authenticate, this.create);
 
         this.router.route(this.basePath + "/:id")
             .get(this.authenticate, this.get)
-            .patch(this.authenticate, this.update)
-            .delete(this.authenticate, this.erase);
+            .patch(this.authenticate, UserRouter.shouldUserAccess, this.update)
+            .delete(this.authenticate, UserRouter.shouldUserAccess, this.erase);
 
         this.router.route(this.basePath + "/install")
             .post(this.install);
+    }
+
+    /**
+     * This method checks, if the current user are allowed to access the admin functionality.
+     * @param req
+     * @param res
+     * @param next
+     */
+    public static shouldUserAccess(req: Request, res: Response, next: NextFunction): void {
+        if (req.user.roleId == 1)
+            next();
+        else {
+            res.status(401);
+            res.send({ error: "User is not authorized to do that!" })
+        }
+    }
+
+    /**
+     * POST /user/install route to create a new admin user.
+     * This method will be called from our install script and create an admin user, if the current user model is empty.
+     * Otherwise it returns status code 403.
+     * @param req
+     * @param res
+     */
+    private install(req: Request, res: Response): void {
+        userModel.find()
+            .then(users => {
+                if (users.length == 0) {
+                    UserValidator.validateUserSchema(req, 1)
+                        .then(user => {
+                            userModel.register(user, req.body.password, (err, account) => {
+                                if (err) {
+                                    res.status(400);
+                                    res.json({ error: err.message });
+                                    return;
+                                }
+                                const savedUser = {
+                                    __v: account.__v,
+                                    _id: account._id,
+                                    username: account.username,
+                                };
+                                res.json(savedUser);
+                            });
+                        })
+                        .catch(err => {
+                            res.status(400);
+                            res.json(err);
+                        });
+                } else {
+                    res.status(403);
+                    res.send({ error: "The install script was already executed! No admin user was created!" });
+                }
+            })
+            .catch(() => {
+                res.sendStatus(500);
+            });
     }
 
     /**
@@ -68,26 +124,31 @@ export class UserRouter extends BaseRouter {
      * @param res
      */
     protected create(req: Request, res: Response): void {
-        UserValidator.validateUserSchema(req)
+        UserValidator.validateUserSchema(req, 2)
             .then(user => {
-                userModel.register(user, req.body.password, (err, account) => {
-                    if (err) {
-                        res.status(400);
-                        res.json({ error: err.message });
-                        return;
-                    }
-                    const savedUser = {
-                        __v: account.__v,
-                        _id: account._id,
-                        username: account.username,
-                    };
-                    inviteModel.findOneAndRemove({ email: account.email} )
-                        .then(invite => {
-                            if (invite != null)
+                InviteValidator.validateInviteStatus(req)
+                    .then(invite => {
+                        userModel.register(user, req.body.password, (err, account) => {
+                            if (err) {
+                                res.status(400);
+                                res.json({ error: err.message });
+                                return;
+                            }
+                            invite.remove({}, () => {
                                 console.log("Successfully removed invite with email address " + invite.email);
+                            });
+                            const savedUser = {
+                                __v: account.__v,
+                                _id: account._id,
+                                username: account.username,
+                            };
+                            res.json(savedUser);
                         });
-                    res.json(savedUser);
-                });
+                    })
+                    .catch(err => {
+                        res.status(400);
+                        res.send(err);
+                    });
             })
             .catch(err => {
                 res.status(400);

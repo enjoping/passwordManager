@@ -26,7 +26,7 @@ describe("Groups", () => {
         userModel.remove({}, () => {
             console.log("All users was removed successful.");
             chai.request(server)
-                .post("/api/1.0/user")
+                .post("/api/1.0/user/install")
                 .send(config.get("user"))
                 .end((err, res) => {
                     res.should.have.status(200);

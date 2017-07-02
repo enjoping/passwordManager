@@ -6,7 +6,7 @@ import { BaseValidator } from "./baseValidator";
 const userModel = require("../models/userModel");
 
 export class UserValidator extends BaseValidator {
-    public static validateUserSchema(req: Request): Promise<any> {
+    public static validateUserSchema(req: Request, roleId: number = 2): Promise<any> {
         return new Promise((resolve, reject) => {
             if (typeof req.body !== "object") {
                 reject({ error: "The request was no object!" });
@@ -18,10 +18,8 @@ export class UserValidator extends BaseValidator {
             const user = new userModel({
                 email: this.escapeHTML(req.body.email),
                 username: this.escapeHTML(req.body.username),
+                roleId: roleId
             });
-            if (typeof req.body.password !== "undefined") {
-                user.password = req.body.password;
-            }
             if (typeof req.body.publicKey !== "undefined") {
                 user.publicKey = req.body.publicKey;
             }
