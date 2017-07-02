@@ -31,7 +31,7 @@ p {
     width: 100%;
 }
 
-input[type="text"], input[type="email"] {
+input[type="text"], input[type="email"], input[type="password"] {
     width: 98%;
     padding: 15px 0 15px 8px;
     border-radius: 5px;
