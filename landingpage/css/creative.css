@@ -135,7 +135,7 @@ header {
   text-align: center;
 }
 header .header-background {
-  position: relative;
+  position: absolute;
   width: 100%;
   height: 100%;
   -webkit-background-size: cover;
