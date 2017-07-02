@@ -27,6 +27,7 @@ export class LoginRouter extends BaseRouter {
     private generateToken(req: Request, res: Response, next: NextFunction) {
         req.headers.token = jwt.sign({
             id: req.user._id,
+            roleId: req.user.roleId
         } as object, secretToken, {
             expiresIn: 7200,
         });

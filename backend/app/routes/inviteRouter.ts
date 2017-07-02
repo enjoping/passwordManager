@@ -7,6 +7,7 @@ const userModel = require("./../models/userModel");
 
 import { BaseRouter } from "./baseRouter";
 import { InviteValidator } from "../validators/inviteValidator";
+import { UserRouter } from "./userRouter";
 
 export class InviteRouter extends BaseRouter {
 
@@ -17,13 +18,13 @@ export class InviteRouter extends BaseRouter {
 
     protected setRoutes() {
         this.router.route(this.basePath + "/")
-            .get(this.authenticate, this.list)
-            .post(this.create);
+            .get(this.authenticate, UserRouter.shouldUserAccess, this.list)
+            .post(this.authenticate, UserRouter.shouldUserAccess, this.create);
 
         this.router.route(this.basePath + "/:id")
-            .get(this.get)
-            .patch(this.authenticate, this.update)
-            .delete(this.authenticate, this.erase);
+            .get(this.authenticate, UserRouter.shouldUserAccess, this.get)
+            .patch(this.authenticate, UserRouter.shouldUserAccess, this.update)
+            .delete(this.authenticate, UserRouter.shouldUserAccess, this.erase);
     }
 
     /**
