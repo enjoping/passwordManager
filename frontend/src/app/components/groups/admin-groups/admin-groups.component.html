@@ -3,6 +3,7 @@
     <table class="table table-striped">
       <thead>
       <tr>
+        <th class="first">Group Id</th>
         <th class="first">Name</th>
         <th class="first">Owner</th>
         <th class="second"> </th>
@@ -11,6 +12,10 @@
       </thead>
       <tbody>
       <tr *ngFor="let group of groups | async">
+        <!--Group Id-->
+        <td>
+          {{group._id}}
+        </td>
         <!--Groupname-->
         <th scope="row" *ngIf="group._id === editGroupId">
           <input type="text" (keyup.enter)="edit(null); update(group); $event.stopPropagation()" class="form-control" [(ngModel)]="group.name" />
@@ -23,7 +28,7 @@
           <input type="text" (keyup.enter)="edit(null); update(group); $event.stopPropagation()" class="form-control" [(ngModel)]="group.owner" />
         </td>
         <td *ngIf="group._id !== editGroupId" (click)="edit(group)">
-          {{group.owner}}
+          {{emailForOwnerId(group.owner)}}
         </td>
         <!--Save/Edit-->
         <td>
