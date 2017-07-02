@@ -43,8 +43,12 @@
         </td>
         <!--Detail key-->
         <td *ngIf="detailView">
-          <span class="glyphicon">&#xe205;</span>
-          {{user.publicKey}}
+          <div class="input-group">
+            <!-- <input type="text" class="form-control" [(ngModel)]=user.publicKey> -->
+            <span class="input-group-btn">
+              <button class="btn btn-default" [class.btn-success]= "checkIfCopied(user._id)" type="button" ngxClipboard [cbContent]=user.publicKey (cbOnSuccess)="isCopied = user._id">copy</button>
+            </span>
+          </div>
         </td>
         <!--Save/Edit-->
         <td>
