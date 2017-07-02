@@ -107,56 +107,44 @@ aside {
 }
 @media (min-width: 768px) {
   .navbar-default {
-    background-color: transparent;
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-  .navbar-default .navbar-header .navbar-brand {
-    color: rgba(255, 255, 255, 0.7);
-  }
-  .navbar-default .navbar-header .navbar-brand:hover,
-  .navbar-default .navbar-header .navbar-brand:focus {
-    color: white;
-  }
-  .navbar-default .nav > li > a,
-  .navbar-default .nav > li > a:focus {
-    color: rgba(255, 255, 255, 0.7);
-  }
-  .navbar-default .nav > li > a:hover,
-  .navbar-default .nav > li > a:focus:hover {
-    color: white;
-  }
-  .navbar-default.affix {
     background-color: white;
     border-color: rgba(34, 34, 34, 0.05);
   }
-  .navbar-default.affix .navbar-header .navbar-brand {
+  .navbar-default .navbar-header .navbar-brand {
     color: #F05F40;
     font-size: 14px;
   }
-  .navbar-default.affix .navbar-header .navbar-brand:hover,
-  .navbar-default.affix .navbar-header .navbar-brand:focus {
+  .navbar-default .navbar-header .navbar-brand:hover,
+  .navbar-default .navbar-header .navbar-brand:focus {
     color: #eb3812;
   }
-  .navbar-default.affix .nav > li > a,
-  .navbar-default.affix .nav > li > a:focus {
+  .navbar-default .nav > li > a,
+  .navbar-default .nav > li > a:focus {
     color: #222222;
   }
-  .navbar-default.affix .nav > li > a:hover,
-  .navbar-default.affix .nav > li > a:focus:hover {
+  .navbar-default .nav > li > a:hover,
+  .navbar-default .nav > li > a:focus:hover {
     color: #F05F40;
   }
 }
 header {
   position: relative;
   width: 100%;
+  height: 100%;
   min-height: auto;
+  text-align: center;
+}
+header .header-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
   background-position: center;
   background-image: url('https://s3.amazonaws.com/cp-s3/wp-content/uploads/2014/08/17031110/encryption_1-e1430765256128-1200x600.jpg');
-  text-align: center;
+  filter: brightness(40%);
 }
 header .header-content {
   position: relative;
@@ -170,8 +158,7 @@ header .header-content .header-content-inner h1 {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 30px;
-  color: #f05f40;
-  text-shadow: 1px 2px #9e9e9e;
+  color: #fff;
 }
 header .header-content .header-content-inner hr {
   margin: 30px auto;
@@ -180,7 +167,6 @@ header .header-content .header-content-inner p {
   font-weight: 300;
   font-family: monospace;
   color: white;
-  text-shadow: 2px 2px black;
   font-size: 20px;
   margin-bottom: 50px;
 }
