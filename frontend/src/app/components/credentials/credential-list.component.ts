@@ -10,7 +10,7 @@ import {LoginService} from '../../services/login.service';
   templateUrl: './credential-list.component.html',
   styleUrls: [ './credential-list.component.scss' ]
 })
-export class CredentialListComponent implements OnInit{
+export class CredentialListComponent {
 
   @Input() group: Group;
   @Input() credentials: SecurityNote[];
@@ -19,9 +19,6 @@ export class CredentialListComponent implements OnInit{
               private keyStorage: KeyStorageService,
               private loginService: LoginService) { }
 
-
-  ngOnInit(): void {
-  }
 
   showPassword(event, field) {
     this.keyStorage.getGroupKey(this.group, this.loginService.currentUser.username)

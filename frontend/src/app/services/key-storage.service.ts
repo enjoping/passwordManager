@@ -12,11 +12,11 @@ export class KeyStorageService {
 
   constructor(private eventService: EventService) {
     if (!window.crypto || !window.crypto.subtle) {
-      alert("Your current browser does not support the Web Cryptography API! This page will not work.");
+      alert('Your current browser does not support the Web Cryptography API! This page will not work.');
       return;
     }
     if (!window.indexedDB) {
-      alert("IndexedDB is not supported by this browser.");
+      alert('IndexedDB is not supported by this browser.');
     }
   }
 
@@ -33,7 +33,7 @@ export class KeyStorageService {
         reject(evt.error);
       };
       req.onblocked = function () {
-        reject(new Error("Database already open"));
+        reject(new Error('Database already open'));
       };
 
       // If the database is being created or upgraded to a new version,
@@ -42,8 +42,8 @@ export class KeyStorageService {
         that.db = evt.target.result;
         if (!that.db.objectStoreNames.contains(that.objectStoreName)) {
           const objStore = that.db.createObjectStore(that.objectStoreName, {autoIncrement: true});
-          objStore.createIndex("name", "name", {unique: false});
-          objStore.createIndex("spki", "spki", {unique: false});
+          objStore.createIndex('name', 'name', {unique: false});
+          objStore.createIndex('spki', 'spki', {unique: false});
         }
       };
     });
@@ -53,23 +53,21 @@ export class KeyStorageService {
     return new Promise((fulfill) => {
       let toBeEncrypted = 0;
       securityNote.fields.forEach((field) => {
-        if(field.fieldType === 'password') {
+        if (field.fieldType === 'password') {
           toBeEncrypted++;
-          let counter = window.crypto.getRandomValues(new Uint8Array(16));
-          console.log('attempt to encrypt field', field);
+          const counter = window.crypto.getRandomValues(new Uint8Array(16));
 
           this.encryptField(groupKey, field.value, counter)
             .then((encrypted) => {
-              console.log('field encrypted', field);
               field.value = this.ab2str8(encrypted);
               field.counter = this.ab2str8(counter);
-              if(--toBeEncrypted === 0) {
+              if (--toBeEncrypted === 0) {
                 fulfill(securityNote);
               }
             });
         }
       });
-      if(toBeEncrypted === 0) {
+      if (toBeEncrypted === 0) {
         fulfill(securityNote);
       }
     });
@@ -77,9 +75,7 @@ export class KeyStorageService {
 
   saveKey(publicKey, privateKey, name) {
     return new Promise((fulfill, reject) => {
-      this.eventService.log('trying to save keypair');
       window.crypto.subtle.exportKey('spki', publicKey).then((spki) => {
-        this.eventService.log('key exported');
 
         const savedObject = {
           publicKey: publicKey,
@@ -92,9 +88,6 @@ export class KeyStorageService {
 
         const transaction = this.getTransaction(
           () => {
-            this.eventService.log('key successfully saved');
-            this.eventService.log(savedObject);
-
             fulfill();
           },
           (evt) => {
@@ -105,8 +98,6 @@ export class KeyStorageService {
         objectStore.add(savedObject);
 
       }, (error) => {
-        this.eventService.log('an error occured');
-        this.eventService.log(error);
         reject(error);
       });
     });
@@ -115,7 +106,7 @@ export class KeyStorageService {
   getGroupKey(group, username): Promise<any> {
     return this.getKey('name', 'passwordManager_' + username)
       .then((keyPair) => {
-        return this.decrypt(keyPair.privateKey, group.members[0].password)
+        return this.decrypt(keyPair.privateKey, group.members[0].password);
       })
       .then((password) => {
         return this.importGroupKey(password);
@@ -132,14 +123,14 @@ export class KeyStorageService {
         reject(evt.error);
       });
       const objectStore = transaction.objectStore(that.objectStoreName);
-      if (propertyName === "id") {
+      if (propertyName === 'id') {
         request = objectStore.get(propertyValue);
-      } else if (propertyName === "name") {
-        request = objectStore.index("name").get(propertyValue);
-      } else if (propertyName === "spki") {
-        request = objectStore.index("spki").get(propertyValue);
+      } else if (propertyName === 'name') {
+        request = objectStore.index('name').get(propertyValue);
+      } else if (propertyName === 'spki') {
+        request = objectStore.index('spki').get(propertyValue);
       } else {
-        reject(new Error("No such property: " + propertyName));
+        reject(new Error('No such property: ' + propertyName));
       }
 
       request.onsuccess = function (evt) {
@@ -156,23 +147,24 @@ export class KeyStorageService {
     const that = this;
     return new Promise(function (fulfill, reject) {
 
-      let list = [];
+      const list = [];
       const transaction = that.getTransaction(() => {
         fulfill();
       }, (evt) => {
         reject(evt.error);
       });
+
       const objectStore = transaction.objectStore(that.objectStoreName);
       const cursor = objectStore.openCursor();
 
-      cursor.onsuccess = function (evt) {
+      cursor.onsuccess = (evt) => {
         if (evt.target.result) {
           list.push({id: evt.target.result.key, value: evt.target.result.value});
           evt.target.result.continue();
         } else {
           fulfill(list);
         }
-      }
+      };
     });
   };
 
@@ -186,7 +178,7 @@ export class KeyStorageService {
   };
 
   getTransaction(complete, error) {
-    let transaction = this.db.transaction([this.objectStoreName], "readwrite");
+    const transaction = this.db.transaction([this.objectStoreName], 'readwrite');
     transaction.onerror = error;
     transaction.onabort = error;
     transaction.oncomplete = complete;
@@ -196,17 +188,17 @@ export class KeyStorageService {
   encrypt(publicKey, string) {
     return window.crypto.subtle.encrypt(
       {
-        name: "RSA-OAEP",
+        name: 'RSA-OAEP',
       },
       publicKey,
       this.str2ab(string)
-    )
+    );
   }
 
   decrypt(privateKey, data) {
     return window.crypto.subtle.decrypt(
       {
-        name: "RSA-OAEP",
+        name: 'RSA-OAEP',
       },
       privateKey,
       this.str2ab8(data)
@@ -216,7 +208,7 @@ export class KeyStorageService {
   encryptField(key, password, counter) {
     return window.crypto.subtle.encrypt(
       {
-        name: "AES-CTR",
+        name: 'AES-CTR',
         counter: counter,
         length: 128,
       },
@@ -228,7 +220,7 @@ export class KeyStorageService {
   decryptField(key, password, counter) {
     return window.crypto.subtle.decrypt(
       {
-        name: "AES-CTR",
+        name: 'AES-CTR',
         counter: this.str2ab8(counter),
         length: 128,
       },
@@ -241,13 +233,13 @@ export class KeyStorageService {
     return new Promise(
       (resolve, reject) => {
         window.crypto.subtle.generateKey({
-            name: "RSA-OAEP",
+            name: 'RSA-OAEP',
             modulusLength: 4096,
             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-            hash: {name: "SHA-256"},
+            hash: {name: 'SHA-256'},
           },
           true,
-          ["encrypt", "decrypt"]
+          ['encrypt', 'decrypt']
         ).then(
           (success) => {
             resolve(success);
@@ -255,7 +247,8 @@ export class KeyStorageService {
           (error) => {
             reject(error);
           }
-        )}
+        );
+      }
     );
   }
 
@@ -263,9 +256,9 @@ export class KeyStorageService {
     return new Promise(
       (resolve, reject) => {
         window.crypto.subtle.generateKey({
-            name: "AES-CBC",
+            name: 'AES-CBC',
             length: 256,
-          }, true, ["encrypt", "decrypt"])
+          }, true, ['encrypt', 'decrypt'])
           .then(
             (key) => {
               resolve(key);
@@ -280,29 +273,29 @@ export class KeyStorageService {
   importGroupKey(password) {
     password = this.str2ab8(this.ab2str(password));
     return window.crypto.subtle.importKey(
-      "raw",
+      'raw',
       password,
       {
-        name: "AES-CTR",
+        name: 'AES-CTR',
       },
       false,
-      ["encrypt", "decrypt"]
+      ['encrypt', 'decrypt']
     );
   }
 
   str2ab(str) {
-    let buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
-    let bufView = new Uint16Array(buf);
-    for (let i = 0, strLen = str.length; i < strLen; i++) {
+    const buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
+    const bufView = new Uint16Array(buf);
+    for (let i = 0; i < str.length; i++) {
       bufView[i] = str.charCodeAt(i);
     }
     return buf;
   }
 
   str2ab8(str) {
-    let buf = new ArrayBuffer(str.length);
-    let bufView = new Uint8Array(buf);
-    for (let i = 0, strLen = str.length; i < strLen; i++) {
+    const buf = new ArrayBuffer(str.length);
+    const bufView = new Uint8Array(buf);
+    for (let i = 0; i < str.length; i++) {
       bufView[i] = str.charCodeAt(i);
     }
     return buf;
@@ -335,26 +328,26 @@ export class KeyStorageService {
   exportRawKey(key) {
     return new Promise(
       (resolve, reject) => {
-        window.crypto.subtle.exportKey("raw", key)
+        window.crypto.subtle.exportKey('raw', key)
           .then(
-            key => resolve(key),
+            exportedKey => resolve(exportedKey),
             error => reject(error)
           );
       }
-    )
+    );
   }
 
   spki2key(spki) {
     return new Promise((fulfill) => {
       window.crypto.subtle.importKey(
-        "spki",
+        'spki',
         this.str2ab8(spki),
         {
-          name: "RSA-OAEP",
-          hash: {name: "SHA-256"},
+          name: 'RSA-OAEP',
+          hash: {name: 'SHA-256'},
         },
         false,
-        ["encrypt"]
+        ['encrypt']
       ).then((data) => {
         fulfill(data);
       });

@@ -85,7 +85,7 @@ export class CreateGroupComponent {
         return this.keyStorage.getKey('name',
             'passwordManager_' + this.loginService.currentUser.username)
           .then((key) => {
-            return this.keyStorage.encrypt(key.publicKey, this.keyStorage.ab2str8(password))
+            return this.keyStorage.encrypt(key.publicKey, this.keyStorage.ab2str8(password));
           });
       })
       .then((encryptedPassword) => {

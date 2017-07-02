@@ -45,7 +45,7 @@ export class InviteComponent {
             })
             .then(() => {
               return this.keyStorageService.saveKey(keyPair.publicKey, keyPair.privateKey, 'passwordManager_' + username);
-            })
+            });
         })
         .then(() => {
           // The user has been created. Navigate to the login page.
