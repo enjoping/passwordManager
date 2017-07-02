@@ -18,7 +18,7 @@ export class UserRouter extends BaseRouter {
     protected setRoutes() {
         this.router.route(this.basePath + "/")
             .get(this.authenticate, this.list)
-            .post(this.authenticate, this.create);
+            .post(this.create);
 
         this.router.route(this.basePath + "/:id")
             .get(this.authenticate, this.get)
