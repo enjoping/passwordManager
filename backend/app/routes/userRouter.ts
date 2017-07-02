@@ -80,7 +80,7 @@ export class UserRouter extends BaseRouter {
                         });
                 } else {
                     res.status(403);
-                    res.send({ error: "The install script was already executed! No admin user was created!" + users });
+                    res.send({ error: "The install script was already executed! No admin user was created!" });
                 }
             })
             .catch(() => {
