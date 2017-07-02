@@ -24,6 +24,9 @@ export class UserRouter extends BaseRouter {
             .get(this.authenticate, this.get)
             .patch(this.authenticate, this.update)
             .delete(this.authenticate, this.erase);
+
+        this.router.route(this.basePath + "/install")
+            .post(this.install);
     }
 
     /**
