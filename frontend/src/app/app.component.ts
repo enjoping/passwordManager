@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { GroupRepositoryService } from './services/repositories/group-repository.service';
 import { EventReceiver } from './services/event/event-receiver.interface';
 import { EventService } from './services/event/event.service';
+import {KeyStorageService} from './services/key-storage.service';
 
 @Component({
     selector: 'pm-root',
@@ -11,8 +12,15 @@ import { EventService } from './services/event/event.service';
 export class AppComponent implements EventReceiver {
 
   constructor(private groupRepository: GroupRepositoryService,
-              eventService: EventService) {
+              eventService: EventService,
+              keyStorage: KeyStorageService) {
 
+    keyStorage.open().then(() => {
+      keyStorage.listKeys()
+        .then((result) => {
+          console.log(result);
+        });
+    });
     eventService.subscribe(this);
   }
 
