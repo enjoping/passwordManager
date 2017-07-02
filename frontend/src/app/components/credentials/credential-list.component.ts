@@ -21,23 +21,17 @@ export class CredentialListComponent implements OnInit{
 
 
   ngOnInit(): void {
+  }
+
+  showPassword(event, field) {
     this.keyStorage.getGroupKey(this.group, this.loginService.currentUser.username)
       .then((groupKey) => {
-        console.log('group key received');
-        // Decrypt the credentials.
-        this.credentials.forEach((securityNote) => {
-          console.log('security note', securityNote);
-          securityNote.fields.forEach((field) => {
-            if(field.fieldType === 'password') {
-              console.log('decrypting password field', field.value);
-              this.keyStorage.decryptField(groupKey, field.value, field.counter)
-                .then((decrypted) => {
-                  field.value = this.keyStorage.ab2str8(decrypted);
-                  console.log('password field decrypted', field.value);
-                });
-            }
+        this.keyStorage.decryptField(groupKey, field.value, field.counter)
+          .then((decrypted) => {
+            const container = document.createElement('div');
+            container.innerHTML = this.keyStorage.ab2str8(decrypted);
+            event.target.parentNode.replaceChild(container, event.target);
           });
-        });
       });
   }
 
