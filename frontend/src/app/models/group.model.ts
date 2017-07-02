@@ -12,6 +12,11 @@ export default class Group extends Model {
    */
   user: User;
 
+  /**
+   * The encrypted group password.
+   */
+  password: string;
+
   members: Member[] = [ ];
   securityNotes: SecurityNote[] = [ ];
 }

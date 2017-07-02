@@ -9,6 +9,7 @@ import Group from '../../../models/group.model';
 import { GroupRepositoryService } from '../../../services/repositories/group-repository.service';
 import { LoginService } from '../../../services/login.service';
 import { MemberRepositoryService } from '../../../services/repositories/member-repository.service';
+import {KeyStorageService} from '../../../services/key-storage.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class CreateGroupComponent {
               private userRepository: UserRepositoryService,
               private groupRepository: GroupRepositoryService,
               private memberRepository: MemberRepositoryService,
-              private loginService: LoginService) {
+              private loginService: LoginService,
+              private keyStorage: KeyStorageService) {
 
     this.group = this.groupRepository.createModel();
     this.group.user = this.loginService.currentUser;
@@ -74,21 +76,39 @@ export class CreateGroupComponent {
   }
 
   createGroup(): void {
-    this.groupRepository.saveModel(this.group)
+    // Generate the password for the group to be used to encrypt/decrypt the security notes.
+    this.keyStorage.generateGroupKeyPair()
+      .then((keyPair) => {
+        return this.keyStorage.exportRawKey(keyPair);
+      })
+      .then((password) => {
+        return this.keyStorage.getKey('name',
+            'passwordManager_' + this.loginService.currentUser.username)
+          .then((key) => {
+            return this.keyStorage.encrypt(key.publicKey, this.keyStorage.ab2str8(password));
+          });
+      })
+      .then((encryptedPassword) => {
+        this.group.password = this.keyStorage.ab2str8(encryptedPassword);
+        console.log('group password generated', this.group.password);
+        return this.groupRepository.saveModel(this.group);
+      })
       .then((group) => {
+        console.log('group created', group);
+        // The group has been created.
         const promises = [ ];
+        this.memberRepository.setCurrentGroup(this.group);
         this.group.members.forEach((member) => {
           member.group = group._id;
           promises.push(this.memberRepository.saveModel(member));
         });
-        this.memberRepository.setCurrentGroup(this.group);
         return Promise.all(promises);
       })
       .then(() => {
         this.activeModal.dismiss('success');
       })
       .catch((error) => {
-        console.log(error);
+        console.log('error', error);
       });
   }
 }

@@ -11,10 +11,6 @@ import Invite from '../../../models/invite.model';
 })
 export class CreateUserComponent {
   emailAddresses = [ ];
-
-  availableAddresses = [
-    'lukas.schardt@stud.h-da.de'
-  ];
   email = '';
 
   constructor(public activeModal: NgbActiveModal,
@@ -39,11 +35,12 @@ export class CreateUserComponent {
     let i = 0;
     for (const email of this.emailAddresses) {
       i++;
-      const invite: Invite = new Invite();
-      invite._created = false;
-      invite.email = email;
+      const invite: Invite = new Invite({
+        _created: false,
+        email: email
+      });
       if (i !== this.emailAddresses.length) {
-        this.inviteRepository.saveModel(invite);
+        this.inviteRepository.saveModel(invite).then();
       } else {
         this.inviteRepository.saveModel(invite)
           .then(() => {

@@ -14,4 +14,9 @@ export class UserRepositoryService extends ModelRepositoryService<User> {
               loginService: LoginService) {
     super(userService, eventService, loginService);
   }
+
+
+  public createModel(): User {
+    return new User({ _created: false });
+  }
 }
