@@ -57,7 +57,6 @@ export class UserRouter extends BaseRouter {
     private install(req: Request, res: Response): void {
         userModel.find()
             .then(users => {
-                console.log(users);
                 if (users.length == 0) {
                     UserValidator.validateUserSchema(req, 1)
                         .then(user => {
@@ -81,7 +80,7 @@ export class UserRouter extends BaseRouter {
                         });
                 } else {
                     res.status(403);
-                    res.send({ error: "The install script was already executed! No admin user was created!" });
+                    res.send({ error: "The install script was already executed! No admin user was created!" + users });
                 }
             })
             .catch(() => {
