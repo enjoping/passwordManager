@@ -119,39 +119,21 @@ aside {
         }
     }
     @media (min-width: 768px) {
-        background-color: transparent;
-        border-color: fade(white, 30%);
+        background-color: white;
+        border-color: fade(@gray-darker, 5%);
         .navbar-header .navbar-brand {
-            color: fade(white, 70%);
+            color: @theme-primary;
+            font-size: 14px;
             &:hover,
             &:focus {
-                color: white;
+                color: darken(@theme-primary, 10%);
             }
         }
         .nav > li > a,
         .nav > li > a:focus {
-            color: fade(white, 70%);
+            color: @gray-darker;
             &:hover {
-                color: white;
-            }
-        }
-        &.affix {
-            background-color: white;
-            border-color: fade(@gray-darker, 5%);
-            .navbar-header .navbar-brand {
                 color: @theme-primary;
-                font-size: 14px;
-                &:hover,
-                &:focus {
-                    color: darken(@theme-primary, 10%);
-                }
-            }
-            .nav > li > a,
-            .nav > li > a:focus {
-                color: @gray-darker;
-                &:hover {
-                    color: @theme-primary;
-                }
             }
         }
     }
