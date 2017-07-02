@@ -3,11 +3,11 @@
  */
 
 import { Request, Response, NextFunction } from "express";
-
 import { BaseRouter } from "./baseRouter";
+import { SecurityNoteValidator } from "../validators/securityNoteValidator";
+
 const securityNoteModel = require("./../models/securityNoteModel");
 const groupModel = require("./../models/groupModel");
-import { SecurityNoteValidator } from "../validators/securityNoteValidator";
 
 export class SecurityNoteRouter extends BaseRouter {
     constructor() {
@@ -16,6 +16,9 @@ export class SecurityNoteRouter extends BaseRouter {
         this.init();
     }
 
+    /**
+     * Override the method from the super class BaseRouter to implement specific middleware.
+     */
     protected setRoutes(): void {
         this.router.route(this.basePath + "/")
             .get(this.authenticate, this.shouldUserAccessGroup, this.list)

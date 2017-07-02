@@ -2,12 +2,12 @@
  * Created by marcelboes on 05.06.17.
  */
 import { Request, Response } from "express";
-const inviteModel = require("./../models/inviteModel");
-const userModel = require("./../models/userModel");
-
 import { BaseRouter } from "./baseRouter";
 import { InviteValidator } from "../validators/inviteValidator";
 import { UserRouter } from "./userRouter";
+
+const inviteModel = require("./../models/inviteModel");
+const userModel = require("./../models/userModel");
 
 export class InviteRouter extends BaseRouter {
 
@@ -16,6 +16,9 @@ export class InviteRouter extends BaseRouter {
         this.init();
     }
 
+    /**
+     * Override the method from the super class BaseRouter to implement specific middleware.
+     */
     protected setRoutes() {
         this.router.route(this.basePath + "/")
             .get(this.authenticate, UserRouter.shouldUserAccess, this.list)

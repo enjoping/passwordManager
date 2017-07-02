@@ -3,9 +3,16 @@
  */
 import { Request } from "express";
 import { BaseValidator } from "./baseValidator";
+
 const userModel = require("../models/userModel");
 
 export class UserValidator extends BaseValidator {
+    /**
+     * This method checks the given request on validation for the user schema and returns a promise.
+     * @param req
+     * @param roleId
+     * @returns {Promise<T>}
+     */
     public static validateUserSchema(req: Request, roleId: number = 2): Promise<any> {
         return new Promise((resolve, reject) => {
             if (typeof req.body !== "object") {

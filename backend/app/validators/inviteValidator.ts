@@ -7,6 +7,11 @@ import * as crypto from "crypto";
 const inviteModel = require("../models/inviteModel");
 
 export class InviteValidator extends BaseValidator {
+    /**
+     * This method checks the given request on validation for the invite schema and returns a promise.
+     * @param req
+     * @returns {Promise<T>}
+     */
     public static validateInviteSchema(req: Request): Promise<any> {
         return new Promise((resolve, reject) => {
             if (typeof req.body !== "object") {
@@ -27,6 +32,11 @@ export class InviteValidator extends BaseValidator {
         });
     }
 
+    /**
+     * This method checks the given request on validation for a valid invite and returns a promise.
+     * @param req
+     * @returns {Promise<T>}
+     */
     public static validateInviteStatus(req: Request): Promise<any> {
         return new Promise((resolve, reject) => {
             if (typeof req.body !== "object") {

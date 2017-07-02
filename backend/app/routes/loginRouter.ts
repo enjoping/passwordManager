@@ -15,6 +15,9 @@ export class LoginRouter extends BaseRouter {
         this.init();
     }
 
+    /**
+     * Override the method from the super class BaseRouter to implement specific middleware.
+     */
     protected setRoutes() {
         this.router.route(this.basePath + "/")
             .post(passport.authenticate("local", { session: false }), this.generateToken, this.login);

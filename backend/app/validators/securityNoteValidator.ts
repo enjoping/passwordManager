@@ -6,6 +6,11 @@ import { BaseValidator } from "./baseValidator";
 const securityNoteModel = require("../models/securityNoteModel");
 
 export class SecurityNoteValidator extends BaseValidator {
+    /**
+     * This method checks the given request on validation for the security note schema and returns a promise.
+     * @param req
+     * @returns {Promise<T>}
+     */
     public static validateSecurityNoteSchema(req: Request): Promise<any> {
         return new Promise((resolve, reject) => {
             if (typeof req.body === "object") {

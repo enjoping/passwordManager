@@ -3,11 +3,11 @@
  */
 
 import { NextFunction, Request, Response } from "express";
-const groupModel = require("../models/groupModel");
-const securityModel = require("../models/securityNoteModel");
-
 import { BaseRouter } from "./baseRouter";
 import { GroupValidator } from "../validators/groupValidator";
+
+const groupModel = require("../models/groupModel");
+const securityModel = require("../models/securityNoteModel");
 
 export class GroupRouter extends BaseRouter {
 
@@ -16,6 +16,9 @@ export class GroupRouter extends BaseRouter {
         this.init();
     }
 
+    /**
+     * Override the method from the super class BaseRouter to implement specific middleware.
+     */
     protected setRoutes(): void {
         this.router.route(this.basePath + "/")
             .get(this.authenticate, this.list)

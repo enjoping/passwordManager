@@ -7,6 +7,11 @@ import { BaseValidator } from "./baseValidator";
 const groupModel = require("../models/groupModel");
 
 export class GroupValidator extends BaseValidator {
+    /**
+     * This method checks the given request on validation for the group schema and returns a promise.
+     * @param req
+     * @returns {Promise<T>}
+     */
     public static validateGroupSchema(req: Request): Promise<any> {
         return new Promise((fulfill, reject) => {
             if (typeof req.body === "object") {

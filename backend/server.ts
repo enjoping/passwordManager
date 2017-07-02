@@ -15,6 +15,9 @@ import { UserRouter } from "./app/routes/userRouter";
 
 const server = new Server(config.get("port"));
 
+/**
+ * Register all routers here to make the rest interface available from outside.
+ */
 server.registerRouter("/api/1.0/group", new GroupRouter().getRouter());
 server.registerRouter("/api/1.0/group", new SecurityNoteRouter().getRouter());
 server.registerRouter("/api/1.0/group", new GroupMemberRouter().getRouter());

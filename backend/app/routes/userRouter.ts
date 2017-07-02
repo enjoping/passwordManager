@@ -2,11 +2,11 @@
  * Created by marcelboes on 05.06.17.
  */
 import { NextFunction, Request, Response } from "express";
-const userModel = require("./../models/userModel");
-
 import { BaseRouter } from "./baseRouter";
 import { UserValidator } from "../validators/userValidator";
 import { InviteValidator } from "../validators/inviteValidator";
+
+const userModel = require("./../models/userModel");
 
 export class UserRouter extends BaseRouter {
 
@@ -15,6 +15,9 @@ export class UserRouter extends BaseRouter {
         this.init();
     }
 
+    /**
+     * Override the method from the super class BaseRouter to implement specific middleware.
+     */
     protected setRoutes() {
         this.router.route(this.basePath + "/")
             .get(this.authenticate, this.list)
@@ -54,6 +57,7 @@ export class UserRouter extends BaseRouter {
     private install(req: Request, res: Response): void {
         userModel.find()
             .then(users => {
+                console.log(users);
                 if (users.length == 0) {
                     UserValidator.validateUserSchema(req, 1)
                         .then(user => {

@@ -3,6 +3,11 @@
  */
 
 export class BaseValidator {
+    /**
+     * This method escapes an input string for html injection.
+     * @param input
+     * @returns {string}
+     */
     static escapeHTML(input: string): string {
         return input
             .replace(/&/g, "&amp;")
