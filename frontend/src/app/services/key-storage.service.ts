@@ -110,7 +110,17 @@ export class KeyStorageService {
         reject(error);
       });
     });
-  };
+  }
+
+  getGroupKey(group, username): Promise<any> {
+    return this.getKey('name', 'passwordManager_' + username)
+      .then((keyPair) => {
+        return this.decrypt(keyPair.privateKey, group.members[0].password)
+      })
+      .then((password) => {
+        return this.importGroupKey(password);
+      });
+  }
 
   getKey(propertyName, propertyValue): Promise<any> {
     const that = this;

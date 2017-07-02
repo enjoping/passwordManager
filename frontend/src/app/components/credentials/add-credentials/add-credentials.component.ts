@@ -50,13 +50,7 @@ export class AddCredentialComponent implements OnInit {
   createSecurityNote() {
     this.securityNote.group = this.group._id;
 
-    this.keyStorage.getKey('name', 'passwordManager_' + this.loginService.currentUser.username)
-      .then((keyPair) => {
-        return this.keyStorage.decrypt(keyPair.privateKey, this.group.members[0].password)
-      })
-      .then((password) => {
-        return this.keyStorage.importGroupKey(password);
-      })
+    this.keyStorage.getGroupKey(this.group, this.loginService.currentUser.username)
       .then((groupKey) => {
         return this.keyStorage.encryptSecurityNoteFields(groupKey, this.securityNote);
       })
