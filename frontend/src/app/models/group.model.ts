@@ -13,6 +13,11 @@ export default class Group extends Model {
   user: User;
 
   /**
+   * Deprecated owner attribute, use user instead
+   */
+  owner: any;
+
+  /**
    * The encrypted group password.
    */
   password: string;

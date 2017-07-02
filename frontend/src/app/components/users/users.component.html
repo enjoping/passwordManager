@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row col-md-10">
     <button *ngIf="!detailView" type="button" class="btn btn-primary btn-block custom"
-            (click)="toggleDetail(true); $event.stopPropagation()">Details</button>
+            (click)="toggleDetail(true); $event.stopPropagation()">Detail</button>
     <button *ngIf="detailView" type="button" class="btn btn-primary btn-block custom"
             (click)="toggleDetail(false); $event.stopPropagation()">Basic</button>
     <table class="table table-striped">
@@ -46,7 +46,7 @@
           <div class="input-group">
             <!-- <input type="text" class="form-control" [(ngModel)]=user.publicKey> -->
             <span class="input-group-btn">
-              <button class="btn btn-default" [class.btn-success]= "checkIfCopied(user._id)" type="button" ngxClipboard [cbContent]=user.publicKey (cbOnSuccess)="isCopied = user._id">copy</button>
+              <button class="btn btn-info" [class.btn-success]= "checkIfCopied(user._id)" type="button" ngxClipboard [cbContent]=user.publicKey (cbOnSuccess)="isCopied = user._id">copy</button>
             </span>
           </div>
         </td>

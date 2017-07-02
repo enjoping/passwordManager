@@ -47,17 +47,25 @@ export class AdminGroupsComponent implements OnInit {
   }
 
   update(group: Group) {
-    console.log(group.name + ' ' + group.user);
-    this.groupRepository.saveModel(group);
+    if (group.user = this.getUserById(group.owner)) {
+        this.groupRepository.saveModel(group);
+    }
   }
 
+  getUserById(userId): User {
+    for (let _i = 0; _i < this.usersResolved.length; _i++) {
+      if (this.usersResolved[_i]._id === +userId) {
+        return this.usersResolved[_i];
+      }
+    }
+    return null;
+  }
   emailForOwnerId(userId): string {
-          console.log(this.usersResolved);
-          for (let _i = 0; _i < this.usersResolved.length; _i++) {
-            if (this.usersResolved[_i]._id === userId) {
-             return this.usersResolved[_i].email;
-             }
-          }
-    return userId;
+    for (let _i = 0; _i < this.usersResolved.length; _i++) {
+      if (this.usersResolved[_i]._id === +userId) {
+        return this.usersResolved[_i].email;
+      }
+    }
+    return '';
   }
 }

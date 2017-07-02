@@ -4,8 +4,9 @@
       <thead>
       <tr>
         <th class="first">Group Id</th>
-        <th class="first">Name</th>
-        <th class="first">Owner</th>
+        <th class="first">Group Name</th>
+        <th class="first">Owner Id</th>
+        <th class="first">Owner Email</th>
         <th class="second"> </th>
         <th class="second"> </th>
       </tr>
@@ -23,11 +24,15 @@
         <th scope="row" *ngIf="group._id !== editGroupId" (click)="edit(group)">
           {{group.name}}
         </th>
-        <!--Email-->
+        <!--Owner Id-->
         <td *ngIf="group._id === editGroupId">
           <input type="text" (keyup.enter)="edit(null); update(group); $event.stopPropagation()" class="form-control" [(ngModel)]="group.owner" />
         </td>
         <td *ngIf="group._id !== editGroupId" (click)="edit(group)">
+          {{group.owner}}
+        </td>
+        <!--Email-->
+        <td>
           {{emailForOwnerId(group.owner)}}
         </td>
         <!--Save/Edit-->
