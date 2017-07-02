@@ -11,7 +11,7 @@ $(document).ready(() => {
         keyStore.open().then(function () {
             KeyManager.generateKeypair().then(function (key) {
                 KeyManager.exportKey(key.publicKey).then((publicKey) => {
-                    $.post('/api/1.0/user', {
+                    $.post('/api/1.0/user/install', {
                         username: $('#username').val(),
                         password: password,
                         email: email,
