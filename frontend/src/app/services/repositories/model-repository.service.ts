@@ -65,15 +65,15 @@ export class ModelRepositoryService<T extends Model> {
               }
             } else {
               model._created = true;
-              // TODO this doesn't assign the backend id to model id...
               model._id = result._id;
-              const body = result.toString();
-              console.log('Model id ' + model._id + ' Result id ' + result._id);
+
               this.models.push(model);
             }
 
-            this.loadAdditionalModelInformation(model);
-            resolve(model);
+            this.loadAdditionalModelInformation(model)
+              .then(() => {
+                resolve(model);
+              });
           })
           .catch((error) => {
             if (error.status === 401) {

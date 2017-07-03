@@ -5,6 +5,7 @@ import { ModelRepositoryService } from './model-repository.service';
 import { SecurityNoteRepositoryService } from './security-note-repository.service';
 import { LoginService } from '../login.service';
 import { EventService } from '../event/event.service';
+import {MemberRepositoryService} from './member-repository.service';
 
 
 /**
@@ -16,7 +17,8 @@ export class GroupRepositoryService extends ModelRepositoryService<Group> {
   constructor(groupService: GroupService,
               eventService: EventService,
               loginService: LoginService,
-              private securityNoteRepository: SecurityNoteRepositoryService) {
+              private securityNoteRepository: SecurityNoteRepositoryService,
+              private memberRepository: MemberRepositoryService) {
     super(groupService, eventService, loginService);
   }
 
@@ -28,6 +30,12 @@ export class GroupRepositoryService extends ModelRepositoryService<Group> {
     return this.securityNoteRepository.loadModels()
       .then(() => {
         model.securityNotes = this.securityNoteRepository.models;
+
+        this.memberRepository.setCurrentGroup(model);
+        return this.memberRepository.loadModels();
+      })
+      .then(() => {
+        model.members = this.memberRepository.models;
         return Promise.resolve();
       });
   }
