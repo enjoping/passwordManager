@@ -6,5 +6,6 @@
     "email": "test@test.de",
     "password": "testPW",
     "publicKey": "aPublicKey"
-  }
+  },
+  "secret": "p4ssw0rdM4n4g3R!"
 }

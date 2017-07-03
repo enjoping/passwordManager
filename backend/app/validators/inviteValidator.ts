@@ -4,6 +4,8 @@
 import { Request } from "express";
 import { BaseValidator } from "./baseValidator";
 import * as crypto from "crypto";
+import * as config from "config";
+
 const inviteModel = require("../models/inviteModel");
 
 export class InviteValidator extends BaseValidator {
@@ -20,7 +22,7 @@ export class InviteValidator extends BaseValidator {
             if (typeof req.body.email === "undefined") {
                 reject({ error: "The field email is required." });
             }
-            const secret = "1nv1t3t0k3n";
+            const secret = String(config.get("secret"));
             const encryptedInviteToken = crypto.createHmac("sha256", secret)
                 .update(crypto.randomBytes(64).toString("utf8"))
                 .digest("hex");

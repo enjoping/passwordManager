@@ -4,7 +4,9 @@
 
 import { Request, Response, Router } from "express";
 import * as expressJwt from "express-jwt";
-const authenticate = expressJwt({secret : "p4ssw0rdM4n4g3R!"});
+import * as config from "config";
+
+const authenticate = expressJwt({secret : String(config.get("secret"))});
 
 export class BaseRouter {
     protected router: Router;

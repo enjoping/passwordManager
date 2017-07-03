@@ -3,9 +3,7 @@
  */
 
 import * as config from "config";
-
 import { Server } from "./app/models/server";
-
 import { GroupMemberRouter } from "./app/routes/groupMemberRouter";
 import { GroupRouter } from "./app/routes/groupRouter";
 import { InviteRouter } from "./app/routes/inviteRouter";
