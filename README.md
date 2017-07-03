@@ -13,7 +13,7 @@ users about our product and how to install it. This can be found at http://info.
 ## Short description
 The passwordManager is an easy and use tool to manage passwords in a team. It features a user and group management and
 is based on modern encryption techniques and the WebCripto API which is build in into all modern Browsers. The frontend
-is based on Angular 4, the frontend is based on Node.js and uses a MongoDB for storing data. A detailed description of
+is based on Angular 4, the backend is based on Node.js and uses a MongoDB for storing data. A detailed description of
 used technologies can be found later in this documentation.
 
 ## Supported Browsers
@@ -34,7 +34,7 @@ a hybrid cryptosystem. Therefore we create a RSA keypair for every user which is
 private key will only be stored in the browsers indexedDB. For this prototype it is stored without any encryption as
 resulted in a broken key but a goal for the next release would be the encryption using the users password. The users
 public key will be send to the backend and stored in the database.  
-The the RSA keypair will not be used for the direct encryption of a password because of two main reasons:
+The RSA keypair will not be used for the direct encryption of a password because of two main reasons:
 1. Public-key encryption is a slow form of encryption and is very limited in the length the data to be crypted can have.
 2. We've focused on a group based system from the beginning on. If we want to encrypt passwords using a public-key we
  need to do this for every single user of a group. This would result in a big number of encrypted strings per group
@@ -61,7 +61,7 @@ application which will be running on port 3000. The output of the init.sh script
 `http://localhost:3000/install` on which you will be able to create the administrator account. If you are on a Mac your
 default browser will automatically be opened with this page. As we are creating your keypair when creating an account
 please make sure to use on of the supported browsers otherwise you will just see an alert message.  
-Please also be aware of the fact that you can use an account only with the browser you've created it in.as it will store
+Please also be aware of the fact that you can use an account only with the browser you've created it in as it will store
 the keypair and we have no export and import functionality at the moment.  
 After creating your administrator account you can start using the passwordManager.
 
