@@ -58,7 +58,7 @@ export class UserRouter extends BaseRouter {
         userModel.find()
             .then(users => {
                 if (users.length == 0) {
-                    UserValidator.validateUserSchema(req, 1)
+                    UserValidator.validateCreateUser(req, 1)
                         .then(user => {
                             userModel.register(user, req.body.password, (err, account) => {
                                 if (err) {
@@ -127,7 +127,7 @@ export class UserRouter extends BaseRouter {
      * @param res
      */
     protected create(req: Request, res: Response): void {
-        UserValidator.validateUserSchema(req, 2)
+        UserValidator.validateCreateUser(req)
             .then(user => {
                 InviteValidator.validateInviteStatus(req)
                     .then(invite => {
@@ -165,7 +165,7 @@ export class UserRouter extends BaseRouter {
      * @param res
      */
     protected update(req: Request, res: Response): void {
-        UserValidator.validateUserSchema(req)
+        UserValidator.validateUpdateUser(req, req.params.id)
             .then(() => {
                 userModel.findById(req.params.id)
                     .then(user => {
