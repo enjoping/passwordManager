@@ -25,7 +25,7 @@ export class InviteComponent {
   createNewUser(username, password, password2) {
     if (this.passMatch(password, password2) && (username !== '') && (password !== '')) {
       // We can work with the data the user entered.
-
+      console.log(this.invitetoken);
       this.keyStorageService.generateKeypair()
         .then((keyPair) => {
           // Retrieve the public key from the generated key pair.
@@ -39,6 +39,7 @@ export class InviteComponent {
                 username: username,
                 publicKey: publicKey,
                 pendingInvite: true,
+                inviteToken: this.invitetoken
               });
 
               return this.userRepository.saveModel(user);

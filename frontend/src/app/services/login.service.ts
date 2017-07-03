@@ -10,7 +10,6 @@ import { EventService } from './event/event.service';
 export class LoginService {
 
   accessToken: string;
-
   currentUser: User;
 
   private route: string;
@@ -19,9 +18,13 @@ export class LoginService {
               private router: Router,
               private eventService: EventService) {
     this.route = environment.apiEndpoint + '/login';
+  }
 
+  loadAccessTokenFromStorage() {
     if (localStorage.getItem('pw-token')) {
       this.accessToken = localStorage.getItem('pw-token');
+
+      this.eventService.inform(this, 'authorization-status-change', { authorized: true, userId: localStorage.getItem('pw-user') });
     }
   }
 
@@ -39,6 +42,7 @@ export class LoginService {
 
   setCurrentUser(currentUser: User) {
     this.currentUser = currentUser;
+    localStorage.setItem('pw-user', String(currentUser._id));
 
     this.eventService.inform(this, 'authorization-status-change', { authorized: true, user: this.currentUser });
   }

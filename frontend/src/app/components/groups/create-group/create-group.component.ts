@@ -90,19 +90,30 @@ export class CreateGroupComponent {
       })
       .then((encryptedPassword) => {
         this.group.password = this.keyStorage.ab2str8(encryptedPassword);
-        console.log('group password generated', this.group.password);
         return this.groupRepository.saveModel(this.group);
       })
-      .then((group) => {
+      .then((group: Group) => {
         console.log('group created', group);
         // The group has been created.
         const promises = [ ];
-        this.memberRepository.setCurrentGroup(this.group);
-        this.group.members.forEach((member) => {
-          member.group = group._id;
-          promises.push(this.memberRepository.saveModel(member));
-        });
-        return Promise.all(promises);
+
+        this.keyStorage.getGroupKey(group, this.loginService.currentUser.username)
+          .then((groupKey) => {
+            this.memberRepository.setCurrentGroup(this.group);
+            this.group.members.forEach((member) => {
+              member.group = group._id;
+
+              const publicKey = member.user.publicKey;
+              return this.keyStorage.encrypt(publicKey, this.keyStorage.ab2str8(groupKey))
+                .then((encryptedPassword) => {
+                  member.password = this.keyStorage.ab2str8(encryptedPassword);
+                  promises.push(this.memberRepository.saveModel(member));
+
+                  return Promise.all(promises);
+                });
+            });
+          });
+
       })
       .then(() => {
         this.activeModal.dismiss('success');
