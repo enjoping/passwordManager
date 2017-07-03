@@ -35,7 +35,7 @@ export class AppComponent implements EventReceiver {
 
   onEventReceived(source, key, value) {
     if (key === 'authorization-status-change') {
-      if (value.authorized === true) {
+      if (value.authorized === true && value.userId) {
         this.userRepository.loadModels()
           .then(() => {
             if (value.userId) {
