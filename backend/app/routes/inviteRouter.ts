@@ -25,7 +25,7 @@ export class InviteRouter extends BaseRouter {
             .post(this.authenticate, UserRouter.shouldUserAccess, this.create);
 
         this.router.route(this.basePath + "/:id")
-            .get(this.authenticate, UserRouter.shouldUserAccess, this.get)
+            .get(this.get)
             .patch(this.authenticate, UserRouter.shouldUserAccess, this.update)
             .delete(this.authenticate, UserRouter.shouldUserAccess, this.erase);
     }
