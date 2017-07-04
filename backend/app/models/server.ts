@@ -8,6 +8,7 @@ import * as express from "express";
 import * as passport from "passport";
 import {Strategy as LocalStrategy} from "passport-local";
 import * as path from "path";
+import * as config from "config";
 
 const userModel = require("./../models/userModel");
 
@@ -47,7 +48,7 @@ export class Server {
         this.app.use(require("express-session")({
             resave: false,
             saveUninitialized: false,
-            secret: "keyboard cat",
+            secret: String(config.get("secret")),
         }));
         this.app.use(passport.initialize());
         this.app.use(cors());
