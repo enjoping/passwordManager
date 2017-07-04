@@ -99,49 +99,45 @@ The frontend uses angular cli as a command line interface.
 ### Structure
 The frontend source code is split into several dedicated categories, which can be found in frontend/src/app.
 
-#### Components
+- Components
 Each subfolder of the components folder is grouped by their task, e.g. the login subfolder contains the 
 html, typescript and scss files, which implementation will allow the user to login. 
 Some of these subfolders additionally represent reoccuring components, so they were created with reusability in mind
 and therefore are imported into several other components.
 
-#### Models
+- Models
 The models folder groups the entities classes, that we instantiate elsewhere and send to the backend for persistance, e.g. user.model.ts.
 Thus they have to define the same attributes as their backend counterparts.
 
-#### Pages
+- Pages
 Each subfolder represents a navigable page in the web browser. 
 E.g. the login folder provides the framework for the login page and imports the login component.
 
-#### Services
+- Services
 Each service class matches an API that the backend provides for group/note/user persistance, user registering or user authorisation.
 Some services make sure that only authorised users are granted access to frontend functionality, they are the backbone of the password manager. 
-
 Many of them import abovementioned model classes to return promises of these for the app components.
-
 To provide offline functionality, the subfolder services/repositories contains classes for all those services, 
 that should continue working in offline mode. 
 
 ### Routes
 
-#### /
+- /
 The default route allows registered users to login, using their username and password.
 
-#### /groups
+- /groups
 Upon a succesfull login, the user will find themselves on the groups page, 
 that allows creating groups and therefore also security notes inside those groups.
 
-#### /admin
+- /admin
 These will be only accessible for users with admin rights.
-
 While /admin/users shows a list of all registered users, that allows to edit or delete them, 
 (provided the logged in user is authorised to do so) the invite function also makes it possible to 
 send invite tokens to persons.
-
 /admin/groups is the equivalent to the users page for groups. 
 It's possible to change group owners based on their user id or to delete them together with their security notes.
 
-#### /invite/:token
+- invite/:token
 This route will be part of the invitation. :token is replaced with a unique invite token, provided by the respective backend API.
 
 ___
