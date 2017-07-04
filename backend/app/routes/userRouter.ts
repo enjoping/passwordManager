@@ -24,7 +24,7 @@ export class UserRouter extends BaseRouter {
             .post(this.create);
 
         this.router.route(this.basePath + "/:id")
-            .get(this.authenticate, this.get)
+            .get(this.get)
             .patch(this.authenticate, UserRouter.shouldUserAccess, this.update)
             .delete(this.authenticate, UserRouter.shouldUserAccess, this.erase);
 
