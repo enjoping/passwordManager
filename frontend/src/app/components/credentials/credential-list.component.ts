@@ -23,6 +23,7 @@ export class CredentialListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.securityNoteRepository.models = [ ];
     this.securityNoteRepository.setCurrentGroup(this.group);
     this.securityNoteRepository.loadModels().then();
   }

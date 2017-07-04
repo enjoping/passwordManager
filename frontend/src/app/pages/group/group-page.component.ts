@@ -26,12 +26,16 @@ export class GroupPageComponent implements OnInit {
     this.route.params.subscribe((params) => {
       const groupId = +params['id'];
 
-      this.groupRepository.get(groupId)
+      this.groupRepository.loadModels()
+        .then(() => {
+          return this.groupRepository.get(groupId);
+        })
         .then((group) => {
           this.group = group;
         })
         .catch(() => {
           // The group couldn't be loaded.
+          console.log('group couldn`t be loaded');
         });
     });
   }
