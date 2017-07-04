@@ -11,13 +11,12 @@ export class RegisterService {
 
   private route: string;
 
-  constructor(private http: Http,
-              private loginService: LoginService) {
+  constructor(private http: Http) {
     this.route = environment.apiEndpoint + '/invite';
   }
 
   single(token: any): Promise<Invite> {
-    return this.http.get(this.route + '/' + token, this.loginService.buildAuthorizationHeaders())
+    return this.http.get(this.route + '/' + token)
       .map((response) => {
         return new Invite().jsonFill(response);
       })
