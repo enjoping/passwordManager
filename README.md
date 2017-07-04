@@ -13,7 +13,7 @@ users about our product and how to install it. This can be found at http://info.
 ## Short description
 The passwordManager is an easy and use tool to manage passwords in a team. It features a user and group management and
 is based on modern encryption techniques and the WebCripto API which is build in into all modern Browsers. The frontend
-is based on Angular 4, the frontend is based on Node.js and uses a MongoDB for storing data. A detailed description of
+is based on Angular 4, the backend is based on Node.js and uses a MongoDB for storing data. A detailed description of
 used technologies can be found later in this documentation.
 
 ## Supported Browsers
@@ -34,7 +34,7 @@ a hybrid cryptosystem. Therefore we create a RSA keypair for every user which is
 private key will only be stored in the browsers indexedDB. For this prototype it is stored without any encryption as
 resulted in a broken key but a goal for the next release would be the encryption using the users password. The users
 public key will be send to the backend and stored in the database.  
-The the RSA keypair will not be used for the direct encryption of a password because of two main reasons:
+The RSA keypair will not be used for the direct encryption of a password because of two main reasons:
 1. Public-key encryption is a slow form of encryption and is very limited in the length the data to be crypted can have.
 2. We've focused on a group based system from the beginning on. If we want to encrypt passwords using a public-key we
  need to do this for every single user of a group. This would result in a big number of encrypted strings per group
@@ -61,7 +61,7 @@ application which will be running on port 3000. The output of the init.sh script
 `http://localhost:3000/install` on which you will be able to create the administrator account. If you are on a Mac your
 default browser will automatically be opened with this page. As we are creating your keypair when creating an account
 please make sure to use on of the supported browsers otherwise you will just see an alert message.  
-Please also be aware of the fact that you can use an account only with the browser you've created it in.as it will store
+Please also be aware of the fact that you can use an account only with the browser you've created it in as it will store
 the keypair and we have no export and import functionality at the moment.  
 After creating your administrator account you can start using the passwordManager.
 
@@ -94,6 +94,59 @@ https://gl.fbi.h-da.de/fwe-ss2017/projekte/passwordmanager/wikis/api-description
 ___
 
 ## Frontend
+The frontend uses angular cli as a command line interface.
+
+### Structure
+The frontend source code is split into several dedicated categories, which can be found in frontend/src/app.
+
+- Components
+
+Each subfolder of the components folder is grouped by their task, e.g. the login subfolder contains the 
+html, typescript and scss files, which implementation will allow the user to login. 
+Some of these subfolders additionally represent reoccuring components, so they were created with reusability in mind
+and therefore are imported into several other components.
+
+- Models
+
+The models folder groups the entities classes, that we instantiate elsewhere and send to the backend for persistance, e.g. user.model.ts.
+Thus they have to define the same attributes as their backend counterparts.
+
+- Pages
+
+Each subfolder represents a navigable page in the web browser. 
+E.g. the login folder provides the framework for the login page and imports the login component.
+
+- Services
+
+Each service class matches an API that the backend provides for group/note/user persistance, user registering or user authorisation.
+Some services make sure that only authorised users are granted access to frontend functionality, they are the backbone of the password manager. 
+Many of them import abovementioned model classes to return promises of these for the app components.
+To provide offline functionality, the subfolder services/repositories contains classes for all those services, 
+that should continue working in offline mode. 
+
+### Routes
+
+- /
+
+The default route allows registered users to login, using their username and password.
+
+- /groups
+
+Upon a succesfull login, the user will find themselves on the groups page, 
+that allows creating groups and therefore also security notes inside those groups.
+
+- /admin
+
+These will be only accessible for users with admin rights.
+While /admin/users shows a list of all registered users, that allows to edit or delete them, 
+(provided the logged in user is authorised to do so) the invite function also makes it possible to 
+send invite tokens to persons.
+/admin/groups is the equivalent to the users page for groups. 
+It's possible to change group owners based on their user id or to delete them together with their security notes.
+
+- invite/:token
+
+This route will be part of the invitation. :token is replaced with a unique invite token, provided by the respective backend API.
 
 ___
 

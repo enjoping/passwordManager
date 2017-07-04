@@ -51,7 +51,7 @@ export class SecurityNoteService implements RestServiceInterface<SecurityNote> {
   public post(note: SecurityNote): Promise<SecurityNote> {
     return this.http.post(this.route, note, this.loginService.buildAuthorizationHeaders())
       .map((response) => {
-        return new SecurityNote().jsonFill(response);
+        return new SecurityNote().jsonFill(response.json());
       })
       .toPromise();
   }

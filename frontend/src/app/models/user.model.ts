@@ -6,4 +6,5 @@ export default class User extends Model {
   password: string;
   publicKey: string;
   pendingInvite = false;
+  inviteToken: string;
 }

@@ -10,6 +10,7 @@ import { GroupRepositoryService } from '../../../services/repositories/group-rep
 import { LoginService } from '../../../services/login.service';
 import { MemberRepositoryService } from '../../../services/repositories/member-repository.service';
 import {KeyStorageService} from '../../../services/key-storage.service';
+import Member from '../../../models/member.model';
 
 
 @Component({
@@ -19,6 +20,9 @@ import {KeyStorageService} from '../../../services/key-storage.service';
 })
 export class CreateGroupComponent {
   group: Group;
+
+  // The group members that should be created.
+  members: Member[];
 
   constructor(public activeModal: NgbActiveModal,
               private userRepository: UserRepositoryService,
@@ -59,7 +63,7 @@ export class CreateGroupComponent {
       const member = this.memberRepository.createModel();
       member.jsonFill({ password: 'random-password' });
       member.user = user;
-      member.id = -1;
+      member.id = user._id;
       member.group = this.group._id;
       this.group.members.push(member);
 
@@ -76,6 +80,9 @@ export class CreateGroupComponent {
   }
 
   createGroup(): void {
+    // Save the members in an extra variable, because the group will be override on saving.
+    this.members = this.group.members;
+
     // Generate the password for the group to be used to encrypt/decrypt the security notes.
     this.keyStorage.generateGroupKeyPair()
       .then((keyPair) => {
@@ -90,18 +97,36 @@ export class CreateGroupComponent {
       })
       .then((encryptedPassword) => {
         this.group.password = this.keyStorage.ab2str8(encryptedPassword);
-        console.log('group password generated', this.group.password);
         return this.groupRepository.saveModel(this.group);
       })
-      .then((group) => {
-        console.log('group created', group);
+      .then((group: Group) => {
         // The group has been created.
+        return this.keyStorage.getGroupKey(group, this.loginService.currentUser.username);
+      })
+      .then((groupKey) => {
         const promises = [ ];
-        this.memberRepository.setCurrentGroup(this.group);
-        this.group.members.forEach((member) => {
-          member.group = group._id;
-          promises.push(this.memberRepository.saveModel(member));
+
+        this.members.forEach((member) => {
+          if (member._created) {
+            // The member has already been created.
+            return;
+          }
+
+          promises.push(
+            this.keyStorage.importKey(member.user.publicKey)
+              .then((publicKey) => {
+                return this.keyStorage.encrypt(publicKey, this.keyStorage.ab2str8(groupKey));
+              })
+              .then((encryptedPassword) => {
+                member.password = this.keyStorage.ab2str8(encryptedPassword);
+                member.group = this.group._id;
+
+                this.memberRepository.setCurrentGroup(this.group);
+                return this.memberRepository.saveModel(member);
+              })
+          );
         });
+
         return Promise.all(promises);
       })
       .then(() => {

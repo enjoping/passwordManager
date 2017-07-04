@@ -13,6 +13,7 @@ export class UsersComponent implements OnInit {
   editUserName: any;
   editUserMail: any;
   detailView: any;
+  isCopied: any = 0;
 
   constructor(private userRepository: UserRepositoryService) {
 
@@ -49,5 +50,12 @@ export class UsersComponent implements OnInit {
 
   toggleDetail(any) {
     this.detailView = any;
+  }
+
+  checkIfCopied(any): boolean {
+    if (any === this.isCopied) {
+      return true;
+    }
+    return false;
   }
 }

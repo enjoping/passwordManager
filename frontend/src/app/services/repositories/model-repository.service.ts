@@ -65,15 +65,16 @@ export class ModelRepositoryService<T extends Model> {
               }
             } else {
               model._created = true;
-              // TODO this doesn't assign the backend id to model id...
+              console.log('model created', result);
               model._id = result._id;
-              const body = result.toString();
-              console.log('Model id ' + model._id + ' Result id ' + result._id);
+
               this.models.push(model);
             }
 
-            this.loadAdditionalModelInformation(model);
-            resolve(model);
+            this.loadAdditionalModelInformation(model)
+              .then(() => {
+                resolve(model);
+              });
           })
           .catch((error) => {
             if (error.status === 401) {
@@ -152,19 +153,28 @@ export class ModelRepositoryService<T extends Model> {
     return Promise.resolve(this.models.filter(callable));
   }
 
-  public deleteModel(model: T) {
-    this.restService.remove(model)
-      .then((result) => {
-        const index = this.models.findIndex(row => row._id === model._id);
-        if (index !== -1) {
-          this.models.splice(index, 1);
-        }
-      })
-      .catch((error) => {
-        if (error.status === 401) {
-          // Unauthorized.
-          this.loginService.accessTokenNotValid();
-        }
-      });
+  public deleteModel(model: T): Promise<any> {
+    console.log('remove model', model);
+    return new Promise(
+      (resolve, reject) => {
+        this.restService.remove(model)
+          .then((result) => {
+            console.log(this.models, model);
+            const index = this.models.findIndex(row => row._id === model._id);
+            if (index !== -1) {
+              this.models.splice(index, 1);
+              resolve();
+            }
+          })
+          .catch((error) => {
+            console.log('model not removed', error);
+            if (error.status === 401) {
+              // Unauthorized.
+              this.loginService.accessTokenNotValid();
+              reject();
+            }
+          });
+      }
+    );
   }
 }

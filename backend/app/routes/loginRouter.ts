@@ -6,8 +6,9 @@ import {NextFunction, Request, Response} from "express";
 import * as jwt from "jsonwebtoken";
 import * as passport from "passport";
 import {BaseRouter} from "./baseRouter";
+import * as config from "config";
 
-const secretToken = "p4ssw0rdM4n4g3R!";
+const secretToken = String(config.get("secret"));
 
 export class LoginRouter extends BaseRouter {
     constructor() {

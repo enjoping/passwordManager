@@ -1,4 +1,5 @@
 {
-    "db": "mongodb://localhost:27017/passwordManagerDev",
-    "port": 8181
+  "db": "mongodb://localhost:27017/passwordManagerDev",
+  "port": 8181,
+  "secret": "p4ssw0rdM4n4g3R!"
 }
