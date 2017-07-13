@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:7.10
+      - image: mongo:3.4.4
+
+    working_directory: ~/passwordManager
+
+    steps:
+      - checkout
+      - run: cd backend && npm install
