@@ -7,7 +7,7 @@ jobs:
     working_directory: ~/passwordManager
     steps:
       - checkout
-      - run: cd backend && npm install && gulp
+      - run: cd backend && npm install && ./node_modules/gulp/bin/gulp.js
 
   testFrontend:
     docker:
