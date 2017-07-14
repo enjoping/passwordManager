@@ -1,14 +1,5 @@
 version: 2
 jobs:
-  testBackend:
-    docker:
-      - image: circleci/node:7.10
-      - image: mongo:3.4.4
-    working_directory: ~/passwordManager
-    steps:
-      - checkout
-      - run: cd backend && npm install && npm test
-
   buildBackend:
     docker:
       - image: circleci/node:7.10
@@ -25,7 +16,7 @@ jobs:
     working_directory: ~/passwordManager
     steps:
       - checkout
-      - run: cd frontend && npm install -g @angular/cli && npm test
+      - run: cd frontend && npm install && ./node_modules/@angular/cli/bin/ng test
 
   buildFrontend:
     docker:
@@ -34,16 +25,13 @@ jobs:
     working_directory: ~/passwordManager
     steps:
       - checkout
-      - run: cd frontend && npm install -g @angular/cli && npm install && ng build -e master
+      - run: cd frontend && npm install && ./node_modules/@angular/cli/bin/ng build -e master
 
 workflows:
   version: 2
   build-test-and-deploy:
     jobs:
-      - testBackend
-      - buildBackend:
-          requires:
-            - testBackend
+      - buildBackend
       - testFrontend
       - buildFrontend:
           requires:
