@@ -1,12 +1,50 @@
 version: 2
 jobs:
-  build:
+  testBackend:
     docker:
       - image: circleci/node:7.10
       - image: mongo:3.4.4
-
     working_directory: ~/passwordManager
+    steps:
+      - checkout
+      - run: cd backend && npm test
 
+  buildBackend:
+    docker:
+      - image: circleci/node:7.10
+      - image: mongo:3.4.4
+    working_directory: ~/passwordManager
     steps:
       - checkout
       - run: cd backend && npm install
+
+  testFrontend:
+    docker:
+      - image: circleci/node:7.10
+      - image: mongo:3.4.4
+    working_directory: ~/passwordManager
+    steps:
+      - checkout
+      - run: cd frontend && npm test
+
+  buildFrontend:
+    docker:
+      - image: circleci/node:7.10
+      - image: mongo:3.4.4
+    working_directory: ~/passwordManager
+    steps:
+      - checkout
+      - run: cd frontend && npm install
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - testBackend
+      - buildBackend:
+          requires:
+            - testBackend
+      - testFrontend
+      - buildFrontend:
+          requires:
+            - testFrontend
