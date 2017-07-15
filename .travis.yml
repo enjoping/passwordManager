@@ -12,6 +12,9 @@ cache:
     - "frontend/node_modules"
     - "backend/node_modules"
 
+services:
+  - mongodb
+
 install:
     - cd backend
     - npm install
