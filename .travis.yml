@@ -18,10 +18,13 @@ services:
 install:
     - cd backend
     - npm install
+    - cd ../frontend
+    - npm install
+    - cd ..
 
 script:
     - cd backend
-    - npm test
+    - npm run lint
 
 notifications:
     slack: laecherbar:y1NWyusbhnKv2tGC3XQCmmJW
