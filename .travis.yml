@@ -2,7 +2,6 @@ language: node_js
 node_js:
   - "7"
   - "6"
-  - "5"
 
 cache:
   directories:
@@ -11,6 +10,9 @@ cache:
 
 services:
   - mongodb
+
+addons:
+  firefox: "latest"
 
 install:
     - cd backend
