@@ -22,6 +22,8 @@ install:
 script:
     - cd backend
     - npm run lint
+    - cd ../frontend
+    - npm test
 
 notifications:
     slack: laecherbar:y1NWyusbhnKv2tGC3XQCmmJW
