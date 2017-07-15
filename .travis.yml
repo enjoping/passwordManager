@@ -25,11 +25,20 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-script:
-    - cd backend
-    - npm run lint
-    - cd ../frontend
-    - npm test
+jobs:
+  include:
+    - stage: test
+      script:
+        - cd frontend
+        - npm run lint
+        - npm test
+        - cd ..
+      script:
+        - cd backend
+        - npm run lint
+        - cd ..
+    - stage: deploy
+      script: echo "deploy"
 
 notifications:
     slack: laecherbar:y1NWyusbhnKv2tGC3XQCmmJW
