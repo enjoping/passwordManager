@@ -5,6 +5,7 @@ jobs:
       - image: circleci/node:7.10
       - image: mongo:3.4.4
     working_directory: ~/passwordManager
+    parallelism: 2
     steps:
       - checkout
       - run: cd backend && npm install && ./node_modules/gulp/bin/gulp.js
