@@ -3,6 +3,10 @@ node_js:
   - "7"
   - "6"
 
+branches:
+  only:
+  - master
+
 cache:
   directories:
     - "frontend/node_modules"
@@ -31,6 +35,17 @@ script:
     - cd ../frontend
     - npm run lint
     - npm test
+    - ng build -e ${TRAVIS_BRANCH}
+    - cp -rv dist ../backend
+    - rm -r dist
+    - ng build -e build
+    - mv dist frontend
+    - cp -rv frontend ../backend
+    - cd ../backend
+    - ls -lah
+
+deploy:
+  skip_cleanup: true
 
 notifications:
     slack: laecherbar:y1NWyusbhnKv2tGC3XQCmmJW
