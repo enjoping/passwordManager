@@ -16,7 +16,7 @@ jobs:
     working_directory: ~/passwordManager
     steps:
       - checkout
-      - run: cd frontend && npm install && ./node_modules/@angular/cli/bin/ng test
+      - run: cd frontend && npm install && ./node_modules/@angular/cli/bin/ng lint
 
   buildFrontend:
     docker:
