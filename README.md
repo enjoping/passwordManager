@@ -1,4 +1,4 @@
-# passwordManager
+# passwordManager [![Build Status](https://api.travis-ci.org/enjoping/passwordManager.svg?branch=master)](https://travis-ci.org/enjoping/passwordManager)
 ### Developed by
 - Joe Pietler
 - Lukas Schardt
